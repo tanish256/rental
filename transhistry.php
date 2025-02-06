@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Table</title>
+    <title>Transaction History</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,7 +73,7 @@
     <?php 
     if (isset($_GET['tid'])) {
         $tenant_id = $_GET['tid']; // Get tenant ID from the query string
-        $tenant= getTenant($tenant_id,$tenants);
+        $tenant= getTenant($tenant_id);
         if ($tenant) {
             $tenant_data = json_decode($tenant, true);
             echo "<h2>{$tenant_data['name']}</h2>";
@@ -130,12 +130,12 @@ if (isset($_GET['tid'])) {
                 if ($yh) {
                     # code...
                     foreach ($yh as $transaction) {
-                        $landlord = getLandlord($transaction['landlord'], $landlords);
+                        $room =getRoom($transaction['room'],$rooms);
+                        $landlord = getLandlord($room['landlord'], $landlords);
                         // Replace placeholder names and balance with data from JSON
                         echo "<tr>";
                         echo "<td> #{$transaction['id']}</td>";
                         echo "<td>{$transaction['date_paid']}</td>";
-                    
                         echo "<td>{$landlord['name']}</td>";
                         echo "<td>#{$transaction['room']}</td>";
                         echo "<td>UGx {$transaction['amount']}</td>";

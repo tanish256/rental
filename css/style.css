@@ -54,9 +54,11 @@ body{
                                 width: 30px;
                                 height: 30px;
                             }
-                            svg.more path{
+                            svg.more path,rect{
                                 fill: #9197B3;
                             }
+                            
+                            
                         }
                         li.active{
                             color: #9197B3;
@@ -68,7 +70,7 @@ body{
                                 stroke: #9197B3;
                                 width: 30px;
                             }
-                            svg.more path{
+                            svg.more path,rect{
                                 fill: #9197B3;
                             }
                         }
@@ -89,7 +91,7 @@ body{
                                 width: 30px;
                                 transition: fill 0.3s ease;
                             }
-                            svg.more path{
+                            svg.more path,rect{
                                 fill: white;
                             }
                             svg{
@@ -237,7 +239,7 @@ thead{
     border-radius: 5px;
     width: 50%;
     text-align: center;
-    border: 1.5px green solid;
+    /* border: 1.5px green solid; */
 }
 .status-edit div{
     background-color: #ff0000cc;
@@ -258,7 +260,7 @@ thead{
     width: 50%;
     padding: 5px 15px;
     border-radius: 5px;
-    border: 1.5px red solid;
+    /* border: 1.5px red solid; */
 }
 #search {
     padding: 10px;
@@ -492,6 +494,9 @@ tbody.collect{
             cursor: pointer;
             border: 1px solid black;
         }
+        a{
+            margin-inline:20px;
+        }
     }
 }
 .Tparent{
@@ -521,3 +526,17 @@ tbody.collect{
         }
     }
 }
+input:disabled {
+    color: #6d6d6d !important;
+    cursor: not-allowed;
+  }
+  div.delete{
+    background-color: #ff0000cc;
+    width: fit-content;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    padding: 7px 20px;
+    border-radius: 3px;
+    border:none;
+  }

@@ -5,11 +5,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
+    tbody{
+        max-height: 40vh;
+    }
 </style>
 <body>
     <div class="root">
@@ -32,7 +34,7 @@
                         <path d="M11.9999 14.92C9.60992 14.92 7.66992 12.97 7.66992 10.58C7.66992 8.19002 9.60992 6.25 11.9999 6.25C14.3899 6.25 16.3299 8.19002 16.3299 10.58C16.3299 12.97 14.3899 14.92 11.9999 14.92ZM11.9999 7.75C10.4399 7.75 9.16992 9.02002 9.16992 10.58C9.16992 12.15 10.4399 13.42 11.9999 13.42C13.5599 13.42 14.8299 12.15 14.8299 10.58C14.8299 9.02002 13.5599 7.75 11.9999 7.75Z" fill="#9197B3"/>
                         </svg>
                         Tenants</li></a>
-                    <a href="#"><li class="active"><svg class="more" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <a href="Landlords.php"><li><svg class="more" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15 22.75H9C3.57 22.75 1.25 20.43 1.25 15V9C1.25 3.57 3.57 1.25 9 1.25H15C20.43 1.25 22.75 3.57 22.75 9V15C22.75 20.43 20.43 22.75 15 22.75ZM9 2.75C4.39 2.75 2.75 4.39 2.75 9V15C2.75 19.61 4.39 21.25 9 21.25H15C19.61 21.25 21.25 19.61 21.25 15V9C21.25 4.39 19.61 2.75 15 2.75H9Z" fill="#9197B3"/>
                         <path d="M12.0006 13.0797C11.8706 13.0797 11.7406 13.0497 11.6206 12.9797L6.32061 9.9197C5.96061 9.7097 5.84059 9.2497 6.05059 8.8997C6.26059 8.5397 6.72061 8.4197 7.07061 8.6297L11.9906 11.4797L16.8806 8.6497C17.2406 8.4397 17.7006 8.5697 17.9006 8.9197C18.1006 9.2697 17.9806 9.7397 17.6306 9.9397L12.3706 12.9797C12.2606 13.0397 12.1306 13.0797 12.0006 13.0797Z" fill="#9197B3"/>
                         <path d="M12 18.5201C11.59 18.5201 11.25 18.1801 11.25 17.7701V12.3301C11.25 11.9201 11.59 11.5801 12 11.5801C12.41 11.5801 12.75 11.9201 12.75 12.3301V17.7701C12.75 18.1801 12.41 18.5201 12 18.5201Z" fill="#9197B3"/>
@@ -47,7 +49,7 @@
                         <path d="M22 10.9699V13.03C22 13.58 21.56 14.0299 21 14.0499H19.0399C17.9599 14.0499 16.97 13.2599 16.88 12.1799C16.82 11.5499 17.0599 10.9599 17.4799 10.5499C17.8499 10.1699 18.36 9.94995 18.92 9.94995H21C21.56 9.96995 22 10.4199 22 10.9699Z" stroke="#9197B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M2 10.5V8.5C2 5.78 3.64 3.88 6.19 3.56C6.45 3.52 6.72 3.5 7 3.5H16C16.26 3.5 16.51 3.50999 16.75 3.54999C19.33 3.84999 21 5.76 21 8.5V9.95001H18.92C18.36 9.95001 17.85 10.17 17.48 10.55C17.06 10.96 16.82 11.55 16.88 12.18C16.97 13.26 17.96 14.05 19.04 14.05H21V15.5C21 18.5 19 20.5 16 20.5H13.5" stroke="#9197B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>Accounting</li></a>
-                        <a href="payment.php"><li><svg class="fill" fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        <a href="#"><li class="active"><svg class="fill" fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                             viewBox="0 0 511 511" xml:space="preserve">
                        <g>
                            <path d="M471.5,28h-432C17.72,28,0,45.72,0,67.5v256C0,345.28,17.72,363,39.5,363h176c4.142,0,7.5-3.358,7.5-7.5
@@ -91,107 +93,186 @@
             </nav>
         </div>
         <div class="dashmain">
-
-            <div class="summary">
-                
-                <!-- ...................................summary.................................. -->
-                <div class="sum">
-                    <div class="circle">
-                        <img src="assets/profile-2user.svg" alt="">
-                    </div>
-                    <div class="inf">
-                        <h3>Total Tenants</h3>
-                        <h4><?php echo $ttenants?></h4>
-                        <p>this month</p>
-                    </div>
-                </div>
-
-                <div class="sum">
-                    <div class="circle">
-                        <img src="assets/profile-tick.svg" alt="">
-                    </div>
-                    <div class="inf">
-                        <h3>Total landlords</h3>
-                        <h4><?php echo $tlandlords?></h4>
-                    <p>this month</p>
-                    </div>
-                </div>
-    
-                <div class="sum">
-                    <div class="circle">
-                        <img src="assets/monitor.svg" alt="">
-                    </div>
-                    <div class="inf">
-                    <h3>Vacant Rooms</h3>
-                    <h4><?php echo count($roomsWithoutTenant)?></h4>
-                    <p>this month</p>
-                    </div>
-                </div>
-    
-            </div>
-            <!-- ...................................summary.................................. -->
-
             <!-- ----------------------------------table-------------------------------------------- -->
             <div class="tablecard">
                 <div class="tops">
                     <div class="headers">
-                        <h1>landlords</h1>
-                        <p>active landlords</p>
+                        <h1>Landlords</h1>
+                        <p>active Landlords</p>
                     </div>
                     <div class="right">
                         <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
                         <div class="sort-component">
                             <label for="sort-options" class="sort-label">Sort_by:</label>
-                            <select id="sort-options" class="sort-select" onchange="sortTable()">
-                                <option value="name-asc">Name</option>
-                                <option value="landlord-asc">Landlord</option>
-                                <option value="status-asc">Status</option>
-                                <option value="balance-asc">Balance</option>
+                            <select id="sort-options" class="sort-select">
+                              <option value="name-asc">Name</option>
+                              <option value="name-desc">Landlord</option>
+                              <option value="date-asc">Status</option>
+                              <option value="date-desc">Balance</option>
                             </select>
-                        </div>
+                          </div>
                     </div>
                 </div>
                 
-            <table id="tenantTable">
+            <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Location</th>
-                        <th>Balance</th>
-                        <th>Status</th>
+                        <th>Landlord Name</th>
+                        <th>Total Income</th>
+                        <th>Out Standing</th>
+                        <th>Total Paid</th>
+                        <th>Amount</th>
+                        <th>action</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
                     foreach ($landlords as $landlord) {
-                        echo "<tr class='TReport' onclick='TReport({$landlord['id']})'>";
-                        echo "<td>{$landlord['name']}</td>";
-                        echo "<td class='email'>{$landlord['email']}</td>";
-                        echo "<td>{$landlord['contact']}</td>";
-                        echo "<td>{$landlord['location']}</td>";
                         $balances = getBalanceLandlord($landlord['id'],date("M"),date("Y"));
                         $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
-                        $landlord['balance'] = $balance;
-                        echo "<td>ugx " . number_format($landlord['balance'], 0, '.', ',') . "</td>";
-                        if ($landlord['balance'] <= 0) {
-                            echo "<td class='status-active'><div>cleared</div></td>";
-                        } else {
-                            echo "<td class='status-inactive'><div>pending</div></td>";
-                        }
+                        $balance_bf = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
+                        $balance_due = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
+
+                        echo "<tr>";
+                        echo "<td>{$landlord['name']}</td>";
+                        echo "<td>".$balance_bf+$balance_due."</td>";
+                        echo "<td>{$balance}</td>";
+                        echo "<td>".$balance_due+$balance_bf-$balance."</td>";
+                        echo "<td><input type='number' class='payment' data-landlord-id='{$landlord['id']}'></td>";
+                        echo "<td><button class='collect-btn' data-landlord-id='{$landlord['id']}'>pay</button></td>";
                         echo "</tr>";
                     }
                     ?>
+                   
                 </tbody>
             </table>
             </div>
             <!-- ----------------------------------table-------------------------------------------- -->
 
+                        <!-- ----------------------------------table-------------------------------------------- -->
+                        <div class="tablecard">
+                            <div class="tops">
+                                <div class="headers">
+                                    <h1>Tenants</h1>
+                                    <p>active Tenants</p>
+                                </div>
+                                <div class="right">
+                                    <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
+                                    <div class="sort-component">
+                                        <label for="sort-options" class="sort-label">Sort_by:</label>
+                                        <select id="sort-options" class="sort-select">
+                                          <option value="name-asc">Name</option>
+                                          <option value="name-desc">Landlord</option>
+                                          <option value="date-asc">Status</option>
+                                          <option value="date-desc">Balance</option>
+                                        </select>
+                                      </div>
+                                </div>
+                            </div>
+                            
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Landlord Name</th>
+                                    <th>Total Income</th>
+                                    <th>Out Standing</th>
+                                    <th>Total Paid</th>
+                                    <th>amount</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="collect">
+                            <?php
+                                // Loop through tenants and output the table rows
+                            foreach ($tenants as $tenant) {
+                                // Get room data from $rooms array
+                                $room = getRoom($tenant['room_id'], $rooms);
+                                $location = $room['location'];
+                                $landlord = getLandlord($room['landlord'], $landlords);
+                                $balances = getBalance($tenant['id'],date("M"),date("Y"));
+                                $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
+                                $balance_bf = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
+                                $balance_due = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
+                                // Replace placeholder names and balance with data from JSON
+                                echo "<tr>";
+                                echo "<td>{$tenant['name']}</td>";
+                                echo "<td>".$balance_due+$balance_bf."</td>";
+                                echo "<td>{$balance}</td>";
+                                echo "<td>".$balance_due+$balance_bf-$balance."</td>";
+                                echo "<td><input type='number' class='payment' data-tenant-id='{$tenant['id']}'></td>";
+                                echo "<td><button class='collect-btn' data-tenant-id='{$tenant['id']}'>collect</button></td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                        </div>
+                        <!-- ----------------------------------table-------------------------------------------- -->
+
         </div>
     </div>
     <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/filter.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+    // Event listener for the 'collect' button click
+    $('.collect-btn').on('click', function() {
+    var tenantId = $(this).data('tenant-id');  // Get tenant ID from data attribute
+    var landlordId = $(this).data('landlord-id');  // Get landlord ID from data attribute
+    var paymentAmount = $(this).closest('tr').find('input.payment').val();  // Get the value from the input field
+
+    // Ensure the input is not empty
+    if (paymentAmount && !isNaN(paymentAmount)) {
+        // Check if tenantId or landlordId is present
+        if (tenantId) {
+            // Execute logic for tenant
+            console.log("Tenant payment logic executed.");
+            $.ajax({
+                url: 'postpayment.php', // The server-side script to handle the request
+                type: 'POST',
+                data: {
+                    tenant_id: tenantId,
+                    payment: paymentAmount
+                },
+                success: function(response) {
+                    console.log(response); // You can log the response from the server here
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('An error occurred:', error);
+                }
+            });
+        } else if (landlordId) {
+            // Execute logic for landlord
+            console.log("Landlord payment logic executed.");
+            //alert(paymentAmount);
+            $.ajax({
+                url: 'postpayment.php', // The server-side script to handle the request
+                type: 'POST',
+                data: {
+                    landlord_id: landlordId,
+                    payment: paymentAmount
+                },
+                success: function(response) {
+                    console.log(response); // You can log the response from the server here
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('An error occurred:', error);
+                }
+            });
+        } else {
+            // No tenant or landlord ID found
+            alert("No valid tenant or landlord ID found.");
+        }
+    } else {
+        alert("Please enter a valid amount");
+    }
+});
+
+});
+
+    </script>
 </body>
 </html>

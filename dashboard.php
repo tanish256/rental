@@ -71,8 +71,9 @@
                                     d="M12.0002 18.7498C11.4202 18.7498 10.8503 18.6198 10.3903 18.3698L7.19025 16.5898C6.23025 16.0598 5.49023 14.7898 5.49023 13.6898V10.2998C5.49023 9.20981 6.24025 7.9398 7.19025 7.3998L10.3903 5.6198C11.3103 5.1098 12.6902 5.1098 13.6102 5.6198L16.8102 7.3998C17.7702 7.9298 18.5103 9.19981 18.5103 10.2998V13.6898C18.5103 14.7798 17.7602 16.0498 16.8102 16.5898L13.6102 18.3698C13.1502 18.6298 12.5802 18.7498 12.0002 18.7498ZM12.0002 6.7498C11.6702 6.7498 11.3502 6.8098 11.1202 6.9398L7.92026 8.7198C7.43026 8.9898 6.99023 9.7498 6.99023 10.2998V13.6898C6.99023 14.2498 7.43026 14.9998 7.92026 15.2698L11.1202 17.0498C11.5802 17.3098 12.4202 17.3098 12.8802 17.0498L16.0802 15.2698C16.5702 14.9998 17.0103 14.2398 17.0103 13.6898V10.2998C17.0103 9.73981 16.5702 8.9898 16.0802 8.7198L12.8802 6.9398C12.6502 6.8098 12.3302 6.7498 12.0002 6.7498Z"
                                     fill="#9197B3" />
                             </svg>
-                            landlords</li>
+                            Landlords</li>
                     </a>
+                    <a href="rooms.php"><li><svg class="more" width="24" height="24" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.00512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="11.264"></g><g id="SVGRepo_iconCarrier"> <path fill="var(--ci-primary-color, #000000)" d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" class="ci-primary"></path> <rect width="32" height="64" x="256" y="232" fill="var(--ci-primary-color, #000000)" class="ci-primary"></rect> </g></svg>Rooms</li></a>
                     <a href="accounting.php">
                         <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -200,8 +201,8 @@
                         <img src="assets/monitor.svg" alt="">
                     </div>
                     <div class="inf">
-                        <h3>Vacant Rooms</h3>
-                        <h4>30</h4>
+                    <h3>Vacant Rooms</h3>
+                        <h4><?php echo count($roomsWithoutTenant)?></h4>
                         <p>this month</p>
                     </div>
                 </div>
@@ -212,27 +213,27 @@
             <!-- ..............................................metrics1....................... -->
             <div class="metrics">
                 <div class="card">
-                    <p>UGX <?php echo $Tsummary['balance_bf'] ?></p>
+                    <p>UGX <?php echo number_format($Tsummary['balance_bf'], 0, '.', ',')?></p>
                     <h3>Balance b/F</h3>
-                    <p>6% this month</p>
+                    <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo $Tsummary['expected_gross'] ?></p>
+                    <p>UGX <?php echo number_format($Tsummary['expected_gross'], 0, '.', ',') ?></p>
                     <h3>Expected Gross</h3>
-                    <p>6% this month</p>
+                    <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo $Tsummary['total_collected'] ?></p>
+                    <p>UGX <?php echo number_format($Tsummary['total_collected'], 0, '.', ',') ?></p>
                     <h3>Total Payment</h3>
-                    <p>6% this month</p>
+                    <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo $Tsummary['balance_bf']+$Tsummary['expected_gross']-$Tsummary['total_collected'] ?></p>
+                    <p>UGX <?php echo number_format($Tsummary['balance_bf']+$Tsummary['expected_gross']-$Tsummary['total_collected'], 0, '.', ',')  ?></p>
                     <h3>Total Balance</h3>
-                    <p>6% this month</p>
+                    <p>this month</p>
                 </div>
             </div>
             <!-- ..................................metrics1........................................... -->
@@ -250,17 +251,17 @@
                         <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
                         <div class="sort-component">
                             <label for="sort-options" class="sort-label">Sort_by:</label>
-                            <select id="sort-options" class="sort-select">
+                            <select id="sort-options" class="sort-select" onchange="sortTable()">
                                 <option value="name-asc">Name</option>
-                                <option value="name-desc">landlord</option>
-                                <option value="date-asc">Status</option>
-                                <option value="date-desc">Balance</option>
+                                <option value="landlord-asc">Landlord</option>
+                                <option value="status-asc">Status</option>
+                                <option value="balance-asc">Balance</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                <table>
+                <table id="tenantTable">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -272,43 +273,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                foreach ($tenants as $tenant) {
-                    $room_id = $tenant['room_id'];
-                    $room_query = "SELECT location, landlord FROM rooms WHERE id = :room_id";
-    
-    // Prepare and execute the query using PDO
-    $stmt = $pdo->prepare($room_query);
-    $stmt->bindParam(':room_id', $room_id, PDO::PARAM_INT);
-    $stmt->execute();
-    
-    // Fetch the room name
-    $room = $stmt->fetch(PDO::FETCH_ASSOC); // Fetch both columns as an associative array
-    $location = $room['location'];
-    $landlordid = $room['landlord'];
-
-    // Query to get the landlord name
-    $landlord_query = "SELECT name FROM landlord WHERE id = :landlordid";
-    $landlord_stmt = $pdo->prepare($landlord_query);
-    $landlord_stmt->bindParam(':landlordid', $landlordid, PDO::PARAM_INT);
-    $landlord_stmt->execute();
-    $landlord = $landlord_stmt->fetch(PDO::FETCH_ASSOC);
-    $landlord_name = $landlord['name']; // Fetch landlord name
-    
-    // Replace placeholder names and balance with data from JSON
-    echo "<tr>";
-    echo "<td>{$tenant['name']}</td>";
-    echo "<td>{$landlord_name}</td>";
-    echo "<td>{$tenant['contact']}</td>";
-    echo "<td>{$location}</td>";
-    echo "<td>\${$tenant['balance']}</td>";
-    if($tenant['balance']<=0){
-        echo "<td class='status-active'><div>cleared</div></td>";
-    }else{
-        echo "<td class='status-inactive'><div>pending</div></td>";
-    }
-    echo "</tr>";
-}?>
+                    <?php
+                        // Loop through tenants and output the table rows
+                        foreach ($tenants as $tenant) {
+                            // Get room data from $rooms array
+                            $room = getRoom($tenant['room_id'], $rooms);
+                            $location = $room['location'];
+                            $landlord = getLandlord($room['landlord'], $landlords);
+                            $balances = getBalance($tenant['id'],date("M"),date("Y"));
+                            $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
+                            $tenant['balance'] = $balance;
+                            // Replace placeholder names and balance with data from JSON
+                            echo "<tr class='TReport' onclick='TReport({$tenant['id']})'>";
+                            echo "<td>{$tenant['name']}</td>";
+                            echo "<td>{$landlord['name']}</td>";
+                            echo "<td>{$tenant['contact']}</td>";
+                            echo "<td>{$location}</td>";
+                            echo "<td>ugx " . number_format($tenant['balance'], 0, '.', ',') . "</td>";
+                            if ($tenant['balance'] <= 0) {
+                                echo "<td class='status-active'><div>cleared</div></td>";
+                            } else {
+                                echo "<td class='status-inactive'><div>pending</div></td>";
+                            }
+                            echo "</tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -316,6 +305,27 @@
 
         </div>
     </div>
+    <div class="Tparent tenant edit">
+        <div class="card">
+            <div class="x" id="xt">x</div>
+            <h2>Tenant Information</h2>
+            <form action="">
+                <input type="text" name="" id="tid" placeholder="Id" disabled>
+                <input type="text" name="" id="tname" placeholder="Tenant Name" disabled>
+                <input type="text" name="" id="tcontact" placeholder="Contact" disabled>
+                <input type="text" name="" id="tlocation" placeholder="location" disabled>
+                <input type="text" name="" id="tbalance" placeholder="Balance" disabled>
+                <input type="text" name="" id="troom" placeholder="Room Id" disabled>
+                <input type="text" name="" id="tlandlord" placeholder="Landlord" disabled>
+                <input type="text" name="" id="tdate" placeholder="date registered" disabled>
+            </form>
+            <a id="thistory" target="_blank" href="transhistry.php?tenant=2" >Transaction History</a>
+        </div>
+
+    </div>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/filter.js"></script>
 </body>
 
 </html>

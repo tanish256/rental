@@ -1,3 +1,6 @@
+<?php
+require 'Vhelper.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +73,8 @@
                       <path d="M12 18.5201C11.59 18.5201 11.25 18.1801 11.25 17.7701V12.3301C11.25 11.9201 11.59 11.5801 12 11.5801C12.41 11.5801 12.75 11.9201 12.75 12.3301V17.7701C12.75 18.1801 12.41 18.5201 12 18.5201Z" fill="#9197B3"/>
                       <path d="M12.0002 18.7498C11.4202 18.7498 10.8503 18.6198 10.3903 18.3698L7.19025 16.5898C6.23025 16.0598 5.49023 14.7898 5.49023 13.6898V10.2998C5.49023 9.20981 6.24025 7.9398 7.19025 7.3998L10.3903 5.6198C11.3103 5.1098 12.6902 5.1098 13.6102 5.6198L16.8102 7.3998C17.7702 7.9298 18.5103 9.19981 18.5103 10.2998V13.6898C18.5103 14.7798 17.7602 16.0498 16.8102 16.5898L13.6102 18.3698C13.1502 18.6298 12.5802 18.7498 12.0002 18.7498ZM12.0002 6.7498C11.6702 6.7498 11.3502 6.8098 11.1202 6.9398L7.92026 8.7198C7.43026 8.9898 6.99023 9.7498 6.99023 10.2998V13.6898C6.99023 14.2498 7.43026 14.9998 7.92026 15.2698L11.1202 17.0498C11.5802 17.3098 12.4202 17.3098 12.8802 17.0498L16.0802 15.2698C16.5702 14.9998 17.0103 14.2398 17.0103 13.6898V10.2998C17.0103 9.73981 16.5702 8.9898 16.0802 8.7198L12.8802 6.9398C12.6502 6.8098 12.3302 6.7498 12.0002 6.7498Z" fill="#9197B3"/>
                       </svg>
-                      Landlord</li></a>
+                      Landlords</li></a>
+                      <a href="rooms.php"><li><svg class="more" width="24" height="24" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.00512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="11.264"></g><g id="SVGRepo_iconCarrier"> <path fill="var(--ci-primary-color, #000000)" d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" class="ci-primary"></path> <rect width="32" height="64" x="256" y="232" fill="var(--ci-primary-color, #000000)" class="ci-primary"></rect> </g></svg>Rooms</li></a>
                     <a href="#"><li class="active"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M10.7516 16.8604V18.8904C10.7516 20.6104 9.15158 22.0004 7.18158 22.0004C5.21158 22.0004 3.60156 20.6104 3.60156 18.8904V16.8604C3.60156 18.5804 5.20158 19.8004 7.18158 19.8004C9.15158 19.8004 10.7516 18.5704 10.7516 16.8604Z" stroke="#9197B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M10.7501 14.11C10.7501 14.61 10.6101 15.07 10.3701 15.47C9.78006 16.44 8.57004 17.05 7.17004 17.05C5.77004 17.05 4.56003 16.43 3.97003 15.47C3.73003 15.07 3.59009 14.61 3.59009 14.11C3.59009 13.25 3.99007 12.48 4.63007 11.92C5.28007 11.35 6.17003 11.01 7.16003 11.01C8.15003 11.01 9.04006 11.36 9.69006 11.92C10.3501 12.47 10.7501 13.25 10.7501 14.11Z" stroke="#9197B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -199,7 +203,6 @@
                       <label for="sort-options" class="sort-label">Sort_by:</label>
                       <select id="sort-options" class="sort-select" onchange="sortTable()">
                         <option value="name-asc">Name</option>
-                        <option value="name-desc">Landlord</option>
                         <option value="date-asc">Status</option>
                         <option value="date-desc">Balance</option>
                       </select>
@@ -218,86 +221,52 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="clickable-row">
-                      <td>John Doe</td>
-                      <td>200,000</td>
-                      <td>150,000</td>
-                      <td>300,000</td>
-                      <td>50,000</td>
-                      <td class="status-inactive"><div>pending</div></td>
-                    </tr>
-                    <tr class="clickable-row">
-                      <td>Emily Davis</td>
-                      <td>Michael Brown</td>
-                      <td>+9876543210</td>
-                      <td>Entebbe</td>
-                      <td>$500</td>
-                      <td class="status-inactive"><div>Pending</div></td>
-                    </tr>
-                    <tr class="clickable-row">
-                      <td>Robert Wilson</td>
-                      <td>Lisa Johnson</td>
-                      <td>+2567890123</td>
-                      <td>Jinja</td>
-                      <td>$3,400</td>
-                      <td class="status-active"><div>Paid</div></td>
-                    </tr>
-                    <tr class="clickable-row">
-                      <td>Susan Martin</td>
-                      <td>Tom Clark</td>
-                      <td>+2561234567</td>
-                      <td>Mbarara</td>
-                      <td>$200</td>
-                      <td class="status-inactive"><div>Pending</div></td>
-                    </tr>
-                    <tr>
-                      <td>Robert Wilson</td>
-                      <td>Lisa Johnson</td>
-                      <td>+2567890123</td>
-                      <td>Jinja</td>
-                      <td>$3,400</td>
-                      <td class=" status status-active"><div>paid</div></td>
-                  </tr>
-                  <tr>
-                    <td>Robert Wilson</td>
-                    <td>Lisa Johnson</td>
-                    <td>+2567890123</td>
-                    <td>Jinja</td>
-                    <td>$3,400</td>
-                    <td class=" status status-active"><div>paid</div></td>
-                </tr>
-                <tr>
-                  <td>Robert Wilson</td>
-                  <td>Lisa Johnson</td>
-                  <td>+2567890123</td>
-                  <td>Jinja</td>
-                  <td>$3,400</td>
-                  <td class=" status status-active"><div>paid</div></td>
-              </tr>
-              <tr>
-                <td>Robert Wilson</td>
-                <td>Lisa Johnson</td>
-                <td>+2567890123</td>
-                <td>Jinja</td>
-                <td>$3,400</td>
-                <td class=" status status-active"><div>paid</div></td>
-            </tr>
-            <tr>
-              <td>Robert Wilson</td>
-              <td>Lisa Johnson</td>
-              <td>+2567890123</td>
-              <td>Jinja</td>
-              <td>$3,400</td>
-              <td class=" status status-active"><div>paid</div></td>
-          </tr>
-          <tr>
-            <td>Robert Wilson</td>
-            <td>Lisa Johnson</td>
-            <td>+2567890123</td>
-            <td>Jinja</td>
-            <td>$3,400</td>
-            <td class=" status status-active"><div>paid</div></td>
-        </tr>
+                  <?php
+                      foreach ($landlords as $landlord) {
+                        echo "<tr class='clickable-row' data-id='{$landlord['id']}'>";
+                    
+                        // Initialize sums for the landlord
+                        $total_balance = 0;
+                        $total_balance_due = 0;
+                        $total_balance_bf = 0;
+                    
+                        // Get tenants for this landlord
+                        $tenantsl = getTenantsByLandlord($landlord['id']);
+                        // If the function returns a JSON-encoded string, you need to decode it
+                        $tenantst = json_decode($tenantsl, true);
+                        $status_cleared = true;
+                    
+                        // Loop through each tenant and sum their balances
+                        foreach ($tenantst as $tenant) {
+                            $total_balance += isset($tenant['balance']) ? $tenant['balance'] : 0;
+                            $total_balance_due += isset($tenant['balance_due']) ? $tenant['balance_due'] : 0;
+                            $total_balance_bf += isset($tenant['balance_bf']) ? $tenant['balance_bf'] : 0;
+                            if (isset($tenant['balance']) && $tenant['balance'] >0) {
+                              $status_cleared = false;  // Mark as cleared if any tenant has balance <= 0
+                          }
+                        }
+                    
+                        // Calculate final balance
+                        $final_balance = $total_balance_due + $total_balance_bf - $total_balance;
+                    
+                        // Display the landlord's name and balance data
+                        echo "<td>{$landlord['name']}</td>";
+                        echo "<td>{$total_balance_bf}</td>";
+                        echo "<td>{$total_balance_due}</td>";
+                        echo "<td>{$final_balance}</td>";
+                        echo "<td>ugx " . number_format($total_balance, 0, '.', ',') . "</td>";
+                    
+                        // Determine the status based on the total balance
+                        if ($status_cleared) {
+                            echo "<td class='status-active'><div>cleared</div></td>";
+                        } else {
+                            echo "<td class='status-inactive'><div>pending</div></td>";
+                        }
+                    
+                        echo "</tr>";
+                    }
+                    
+                      ?>
                   </tbody>
                 </table>
               </div>
@@ -308,70 +277,6 @@
 
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/filter.js"></script>
-      <script>
-        const apiData = [
-          {
-            subName: "John Sub",
-            subLandlord: "Jane Sub",
-            subPhone: "+1234560000",
-            subLocation: "Kampala",
-            subBalance: "$300",
-            subStatus: "Paid"
-          },
-          {
-            subName: "Emily Sub",
-            subLandlord: "Michael Sub",
-            subPhone: "+9876500000",
-            subLocation: "Entebbe",
-            subBalance: "$150",
-            subStatus: "Pending"
-          },
-          {
-            subName: "Robert Sub",
-            subLandlord: "Lisa Sub",
-            subPhone: "+2567800000",
-            subLocation: "Jinja",
-            subBalance: "$500",
-            subStatus: "Paid"
-          },
-          {
-            subName: "Susan Sub",
-            subLandlord: "Tom Sub",
-            subPhone: "+2561200000",
-            subLocation: "Mbarara",
-            subBalance: "$50",
-            subStatus: "Pending"
-          }
-        ];
-    
-        $(document).ready(function () {
-          $('.clickable-row').on('click', function () {
-            const $row = $(this);
-            const $nextRow = $row.next('.sub-row');
-    
-            if ($('.sub-row').length) {
-  $('.sub-row').remove();
-} else {
-              apiData.forEach((data) => {
-  const $subRow = $(`
-    <tr class="sub-row">
-      <td>${data.subName}</td>
-      <td>${data.subLandlord}</td>
-      <td>${data.subPhone}</td>
-      <td>${data.subLocation}</td>
-      <td>${data.subBalance}</td>
-      <td class="${data.subStatus === 'Paid' ? 'status-active' : 'status-inactive'}">
-        <div>${data.subStatus}</div>
-      </td>
-    </tr>
-  `);
-
-  $row.after($subRow);
-});
-
-            }
-          });
-        });
-      </script>
+    <script src="js/accounting.js"></script>
 </body>
 </html>

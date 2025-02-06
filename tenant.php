@@ -69,8 +69,9 @@
                                     d="M12.0002 18.7498C11.4202 18.7498 10.8503 18.6198 10.3903 18.3698L7.19025 16.5898C6.23025 16.0598 5.49023 14.7898 5.49023 13.6898V10.2998C5.49023 9.20981 6.24025 7.9398 7.19025 7.3998L10.3903 5.6198C11.3103 5.1098 12.6902 5.1098 13.6102 5.6198L16.8102 7.3998C17.7702 7.9298 18.5103 9.19981 18.5103 10.2998V13.6898C18.5103 14.7798 17.7602 16.0498 16.8102 16.5898L13.6102 18.3698C13.1502 18.6298 12.5802 18.7498 12.0002 18.7498ZM12.0002 6.7498C11.6702 6.7498 11.3502 6.8098 11.1202 6.9398L7.92026 8.7198C7.43026 8.9898 6.99023 9.7498 6.99023 10.2998V13.6898C6.99023 14.2498 7.43026 14.9998 7.92026 15.2698L11.1202 17.0498C11.5802 17.3098 12.4202 17.3098 12.8802 17.0498L16.0802 15.2698C16.5702 14.9998 17.0103 14.2398 17.0103 13.6898V10.2998C17.0103 9.73981 16.5702 8.9898 16.0802 8.7198L12.8802 6.9398C12.6502 6.8098 12.3302 6.7498 12.0002 6.7498Z"
                                     fill="#9197B3" />
                             </svg>
-                            landlords</li>
+                            Landlords</li>
                     </a>
+                    <a href="rooms.php"><li><svg class="more" width="24" height="24" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.00512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="11.264"></g><g id="SVGRepo_iconCarrier"> <path fill="var(--ci-primary-color, #000000)" d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" class="ci-primary"></path> <rect width="32" height="64" x="256" y="232" fill="var(--ci-primary-color, #000000)" class="ci-primary"></rect> </g></svg>Rooms</li></a>
                     <a href="accounting.php">
                         <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -198,7 +199,7 @@
                     </div>
                     <div class="inf">
                         <h3>Vacant Rooms</h3>
-                        <h4>30</h4>
+                        <h4><?php echo count($roomsWithoutTenant)?></h4>
                         <p>this month</p>
                     </div>
                 </div>
@@ -241,28 +242,29 @@
                     <tbody>
 
                         <?php
-// Loop through tenants and output the table rows
-foreach ($tenants as $tenant) {
-    // Get room data from $rooms array
-    $room = getRoom($tenant['room_id'], $rooms);
-    $location = $room['location'];
-    $landlord = getLandlord($room['landlord'], $landlords);
-
-    // Replace placeholder names and balance with data from JSON
-    echo "<tr class='TReport' onclick='TReport({$tenant['id']})'>";
-    echo "<td>{$tenant['name']}</td>";
-    echo "<td>{$landlord['name']}</td>";
-    echo "<td>{$tenant['contact']}</td>";
-    echo "<td>{$location}</td>";
-    echo "<td>\${$tenant['balance']}</td>";
-    if ($tenant['balance'] <= 0) {
-        echo "<td class='status-active'><div>cleared</div></td>";
-    } else {
-        echo "<td class='status-inactive'><div>pending</div></td>";
-    }
-    echo "</tr>";
-}
-?>
+                            // Loop through tenants and output the table rows
+                            foreach ($tenants as $tenant) {
+                                // Get room data from $rooms array
+                                $room = getRoom($tenant['room_id'], $rooms);
+                                $location = $room['location'];
+                                $landlord = getLandlord($room['landlord'], $landlords);
+                                $balances = getBalance($tenant['id'],date("M"),date("Y"));
+                                $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
+                                $tenant['balance'] = $balance;
+                                echo "<tr class='TReport' onclick='TReport({$tenant['id']})'>";
+                                echo "<td>{$tenant['name']}</td>";
+                                echo "<td>{$landlord['name']}</td>";
+                                echo "<td>{$tenant['contact']}</td>";
+                                echo "<td>{$location}</td>";
+                                echo "<td>ugx " . number_format($tenant['balance'], 0, '.', ',') . "</td>";
+                                if ($tenant['balance'] <= 0) {
+                                    echo "<td class='status-active'><div>cleared</div></td>";
+                                } else {
+                                    echo "<td class='status-inactive'><div>pending</div></td>";
+                                }
+                                echo "</tr>";
+                            }
+                            ?>
                     </tbody>
                 </table>
             </div>
@@ -270,45 +272,7 @@ foreach ($tenants as $tenant) {
 
         </div>
     </div>
-    <style>
-    .Tparent {
-        width: 100%;
-        height: 100%;
-        top: 0;
-        position: absolute;
-        background-color: rgba(5, 5, 5, 0.302);
-        display: none;
-        align-items: center;
-        justify-content: center;
-
-        .card {
-            width: 60%;
-            height: 70%;
-            background-color: white;
-            border-radius: 5px;
-            position: relative;
-
-            .x {
-                position: absolute;
-                padding: 0;
-                font-weight: lighter;
-                right: 0;
-                font-size: 30px;
-                margin: 0;
-                width: 35px;
-                line-height: 35px;
-                text-align: center;
-                border-radius: 50%;
-                cursor: pointer;
-                border: 1px solid black;
-            }
-        }
-        a{
-            margin-inline:20px;
-        }
-    }
-    </style>
-    <div class="Tparent tenant">
+    <div class="Tparent tenant edit">
         <div class="card">
             <div class="x" id="xt">x</div>
             <h2>Tenant Information</h2>
@@ -326,7 +290,7 @@ foreach ($tenants as $tenant) {
         </div>
 
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/filter.js"></script>
 </body>

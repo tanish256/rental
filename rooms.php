@@ -1,16 +1,14 @@
 <?php 
- require "Vhelper.php";
+require 'Vhelper.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Rooms</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<style>
-</style>
 <body>
     <div class="root">
         <div class="sidebar">
@@ -32,14 +30,14 @@
                         <path d="M11.9999 14.92C9.60992 14.92 7.66992 12.97 7.66992 10.58C7.66992 8.19002 9.60992 6.25 11.9999 6.25C14.3899 6.25 16.3299 8.19002 16.3299 10.58C16.3299 12.97 14.3899 14.92 11.9999 14.92ZM11.9999 7.75C10.4399 7.75 9.16992 9.02002 9.16992 10.58C9.16992 12.15 10.4399 13.42 11.9999 13.42C13.5599 13.42 14.8299 12.15 14.8299 10.58C14.8299 9.02002 13.5599 7.75 11.9999 7.75Z" fill="#9197B3"/>
                         </svg>
                         Tenants</li></a>
-                    <a href="#"><li class="active"><svg class="more" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <a href="Landlords.php"><li><svg class="more" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15 22.75H9C3.57 22.75 1.25 20.43 1.25 15V9C1.25 3.57 3.57 1.25 9 1.25H15C20.43 1.25 22.75 3.57 22.75 9V15C22.75 20.43 20.43 22.75 15 22.75ZM9 2.75C4.39 2.75 2.75 4.39 2.75 9V15C2.75 19.61 4.39 21.25 9 21.25H15C19.61 21.25 21.25 19.61 21.25 15V9C21.25 4.39 19.61 2.75 15 2.75H9Z" fill="#9197B3"/>
                         <path d="M12.0006 13.0797C11.8706 13.0797 11.7406 13.0497 11.6206 12.9797L6.32061 9.9197C5.96061 9.7097 5.84059 9.2497 6.05059 8.8997C6.26059 8.5397 6.72061 8.4197 7.07061 8.6297L11.9906 11.4797L16.8806 8.6497C17.2406 8.4397 17.7006 8.5697 17.9006 8.9197C18.1006 9.2697 17.9806 9.7397 17.6306 9.9397L12.3706 12.9797C12.2606 13.0397 12.1306 13.0797 12.0006 13.0797Z" fill="#9197B3"/>
                         <path d="M12 18.5201C11.59 18.5201 11.25 18.1801 11.25 17.7701V12.3301C11.25 11.9201 11.59 11.5801 12 11.5801C12.41 11.5801 12.75 11.9201 12.75 12.3301V17.7701C12.75 18.1801 12.41 18.5201 12 18.5201Z" fill="#9197B3"/>
                         <path d="M12.0002 18.7498C11.4202 18.7498 10.8503 18.6198 10.3903 18.3698L7.19025 16.5898C6.23025 16.0598 5.49023 14.7898 5.49023 13.6898V10.2998C5.49023 9.20981 6.24025 7.9398 7.19025 7.3998L10.3903 5.6198C11.3103 5.1098 12.6902 5.1098 13.6102 5.6198L16.8102 7.3998C17.7702 7.9298 18.5103 9.19981 18.5103 10.2998V13.6898C18.5103 14.7798 17.7602 16.0498 16.8102 16.5898L13.6102 18.3698C13.1502 18.6298 12.5802 18.7498 12.0002 18.7498ZM12.0002 6.7498C11.6702 6.7498 11.3502 6.8098 11.1202 6.9398L7.92026 8.7198C7.43026 8.9898 6.99023 9.7498 6.99023 10.2998V13.6898C6.99023 14.2498 7.43026 14.9998 7.92026 15.2698L11.1202 17.0498C11.5802 17.3098 12.4202 17.3098 12.8802 17.0498L16.0802 15.2698C16.5702 14.9998 17.0103 14.2398 17.0103 13.6898V10.2998C17.0103 9.73981 16.5702 8.9898 16.0802 8.7198L12.8802 6.9398C12.6502 6.8098 12.3302 6.7498 12.0002 6.7498Z" fill="#9197B3"/>
                         </svg>
                         Landlords</li></a>
-                        <a href="rooms.php"><li><svg class="more" width="24" height="24" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.00512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="11.264"></g><g id="SVGRepo_iconCarrier"> <path fill="var(--ci-primary-color, #000000)" d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" class="ci-primary"></path> <rect width="32" height="64" x="256" y="232" fill="var(--ci-primary-color, #000000)" class="ci-primary"></rect> </g></svg>Rooms</li></a>
+                        <a href="#"><li class="active"><svg class="more" width="24" height="24" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.00512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="11.264"></g><g id="SVGRepo_iconCarrier"> <path fill="var(--ci-primary-color, #000000)" d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" class="ci-primary"></path> <rect width="32" height="64" x="256" y="232" fill="var(--ci-primary-color, #000000)" class="ci-primary"></rect> </g></svg>Rooms</li></a>
                     <a href="accounting.php"><li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.7516 16.8604V18.8904C10.7516 20.6104 9.15158 22.0004 7.18158 22.0004C5.21158 22.0004 3.60156 20.6104 3.60156 18.8904V16.8604C3.60156 18.5804 5.20158 19.8004 7.18158 19.8004C9.15158 19.8004 10.7516 18.5704 10.7516 16.8604Z" stroke="#9197B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M10.7501 14.11C10.7501 14.61 10.6101 15.07 10.3701 15.47C9.78006 16.44 8.57004 17.05 7.17004 17.05C5.77004 17.05 4.56003 16.43 3.97003 15.47C3.73003 15.07 3.59009 14.61 3.59009 14.11C3.59009 13.25 3.99007 12.48 4.63007 11.92C5.28007 11.35 6.17003 11.01 7.16003 11.01C8.15003 11.01 9.04006 11.36 9.69006 11.92C10.3501 12.47 10.7501 13.25 10.7501 14.11Z" stroke="#9197B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -102,16 +100,16 @@
                     <div class="inf">
                         <h3>Total Tenants</h3>
                         <h4><?php echo $ttenants?></h4>
-                        <p>this month</p>
+                    <p>this month</p>
                     </div>
                 </div>
-
+    
                 <div class="sum">
                     <div class="circle">
                         <img src="assets/profile-tick.svg" alt="">
                     </div>
                     <div class="inf">
-                        <h3>Total landlords</h3>
+                        <h3>Total Landlords</h3>
                         <h4><?php echo $tlandlords?></h4>
                     <p>this month</p>
                     </div>
@@ -123,8 +121,8 @@
                     </div>
                     <div class="inf">
                     <h3>Vacant Rooms</h3>
-                    <h4><?php echo count($roomsWithoutTenant)?></h4>
-                    <p>this month</p>
+                        <h4><?php echo count($roomsWithoutTenant)?></h4>
+                        <p>this month</p>
                     </div>
                 </div>
     
@@ -135,54 +133,55 @@
             <div class="tablecard">
                 <div class="tops">
                     <div class="headers">
-                        <h1>landlords</h1>
-                        <p>active landlords</p>
+                        <h1>Rooms</h1>
+                        <p>all Rooms</p>
                     </div>
                     <div class="right">
                         <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
                         <div class="sort-component">
                             <label for="sort-options" class="sort-label">Sort_by:</label>
                             <select id="sort-options" class="sort-select" onchange="sortTable()">
-                                <option value="name-asc">Name</option>
+                                <option value="name-asc">Id</option>
                                 <option value="landlord-asc">Landlord</option>
                                 <option value="status-asc">Status</option>
-                                <option value="balance-asc">Balance</option>
+                                <option value="balance-asc">Amount</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                
             <table id="tenantTable">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
+                        <th>Room Id</th>
+                        <th>Landlord</th>
+                        <th>Condition</th>
                         <th>Location</th>
-                        <th>Balance</th>
+                        <th>Amount</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
-                    foreach ($landlords as $landlord) {
-                        echo "<tr class='TReport' onclick='TReport({$landlord['id']})'>";
-                        echo "<td>{$landlord['name']}</td>";
-                        echo "<td class='email'>{$landlord['email']}</td>";
-                        echo "<td>{$landlord['contact']}</td>";
-                        echo "<td>{$landlord['location']}</td>";
-                        $balances = getBalanceLandlord($landlord['id'],date("M"),date("Y"));
-                        $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
-                        $landlord['balance'] = $balance;
-                        echo "<td>ugx " . number_format($landlord['balance'], 0, '.', ',') . "</td>";
-                        if ($landlord['balance'] <= 0) {
-                            echo "<td class='status-active'><div>cleared</div></td>";
-                        } else {
-                            echo "<td class='status-inactive'><div>pending</div></td>";
-                        }
-                        echo "</tr>";
-                    }
-                    ?>
+// Loop through tenants and output the table rows
+foreach ($rooms as $room) {
+    // Get room data from $rooms array
+    $landlord = getLandlord($room['landlord'], $landlords);
+    echo "<tr>";
+    echo "<td>#{$room['id']}</td>";
+    echo "<td>{$landlord['name']}</td>";
+    echo "<td>{$room['roomcondition']}</td>";
+    echo "<td>{$room['location']}</td>";
+    echo "<td>ugx " . number_format($room['amount'], 0, '.', ',') . "</td>";
+    if (roomHasTenant($pdo, $room['id'])) {
+        echo "<td class='status-active'><div>occupied</div></td>";
+    } else {
+        echo "<td class='status-inactive'><div>vacant</div></td>";
+    }
+    echo "</tr>";
+}
+?>
+                    
+                    
                 </tbody>
             </table>
             </div>
@@ -191,7 +190,8 @@
         </div>
     </div>
     <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/script.js"></script>
+    <script>
+    </script>
     <script src="js/filter.js"></script>
 </body>
 </html>

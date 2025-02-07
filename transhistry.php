@@ -184,9 +184,9 @@ if (isset($_GET['tid'])) {
             window.location.href = url; // Opens in new tab
         });
     }
-//     $( document ).ready(function() {
-//     generatePDF();
-// });
+    $( document ).ready(function() {
+    generatePDF();
+});
     </script>
 
 </body>

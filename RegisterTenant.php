@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+ini_set('display_errors', 0);  // Don't display errors on the page
+ini_set('log_errors', 1);      // Log errors to a file
+ini_set('error_log', '/error.log'); // Optional: specify a log file
 require 'config.php'; // Include your database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -6,7 +10,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $data['name'];
     $contact = $data['contact'];
     $room_id = isset($data['room']) ? intval($data['room']) : 0;
-    if (isset($data['id'])) {
+    if (isset($data['del'])) {
+        $idi = $data['id'];
+        try {
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sqld = "DELETE FROM tenants WHERE id = :id";
+            $stmtd = $pdo->prepare($sqld);
+            $stmtd->bindParam(':id', $idi, PDO::PARAM_INT);
+            $stmtd->execute();
+            echo json_encode(["message" => "delete initiated"]);
+        } catch (PDOException $e) {
+            echo json_encode(["error" => $e->getMessage()]);
+        }
+    }elseif (isset($data['id'])) {
         try {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             

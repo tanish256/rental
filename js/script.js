@@ -113,6 +113,7 @@ function TReport(tenantId) {
                 $('#tcontact').val(data.data.contact);
                 $('#tid').val('tenant id: #'+data.data.id);
                 $('#tlandlord').val('landlord: '+data.data.landlord);
+                $('#tamount').val('Room Value: UGX '+Number(data.data.amount).toLocaleString());
                 $('#tlocation').val(data.data.location); // Ensure API returns 'location'
                 $('#tbalance').val('Balance: UGX '+ Number(data.data.balance).toLocaleString());
                 $('#tdate').val('registered on '+data.data.date_onboarded);

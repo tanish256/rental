@@ -44,6 +44,21 @@ $tenants = $tenants_stmt->fetchAll(PDO::FETCH_ASSOC);
 $ttenants = count($tenants);
 
 // Function to get room information by ID
+$total_balance_bf = 0;
+$total_balance_due = 0;
+$total_balance = 0;
+// Iterate through the tenants array and sum up the balances
+foreach ($tenants as $tenant) {
+    $balances = getBalance($tenant['id'], date("M"), date("Y"));
+    $balance_bf = isset($balances[0]['balance_bf']) && $balances[0]['balance_bf'] >= 0 ? $balances[0]['balance_bf'] : 0;
+    $balance_due = isset($balances[0]['balance_due']) && $balances[0]['balance_due'] >= 0 ? $balances[0]['balance_due'] : 0;
+    $balance = isset($balances[0]['total_balance']) && $balances[0]['total_balance'] >= 0 ? $balances[0]['total_balance'] : 0;
+
+    // Add to the running totals
+    $total_balance_bf += $balance_bf;
+    $total_balance_due += $balance_due;
+    $total_balance += $balance;
+}
 function getRoom($room_id, $rooms) {
     foreach ($rooms as $room) {
         if ($room['id'] == $room_id) {
@@ -128,6 +143,7 @@ function getTenant($tid) {
             $tenant['balance'] = $balance;
             $tenant['landlord']=$landlord['name'];
             $tenant['location']=$room['location'];
+            $tenant['amount']=$room['amount'];
             return json_encode($tenant);
         }
     }
@@ -200,4 +216,135 @@ function roomHasTenant($pdo, $room_id) {
         return false; 
     }
 }
+
+
+
+//never touch it handles monthly balances
+$file = 'year.txt';
+$currentYearMonth = date('Y-M');
+if (file_exists($file)) {
+    // Read the last year-month from the file
+    $lastYearMonth = file_get_contents($file);
+    list($lastYear, $lastMonth) = explode('-', $lastYearMonth);
+    if ($lastYearMonth !== $currentYearMonth) {
+        file_put_contents($file, $currentYearMonth);
+        //loop through tenants
+        foreach ($tenants as $tenant) {
+            $tenantId =$tenant['id'];
+            $room = getRoom($tenant['room_id'], $rooms);
+            $payment = $room['amount'];
+            $balance =getBalance($tenant['id'],$lastMonth,$lastYear)[0];
+            
+            if(empty($balance)){
+                try {
+                    //code...
+                    $balance_duenm =$payment;
+                    $daten =date("Y");
+                    $monthn =date("M");
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $insert_query = "INSERT INTO balances (`tenant`, `month`, `year`,`balance_due`,`total_balance`) VALUES (:tenant_id, :month, :year, :balance_due, :total_balance)";
+                    $insertb_stmt = $pdo->prepare($insert_query);
+                    $insertb_stmt->bindParam(':tenant_id', $tenantId, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':month', $monthn, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':year', $daten, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':balance_due', $balance_duenm, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':total_balance', $balance_duenm, PDO::PARAM_INT);
+                    $insertb_stmt->execute();
+                } catch (PDOException $e) {
+                    echo json_encode(["error" => $e->getMessage()]);
+                }
+                //echo "empty";
+               
+            }else{
+                //echo "not empty";
+                try {
+                    //echo "new month with previous blance";
+                    //code...
+                    $balance_bfnm =$balance['total_balance'];
+                    $balance_duenm =$payment;
+                    $total_balancenm =$balance_bfnm+$balance_duenm;
+                    $datenm =date("Y");
+                    $monthnm =date("M");
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $insert_query = "INSERT INTO balances (`tenant`, `month`, `year`,`balance_bf`,`balance_due`,`total_balance`) VALUES (:tenant_id, :month, :year, :balance_bf, :balance_due, :total_balance)";
+                    $insertb_stmt = $pdo->prepare($insert_query);
+                    $insertb_stmt->bindParam(':tenant_id', $tenantId, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':month', $monthnm, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':year', $datenm, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':balance_due', $balance_duenm, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':balance_bf', $balance_bfnm, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':total_balance', $total_balancenm, PDO::PARAM_INT);
+                    $insertb_stmt->execute();
+                    //echo json_encode(["message" => "balance added"]);
+                } catch (PDOException $e) {
+                    echo json_encode(["error" => $e->getMessage()]);
+                }
+
+            }
+        }
+        foreach ($landlords as $landlord) {
+            $balances = getBalanceLandlord($landlord['id'],$lastMonth,$lastYear)[0];
+            if (empty($balances)) {
+                try {
+                    //code...
+                    $total_balance_due = 0;
+                    $landlordID=$landlord['id'];
+                    $tenantsl = getTenantsByLandlord($landlord['id']);
+                    // If the function returns a JSON-encoded string, you need to decode it
+                    $tenantst = json_decode($tenantsl, true);
+                    foreach ($tenantst as $tenant) {
+                        $total_balance_due += isset($tenant['balance_due']) ? $tenant['balance_due'] : 0;
+                    }
+                    $daten =date("Y");
+                    $monthn =date("M");
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $insert_query = "INSERT INTO balances (`landlord`, `month`, `year`,`balance_due`,`total_balance`) VALUES (:tenant_id, :month, :year, :balance_due, :total_balance)";
+                    $insertb_stmt = $pdo->prepare($insert_query);
+                    $insertb_stmt->bindParam(':tenant_id', $landlordID, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':month', $monthn, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':year', $daten, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':balance_due', $total_balance_due, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':total_balance', $total_balance_due, PDO::PARAM_INT);
+                    $insertb_stmt->execute();
+                } catch (PDOException $e) {
+                    echo json_encode(["error" => $e->getMessage()]);
+                }
+            }else{
+                try {
+                    //code...
+                    $total_balance_bf=$balances['total_balance'];
+                    $total_balance_due = 0;
+                    $landlordID=$landlord['id'];
+                    $tenantsl = getTenantsByLandlord($landlord['id']);
+                    // If the function returns a JSON-encoded string, you need to decode it
+                    $tenantst = json_decode($tenantsl, true);
+                    foreach ($tenantst as $tenant) {
+                        $total_balance_due += isset($tenant['balance_due']) ? $tenant['balance_due'] : 0;
+                    }
+                    $total_balance_l=$total_balance_due+$total_balance_bf;
+                    $daten =date("Y");
+                    $monthn =date("M");
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $insert_query = "INSERT INTO balances (`landlord`, `month`, `year`,`balance_due`,`total_balance`,`balance_bf`) VALUES (:tenant_id, :month, :year, :balance_due, :total_balance, :balance_bf)";
+                    $insertb_stmt = $pdo->prepare($insert_query);
+                    $insertb_stmt->bindParam(':tenant_id', $landlordID, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':month', $monthn, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':year', $daten, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':balance_due', $total_balance_due, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':balance_bf', $total_balance_bf, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':total_balance', $total_balance_l, PDO::PARAM_INT);
+                    $insertb_stmt->execute();
+                } catch (PDOException $e) {
+                    echo json_encode(["error" => $e->getMessage()]);
+                }
+            }
+        }
+        }else{
+            //echo "same motnh";
+        }
+        
+    } else {
+        file_put_contents($file, $currentYearMonth);
+        //echo "It's still the same year-month.";
+    }
 ?>

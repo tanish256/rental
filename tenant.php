@@ -6,7 +6,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -284,6 +283,7 @@
                 <input type="text" name="" id="tbalance" placeholder="Balance" disabled>
                 <input type="text" name="" id="troom" placeholder="Room Id" disabled>
                 <input type="text" name="" id="tlandlord" placeholder="Landlord" disabled>
+                <input type="text" name="" id="tamount" placeholder="amount" disabled>
                 <input type="text" name="" id="tdate" placeholder="date registered" disabled>
             </form>
             <a id="thistory" target="_blank" href="transhistry.php?tenant=2" >Transaction History</a>

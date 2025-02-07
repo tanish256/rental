@@ -213,25 +213,25 @@
             <!-- ..............................................metrics1....................... -->
             <div class="metrics">
                 <div class="card">
-                    <p>UGX <?php echo number_format($Tsummary['balance_bf'], 0, '.', ',')?></p>
+                    <p>UGX <?php echo number_format($total_balance_bf, 0, '.', ',')?></p>
                     <h3>Balance b/F</h3>
                     <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo number_format($Tsummary['expected_gross'], 0, '.', ',') ?></p>
+                    <p>UGX <?php echo number_format($total_balance_due, 0, '.', ',') ?></p>
                     <h3>Expected Gross</h3>
                     <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo number_format($Tsummary['total_collected'], 0, '.', ',') ?></p>
+                    <p>UGX <?php echo number_format($total_balance_due+$total_balance_bf-$total_balance, 0, '.', ',') ?></p>
                     <h3>Total Payment</h3>
                     <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo number_format($Tsummary['balance_bf']+$Tsummary['expected_gross']-$Tsummary['total_collected'], 0, '.', ',')  ?></p>
+                    <p>UGX <?php echo number_format($total_balance, 0, '.', ',')  ?></p>
                     <h3>Total Balance</h3>
                     <p>this month</p>
                 </div>
@@ -317,6 +317,7 @@
                 <input type="text" name="" id="tbalance" placeholder="Balance" disabled>
                 <input type="text" name="" id="troom" placeholder="Room Id" disabled>
                 <input type="text" name="" id="tlandlord" placeholder="Landlord" disabled>
+                <input type="text" name="" id="tamount" placeholder="amount" disabled>
                 <input type="text" name="" id="tdate" placeholder="date registered" disabled>
             </form>
             <a id="thistory" target="_blank" href="transhistry.php?tenant=2" >Transaction History</a>

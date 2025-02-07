@@ -385,9 +385,25 @@ foreach ($rooms as $room) {
     <script src="js/filter.js"></script>
     <script src="js/script.js"></script>
     <script>
-        function Tdel(id) {
-            if (confirm('Are you sure you want to delete Tenant #'+id)) {
-                
+        function Tdel(tid) {
+            if (confirm('Are you sure you want to delete Tenant #'+tid)) {
+                var formData = {
+                    id: tid,
+                    del: 1
+                };
+                $.ajax({
+                    url: "RegisterTenant.php",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function(response){
+                        console.log(response.message);   
+                        location.reload();
+                    },
+                    error: function(xhr, status, error){
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
             } else {
             }
         }

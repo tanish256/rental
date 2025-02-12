@@ -35,7 +35,7 @@ CREATE  TABLE rental.financial_year (
 	end                  DATE    NOT NULL   ,
 	year                 INT    NOT NULL   ,
 	CONSTRAINT unq_financial_year_year UNIQUE ( year ) 
- ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE  TABLE rental.job_batches ( 
 	id                   VARCHAR(255)    NOT NULL   PRIMARY KEY,
@@ -69,19 +69,19 @@ CREATE  TABLE rental.landlord (
 	contact              VARCHAR(15)    NOT NULL   ,
 	email                VARCHAR(100)       ,
 	location             VARCHAR(100)       
- ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE  TABLE rental.migrations ( 
 	id                   INT UNSIGNED   NOT NULL AUTO_INCREMENT  PRIMARY KEY,
 	migration            VARCHAR(255)    NOT NULL   ,
 	batch                INT    NOT NULL   
- ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE  TABLE rental.months ( 
 	id                   INT    NOT NULL AUTO_INCREMENT  PRIMARY KEY,
 	name                 VARCHAR(100)    NOT NULL   ,
 	CONSTRAINT unq_months_name UNIQUE ( name ) 
- ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE  TABLE rental.password_reset_tokens ( 
 	email                VARCHAR(255)    NOT NULL   PRIMARY KEY,
@@ -112,7 +112,7 @@ CREATE  TABLE rental.rooms (
 	remarks              VARCHAR(100)       ,
 	landlord             INT    NOT NULL   ,
 	location             VARCHAR(100)    NOT NULL   
- ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX fk_rooms_landlord ON rental.rooms ( landlord );
 
@@ -145,7 +145,7 @@ CREATE  TABLE rental.tenants (
 	room_id              INT       ,
 	contact              VARCHAR(20)       ,
 	CONSTRAINT room_id UNIQUE ( room_id ) 
- ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE  TABLE rental.users ( 
 	id                   BIGINT UNSIGNED   NOT NULL AUTO_INCREMENT  PRIMARY KEY,
@@ -157,7 +157,7 @@ CREATE  TABLE rental.users (
 	created_at           TIMESTAMP       ,
 	updated_at           TIMESTAMP       ,
 	CONSTRAINT users_email_unique UNIQUE ( email ) 
- ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE  TABLE rental.accs_summary ( 
 	id                   INT    NOT NULL AUTO_INCREMENT  PRIMARY KEY,
@@ -168,7 +168,7 @@ CREATE  TABLE rental.accs_summary (
 	accumulated_profit   INT  DEFAULT (0)  NOT NULL   ,
 	f_year               INT    NOT NULL   ,
 	f_month              VARCHAR(100)    NOT NULL   
- ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX fk_accs_summary_months ON rental.accs_summary ( f_month );
 
@@ -183,7 +183,7 @@ CREATE  TABLE rental.balances (
 	balance_bf           INT  DEFAULT (0)  NOT NULL   ,
 	balance_due          INT  DEFAULT (0)  NOT NULL   ,
 	total_balance        INT  DEFAULT (0)  NOT NULL   
- ) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX fk_balances_months ON rental.balances ( month );
 
@@ -201,7 +201,7 @@ CREATE  TABLE rental.disburse_landlord (
 	landlord             INT    NOT NULL   ,
 	remarks              VARCHAR(100)       ,
 	date_paid            TIMESTAMP  DEFAULT (current_timestamp())  NOT NULL   
- ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX fk_disburse_money_landlord ON rental.disburse_landlord ( landlord );
 
@@ -216,7 +216,7 @@ CREATE  TABLE rental.rooms_payment (
 	remarks              VARCHAR(100)       ,
 	year                 INT    NOT NULL   ,
 	month                VARCHAR(100)    NOT NULL   
- ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX fk_rooms_payment_cache_locks ON rental.rooms_payment ( landlord );
 

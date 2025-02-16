@@ -191,11 +191,14 @@ th, td {
     text-wrap: wrap;
     overflow-x: hidden;
     text-align: left;
-    width: 16%;
+    width: 14.3%;
 }
 th {
-    width: 16%;
+    width: 14.3%;
     color:rgba(0, 0, 0, 0.5);
+}
+th.date,td.date{
+    width: 5%;
 }
 /* tr:nth-child(even) {
     background-color: #f9f9f9;
@@ -231,6 +234,10 @@ thead{
   font-size: 0.9em;
   animation: expandRow 0.3s ease;
 }
+.sub-row:hover{
+    background-color: #42a8c4;
+    color: white !important;
+}
 .status-active div{
     background-color: rgba(0, 128, 0, 0.202);
     width: fit-content;
@@ -262,7 +269,7 @@ thead{
     border-radius: 5px;
     /* border: 1.5px red solid; */
 }
-#search {
+#search,#search2,#search3 {
     padding: 10px;
     width: 15vw;
     height: fit-content;
@@ -439,10 +446,10 @@ margin: 5px 0;
     color: #007bff;
     box-shadow: #9ba2aa4d 1px 2px 5px;
 }
-input{
+input.payment{
     border: #007bff solid 2px;
     border-radius: 4px;
-    width: 100px;
+    width: 90%;
     padding: 5px;
     color: #007bff;
 }
@@ -459,10 +466,18 @@ tbody.collect{
         border: 1.5px solid #008767;
         color: #008767;
     }
-    input{
+    input[type='date']{
+        width: 90%;
         border: #008767 solid 2px;
         color: #008767;
+        border-radius: 5px;
     }
+    input.payment{
+        border: #008767 solid 2px;
+        color: #008767;
+        width: 90%;
+    }
+
 }
 }
 .Tparent{
@@ -540,3 +555,16 @@ input:disabled {
     border-radius: 3px;
     border:none;
   }
+  a.logout{
+    color:white !important;
+    position: fixed;
+    width: fit-content !important;
+    bottom:5%;
+    font-size:16px;
+    text-decoration:underline !important;
+    
+}
+.for-admin{
+    pointer-events: none;
+    opacity:0;
+}

@@ -1,11 +1,61 @@
 <?php
 require 'Vhelper.php';
+if ($_SESSION['role'] == 'admin') {
+  
+} else {
+  echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Forbidden</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 72px;
+            color: #d9534f;
+        }
+        p {
+            font-size: 18px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>403</h1>
+    <p>Forbidden: You dont have permission to access this page.</p>
+    <a href="javascript:history.back()">
+        <button>Go Back</button>
+    </a>
+</body>
+</html>
+';
+  exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Rental</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
@@ -30,6 +80,9 @@ require 'Vhelper.php';
       width: 100%;
       align-items: center;
       padding-inline: 20px;
+      opacity:0.4;
+      user-select: none;
+      pointer-events: none;
       display: flex;
       font-weight: bold;
       p{
@@ -122,6 +175,7 @@ require 'Vhelper.php';
                         <path d="M14.68,14.81a6.76,6.76,0,1,1,6.76-6.75A6.77,6.77,0,0,1,14.68,14.81Zm0-11.51a4.76,4.76,0,1,0,4.76,4.76A4.76,4.76,0,0,0,14.68,3.3Z" class="clr-i-outline clr-i-outline-path-1"></path><path d="M16.42,31.68A2.14,2.14,0,0,1,15.8,30H4V24.22a14.81,14.81,0,0,1,11.09-4.68l.72,0a2.2,2.2,0,0,1,.62-1.85l.12-.11c-.47,0-1-.06-1.46-.06A16.47,16.47,0,0,0,2.2,23.26a1,1,0,0,0-.2.6V30a2,2,0,0,0,2,2H16.7Z" class="clr-i-outline clr-i-outline-path-2"></path><path d="M26.87,16.29a.37.37,0,0,1,.15,0,.42.42,0,0,0-.15,0Z" class="clr-i-outline clr-i-outline-path-3"></path><path d="M33.68,23.32l-2-.61a7.21,7.21,0,0,0-.58-1.41l1-1.86A.38.38,0,0,0,32,19l-1.45-1.45a.36.36,0,0,0-.44-.07l-1.84,1a7.15,7.15,0,0,0-1.43-.61l-.61-2a.36.36,0,0,0-.36-.24H23.82a.36.36,0,0,0-.35.26l-.61,2a7,7,0,0,0-1.44.6l-1.82-1a.35.35,0,0,0-.43.07L17.69,19a.38.38,0,0,0-.06.44l1,1.82A6.77,6.77,0,0,0,18,22.69l-2,.6a.36.36,0,0,0-.26.35v2.05A.35.35,0,0,0,16,26l2,.61a7,7,0,0,0,.6,1.41l-1,1.91a.36.36,0,0,0,.06.43l1.45,1.45a.38.38,0,0,0,.44.07l1.87-1a7.09,7.09,0,0,0,1.4.57l.6,2a.38.38,0,0,0,.35.26h2.05a.37.37,0,0,0,.35-.26l.61-2.05a6.92,6.92,0,0,0,1.38-.57l1.89,1a.36.36,0,0,0,.43-.07L32,30.4A.35.35,0,0,0,32,30l-1-1.88a7,7,0,0,0,.58-1.39l2-.61a.36.36,0,0,0,.26-.35V23.67A.36.36,0,0,0,33.68,23.32ZM24.85,28a3.34,3.34,0,1,1,3.33-3.33A3.34,3.34,0,0,1,24.85,28Z" class="clr-i-outline clr-i-outline-path-4"></path>
                         <rect x="0" y="0" width="36" height="36" fill-opacity="0"/>
                     </svg>Administrator</li></a>
+                    <a class="logout" href="Logout.php">logout</a>
                 </ul>
             </nav>
         </div>
@@ -134,7 +188,7 @@ require 'Vhelper.php';
                 <p>Financial Year</p>
                 <div class="sort-component">
                   <select id="sort-options" class="sort-select">
-                    <option value="name-asc">2021</option>
+                    <option value="name-asc"><?php echo date('Y')?></option>
                     <option value="name-desc">2022</option>
                     <option value="date-asc">2023</option>
                     <option value="date-desc">2024</option>
@@ -142,7 +196,7 @@ require 'Vhelper.php';
                 </div>
                 <div class="sort-component">
                   <select id="sort-options" class="sort-select">
-                    <option value="name-asc">Jan</option>
+                    <option value="name-asc"><?php echo date('M')?></option>
                     <option value="name-desc">Feb</option>
                     <option value="date-asc">Mar</option>
                     <option value="date-desc">Aprirufgro</option>
@@ -150,39 +204,39 @@ require 'Vhelper.php';
                 </div>
                 <div class="month"></div>
               </div>
-                <div class="card">
-                    <p>UGX 20,140,000</p>
+              <div class="card">
+                    <p>UGX <?php echo number_format($total_balance_bf, 0, '.', ',')?></p>
                     <h3>Balance b/F</h3>
-                    <p>6% this month</p>
+                    <p>this month</p>
                 </div>
-    
+
                 <div class="card">
-                    <p>UGX 20,140,000</p>
-                    <h3>Balance b/F</h3>
-                    <p>6% this month</p>
+                    <p>UGX <?php echo number_format($total_balance_due, 0, '.', ',') ?></p>
+                    <h3>Expected Gross</h3>
+                    <p>this month</p>
                 </div>
-    
+
                 <div class="card">
-                    <p>UGX 20,140,000</p>
-                    <h3>Balance b/F</h3>
-                    <p>6% this month</p>
+                    <p>UGX <?php echo number_format($total_balance_due+$total_balance_bf-$total_balance, 0, '.', ',') ?></p>
+                    <h3>Total Payment</h3>
+                    <p>this month</p>
                 </div>
-    
+
                 <div class="card">
-                    <p>UGX 20,140,000</p>
-                    <h3>Balance b/F</h3>
-                    <p>6% this month</p>
+                    <p>UGX <?php echo number_format($total_balance, 0, '.', ',')  ?></p>
+                    <h3>Total Balance</h3>
+                    <p>this month</p>
                 </div>
 
                 <div class="card">
                   <p>UGX 20,140,000</p>
-                  <h3>Balance b/F</h3>
+                  <h3>Expected Profit</h3>
                   <p>6% this month</p>
               </div>
   
               <div class="card">
                   <p>UGX 20,140,000</p>
-                  <h3>Balance b/F</h3>
+                  <h3>Accumulated Profit</h3>
                   <p>6% this month</p>
               </div>
             </div>
@@ -214,7 +268,7 @@ require 'Vhelper.php';
                     <tr>
                       <th>Landlord Name</th>
                         <th>Total B/F</th>
-                        <th>Out Standing</th>
+                        <th>Rent Due</th>
                         <th>Total Paid</th>
                         <th>Total Balance</th>
                         <th>action</th>

@@ -1,4 +1,14 @@
 <?php 
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+    // Redirect to login page if not logged in
+    header("Location: login.php");
+    exit;
+}
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+ini_set('display_errors', 0);  // Don't display errors on the page
+ini_set('log_errors', 1);      // Log errors to a file
+ini_set('error_log', '/error.log'); // Optional: specify a log file
 require 'config.php';
 $year = date("Y");
 $month = date("M");
@@ -12,7 +22,9 @@ $Tsummary =getSummary($month, $year,$summarys);
 
 
 // Fetch Transactions
-$sql_rwt = "SELECT * FROM rooms WHERE id NOT IN (SELECT room_id FROM tenants)";
+$sql_rwt = "SELECT *
+    FROM rooms 
+    WHERE id NOT IN (SELECT room_id FROM tenants WHERE room_id IS NOT NULL)";
 $stmt_rwt = $pdo->prepare($sql_rwt);
 $stmt_rwt->execute();
 $roomsWithoutTenant = $stmt_rwt->fetchAll(PDO::FETCH_ASSOC);

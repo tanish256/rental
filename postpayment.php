@@ -5,11 +5,12 @@ require 'config.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get POST data
     $payment = $_POST['payment'];
+    $date = $_POST['date'];
     $year = date('Y'); // Get current year
     $month = date('M'); // Get current month
     
     // Sanitize and validate input
-    if (isset($_POST['tenant_id']) && isset($payment) && is_numeric($payment)) {
+    if (isset($_POST['tenant_id']) && isset($payment) && is_numeric($payment) && isset($_POST['date'])) {
         $tenantId = $_POST['tenant_id'];
         // Start transaction to ensure atomicity
         try {
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 INSERT INTO `rooms_payment` 
                 (`id`, `date_paid`, `amount`, `tenant`, `room`, `comission`, `remarks`, `year`, `month`) 
                 VALUES 
-                (NULL, NOW(), :amount, :tenant, :room, NULL, NULL, :year, :month)
+                (NULL, :date, :amount, :tenant, :room, NULL, NULL, :year, :month)
             ");
             
             // Fetch room and landlord data (assume `getRoom` is available)
@@ -38,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $roomId = $room['room_id'];
 
             $stmt2->execute([
+                ':date' => $date,
                 ':amount' => $payment,
                 ':tenant' => $tenantId,
                 ':room' => $roomId,

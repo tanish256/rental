@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction History</title>
+    <title>Rental</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -126,13 +126,17 @@ if (isset($_GET['tid'])) {
         <tbody>
             <?php
             if (isset($_GET['tid'])) {
-                $yh= getTransactions($_GET['tid']);
+                $yh = getTransactions($_GET['tid']);
                 if ($yh) {
-                    # code...
+                    // Sort the transactions by date_paid in descending order (newest first)
+                    usort($yh, function($a, $b) {
+                        // Assuming date_paid is in a format like 'Y-m-d H:i:s' (or similar) that can be compared directly
+                        return strtotime($b['date_paid']) - strtotime($a['date_paid']);
+                    });
+            
                     foreach ($yh as $transaction) {
-                        $room =getRoom($transaction['room'],$rooms);
+                        $room = getRoom($transaction['room'], $rooms);
                         $landlord = getLandlord($room['landlord'], $landlords);
-                        // Replace placeholder names and balance with data from JSON
                         echo "<tr>";
                         echo "<td> #{$transaction['id']}</td>";
                         echo "<td>{$transaction['date_paid']}</td>";
@@ -143,13 +147,13 @@ if (isset($_GET['tid'])) {
                         echo "<td>Paid</td>";
                         echo "</tr>";
                     }
-                }else{
+                } else {
                     echo "<tr style='background:#00000000;'>";
-                        echo "<td >no transactions</td>";
-                        echo "</tr>";
+                    echo "<td>no transactions</td>";
+                    echo "</tr>";
                 }
-
             }
+            
         // Loop through tenants and output the table rows
         
 ?>
@@ -157,9 +161,9 @@ if (isset($_GET['tid'])) {
             
         </tbody>
     </table>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/html2canvas.min.js"></script>
+    <script src="js/jspdf.umd.min.js"></script>
 
     <script>
         function updateDateTime() {

@@ -98,6 +98,36 @@ $("#Editrrom").submit(function(event){
         }
     });
 });
+function Rdel(){
+    if (confirm('Are you sure you want to delete Room #'+$("input[name='rid']").val())) {
+        var formData = {
+            id: $("input[name='rid']").val(),
+            condition: $("input[name='rcondition']").val(),
+            amount: $("input[name='ramount']").val(),
+            location: $("input[name='rlocation']").val(),
+            del:1
+        };
+        
+        $.ajax({
+            url: "editroom.php",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function(response){
+                console.log(response.message);
+                    $('.Tparent.room').hide();
+                    location.reload();
+                
+            },
+            error: function(xhr, status, error){
+                alert("Error: " + xhr.responseText);
+            }
+        });
+    } else {
+
+    }
+    
+}
 function TReport(tenantId) {
     $('.Tparent.tenant.edit').css('display', 'flex');
     $.ajax({
@@ -173,6 +203,7 @@ function Redit(id) {
                 $('#rcondition').val(data.data.roomcondition);
                 $('#rlocation').val(data.data.location);
                 $('#ramount').val(data.data.amount);
+                $('#rdel').attr('onclick', 'Rdel(' + data.data.id + ')');
             } else {
                 alert('Error fetching tenant data!');
             }

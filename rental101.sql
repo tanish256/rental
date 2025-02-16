@@ -259,4 +259,3 @@ ALTER TABLE rental.rooms_payment ADD CONSTRAINT fk_rooms_payment_months FOREIGN 
 ALTER TABLE rental.rooms_payment ADD CONSTRAINT fk_rooms_payment_rooms FOREIGN KEY ( room ) REFERENCES rental.rooms( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 ALTER TABLE rental.tenants ADD CONSTRAINT fk_tenants_landlord FOREIGN KEY ( room_id ) REFERENCES rental.rooms( id ) ON DELETE CASCADE ON UPDATE NO ACTION;
-

@@ -6,6 +6,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $amount = isset($data['amount']) ? intval($data['amount']) : 0;
     $location = $data['location'];
     $condition = $data['condition'];
+    if($data['del']){
+        $sql_delete = "DELETE FROM rooms WHERE id = :room_id";
+        $stmt = $pdo->prepare($sql_delete);
+        $roomId=$data['id'];
+        $stmt->bindParam(':room_id', $roomId, PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            echo "Room deleted successfully.";
+        } else {
+            echo "Error deleting room.";
+        }
+    }
 
 try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

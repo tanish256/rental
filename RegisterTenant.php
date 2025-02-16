@@ -23,21 +23,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode(["error" => $e->getMessage()]);
         }
     }elseif (isset($data['id'])) {
-        try {
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            $sql = "UPDATE tenants SET name = :name, contact = :contact WHERE id = :id";
-            $stmt = $pdo->prepare($sql);
-            
-            $stmt->execute([
-                ':id' => $data['id'],
-                ':name' => $name,
-                ':contact' => $contact
-            ]);
-            
-            echo json_encode(["message" => "Tenant updated successfully."]);
-        } catch (PDOException $e) {
-            echo json_encode(["error" => $e->getMessage()]);
+        if ($data['room']) {
+            try {
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                
+                $sql = "UPDATE tenants SET name = :name, contact = :contact, room_id=:room WHERE id = :id";
+                $stmt = $pdo->prepare($sql);
+                
+                $stmt->execute([
+                    ':id' => $data['id'],
+                    ':name' => $name,
+                    ':room' => $room_id,
+                    ':contact' => $contact
+
+                ]);
+                
+                echo json_encode(["message" => "Tenant updated successfully."]);
+            } catch (PDOException $e) {
+                echo json_encode(["error" => $e->getMessage()]);
+            }
+        }else{
+            try {
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                
+                $sql = "UPDATE tenants SET name = :name, contact = :contact WHERE id = :id";
+                $stmt = $pdo->prepare($sql);
+                
+                $stmt->execute([
+                    ':id' => $data['id'],
+                    ':name' => $name,
+                    ':contact' => $contact
+                ]);
+                
+                echo json_encode(["message" => "Tenant updated successfully."]);
+            } catch (PDOException $e) {
+                echo json_encode(["error" => $e->getMessage()]);
+            }
         }
     }else{
         try {
@@ -59,9 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $daten =date("Y");
                     $monthn =date("M");
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $insert_query = "INSERT INTO balances (`tenant`, `month`, `year`) VALUES (:landlord_id, :month, :year)";
+                    $insert_query = "INSERT INTO balances (`tenant`, `month`, `year`) VALUES (:tenant_id, :month, :year)";
                     $insertb_stmt = $pdo->prepare($insert_query);
-                    $insertb_stmt->bindParam(':landlord_id', $tenant_id, PDO::PARAM_INT);
+                    $insertb_stmt->bindParam(':tenant_id', $tenant_id, PDO::PARAM_INT);
                     $insertb_stmt->bindParam(':month', $monthn, PDO::PARAM_INT);
                     $insertb_stmt->bindParam(':year', $daten, PDO::PARAM_INT);
                     $insertb_stmt->execute();

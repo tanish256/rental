@@ -12,11 +12,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $landlord_id = $data['id'];
         $rooms_count = isset($data['rooms']) ? intval($data['rooms']) : 0;
         if ($rooms_count >= 1) {
-                $insert_query = "INSERT INTO rooms (landlord) VALUES (:landlord_id)";
+                $insert_query = "INSERT INTO rooms (landlord,location) VALUES (:landlord_id,:location)";
                 $insert_stmt = $pdo->prepare($insert_query);
     
                 for ($i = 0; $i < $rooms_count; $i++) {
-                    $insert_stmt->execute(['landlord_id' => $landlord_id]);
+                    $insert_stmt->execute([
+                        'location' =>$location,
+                        'landlord_id' => $landlord_id
+                    ]);
                 }
                 echo "$rooms_count rooms added for landlord ID $landlord_id.";
                 if (empty(getBalanceLandlord($landlord_id,date("M"),date("Y"))[0])) {

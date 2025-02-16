@@ -1,11 +1,61 @@
 <?php 
  require "Vhelper.php";
+ if ($_SESSION['role'] == 'admin') {
+  
+ } else {
+   echo '<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>403 Forbidden</title>
+     <style>
+         body {
+             font-family: Arial, sans-serif;
+             background-color: #f4f4f4;
+             color: #333;
+             text-align: center;
+             padding: 50px;
+         }
+         h1 {
+             font-size: 72px;
+             color: #d9534f;
+         }
+         p {
+             font-size: 18px;
+         }
+         button {
+             background-color: #007bff;
+             color: white;
+             font-size: 16px;
+             padding: 10px 20px;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             text-decoration: none;
+         }
+         button:hover {
+             background-color: #0056b3;
+         }
+     </style>
+ </head>
+ <body>
+     <h1>403</h1>
+     <p>Forbidden: You dont have permission to access this page.</p>
+     <a href="javascript:history.back()">
+         <button>Go Back</button>
+     </a>
+ </body>
+ </html>
+ ';
+   exit;
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Rental</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
@@ -89,6 +139,7 @@
                             <path d="M14.68,14.81a6.76,6.76,0,1,1,6.76-6.75A6.77,6.77,0,0,1,14.68,14.81Zm0-11.51a4.76,4.76,0,1,0,4.76,4.76A4.76,4.76,0,0,0,14.68,3.3Z" class="clr-i-outline clr-i-outline-path-1"></path><path d="M16.42,31.68A2.14,2.14,0,0,1,15.8,30H4V24.22a14.81,14.81,0,0,1,11.09-4.68l.72,0a2.2,2.2,0,0,1,.62-1.85l.12-.11c-.47,0-1-.06-1.46-.06A16.47,16.47,0,0,0,2.2,23.26a1,1,0,0,0-.2.6V30a2,2,0,0,0,2,2H16.7Z" class="clr-i-outline clr-i-outline-path-2"></path><path d="M26.87,16.29a.37.37,0,0,1,.15,0,.42.42,0,0,0-.15,0Z" class="clr-i-outline clr-i-outline-path-3"></path><path d="M33.68,23.32l-2-.61a7.21,7.21,0,0,0-.58-1.41l1-1.86A.38.38,0,0,0,32,19l-1.45-1.45a.36.36,0,0,0-.44-.07l-1.84,1a7.15,7.15,0,0,0-1.43-.61l-.61-2a.36.36,0,0,0-.36-.24H23.82a.36.36,0,0,0-.35.26l-.61,2a7,7,0,0,0-1.44.6l-1.82-1a.35.35,0,0,0-.43.07L17.69,19a.38.38,0,0,0-.06.44l1,1.82A6.77,6.77,0,0,0,18,22.69l-2,.6a.36.36,0,0,0-.26.35v2.05A.35.35,0,0,0,16,26l2,.61a7,7,0,0,0,.6,1.41l-1,1.91a.36.36,0,0,0,.06.43l1.45,1.45a.38.38,0,0,0,.44.07l1.87-1a7.09,7.09,0,0,0,1.4.57l.6,2a.38.38,0,0,0,.35.26h2.05a.37.37,0,0,0,.35-.26l.61-2.05a6.92,6.92,0,0,0,1.38-.57l1.89,1a.36.36,0,0,0,.43-.07L32,30.4A.35.35,0,0,0,32,30l-1-1.88a7,7,0,0,0,.58-1.39l2-.61a.36.36,0,0,0,.26-.35V23.67A.36.36,0,0,0,33.68,23.32ZM24.85,28a3.34,3.34,0,1,1,3.33-3.33A3.34,3.34,0,0,1,24.85,28Z" class="clr-i-outline clr-i-outline-path-4"></path>
                             <rect x="0" y="0" width="36" height="36" fill-opacity="0"/>
                         </svg>Administrator</li></a>
+                        <a class="logout" href="Logout.php">logout</a>
                 </ul>
             </nav>
         </div>
@@ -104,7 +155,7 @@
                         <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
                         <div class="sort-component">
                             <label for="sort-options" class="sort-label">Sort_by:</label>
-                            <select id="sort-options" class="sort-select">
+                            <select id="sort-options" class="sort-select" onchange="sortTable()">
                               <option value="name-asc">Name</option>
                               <option value="name-desc">Landlord</option>
                               <option value="date-asc">Status</option>
@@ -114,11 +165,11 @@
                     </div>
                 </div>
                 
-            <table>
+            <table id="tenantTable">
                 <thead>
                     <tr>
                         <th>Landlord Name</th>
-                        <th>Total Income</th>
+                        <th>Total Balance</th>
                         <th>Out Standing</th>
                         <th>Total Paid</th>
                         <th>Amount</th>
@@ -157,10 +208,10 @@
                                     <p>active Tenants</p>
                                 </div>
                                 <div class="right">
-                                    <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
+                                    <input type="text" id="search2" placeholder="Search..." onkeyup="filterTable2()">
                                     <div class="sort-component">
                                         <label for="sort-options" class="sort-label">Sort_by:</label>
-                                        <select id="sort-options" class="sort-select">
+                                        <select id="sort-options" class="sort-select" onchange="sortTable2()">
                                           <option value="name-asc">Name</option>
                                           <option value="name-desc">Landlord</option>
                                           <option value="date-asc">Status</option>
@@ -170,13 +221,14 @@
                                 </div>
                             </div>
                             
-                        <table>
+                        <table id="tenantTable2">
                             <thead>
                                 <tr>
                                     <th>Landlord Name</th>
-                                    <th>Total Income</th>
+                                    <th>Total Balance</th>
                                     <th>Out Standing</th>
                                     <th>Total Paid</th>
+                                    <th class="date">Date</th>
                                     <th>amount</th>
                                     <th>action</th>
                                 </tr>
@@ -186,9 +238,9 @@
                                 // Loop through tenants and output the table rows
                             foreach ($tenants as $tenant) {
                                 // Get room data from $rooms array
-                                $room = getRoom($tenant['room_id'], $rooms);
-                                $location = $room['location'];
-                                $landlord = getLandlord($room['landlord'], $landlords);
+                                //$room = getRoom($tenant['room_id'], $rooms);
+                                //$location = $room['location'];
+                               // $landlord = getLandlord($room['landlord'], $landlords);
                                 $balances = getBalance($tenant['id'],date("M"),date("Y"));
                                 $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
                                 $balance_bf = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
@@ -199,6 +251,7 @@
                                 echo "<td>".$balance_due+$balance_bf."</td>";
                                 echo "<td>{$balance}</td>";
                                 echo "<td>".$balance_due+$balance_bf-$balance."</td>";
+                                echo "<td class='date'><input class='date' type='date' data-tenant-id='{$tenant['id']}'></td>";
                                 echo "<td><input type='number' class='payment' data-tenant-id='{$tenant['id']}'></td>";
                                 echo "<td><button class='collect-btn' data-tenant-id='{$tenant['id']}'>collect</button></td>";
                                 echo "</tr>";
@@ -221,11 +274,11 @@
     var tenantId = $(this).data('tenant-id');  // Get tenant ID from data attribute
     var landlordId = $(this).data('landlord-id');  // Get landlord ID from data attribute
     var paymentAmount = $(this).closest('tr').find('input.payment').val();  // Get the value from the input field
-
+    var paydate = $(this).closest('tr').find('input.date').val();
     // Ensure the input is not empty
-    if (paymentAmount && !isNaN(paymentAmount)) {
+    if (paymentAmount && !isNaN(paymentAmount)) { 
         // Check if tenantId or landlordId is present
-        if (tenantId) {
+        if (tenantId  && paydate) {
             // Execute logic for tenant
             console.log("Tenant payment logic executed.");
             $.ajax({
@@ -233,16 +286,19 @@
                 type: 'POST',
                 data: {
                     tenant_id: tenantId,
+                    date: paydate,
                     payment: paymentAmount
                 },
                 success: function(response) {
-                    console.log(response); // You can log the response from the server here
+                    console.log(response);
                     location.reload();
                 },
                 error: function(xhr, status, error) {
                     console.error('An error occurred:', error);
                 }
             });
+        }else if(tenantId){
+            alert('No date specified');
         } else if (landlordId) {
             // Execute logic for landlord
             console.log("Landlord payment logic executed.");

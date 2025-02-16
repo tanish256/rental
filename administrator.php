@@ -1,11 +1,61 @@
 <?php 
  require "Vhelper.php";
+ if ($_SESSION['role'] == 'admin') {
+  
+ } else {
+   echo '<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>403 Forbidden</title>
+     <style>
+         body {
+             font-family: Arial, sans-serif;
+             background-color: #f4f4f4;
+             color: #333;
+             text-align: center;
+             padding: 50px;
+         }
+         h1 {
+             font-size: 72px;
+             color: #d9534f;
+         }
+         p {
+             font-size: 18px;
+         }
+         button {
+             background-color: #007bff;
+             color: white;
+             font-size: 16px;
+             padding: 10px 20px;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             text-decoration: none;
+         }
+         button:hover {
+             background-color: #0056b3;
+         }
+     </style>
+ </head>
+ <body>
+     <h1>403</h1>
+     <p>Forbidden: You dont have permission to access this page.</p>
+     <a href="javascript:history.back()">
+         <button>Go Back</button>
+     </a>
+ </body>
+ </html>
+ ';
+   exit;
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Rental</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
@@ -15,7 +65,6 @@
             cursor: unset;
         }
     }
-
 </style>
 <body>
     <div class="root">
@@ -93,6 +142,7 @@
                             <path d="M14.68,14.81a6.76,6.76,0,1,1,6.76-6.75A6.77,6.77,0,0,1,14.68,14.81Zm0-11.51a4.76,4.76,0,1,0,4.76,4.76A4.76,4.76,0,0,0,14.68,3.3Z" class="clr-i-outline clr-i-outline-path-1"></path><path d="M16.42,31.68A2.14,2.14,0,0,1,15.8,30H4V24.22a14.81,14.81,0,0,1,11.09-4.68l.72,0a2.2,2.2,0,0,1,.62-1.85l.12-.11c-.47,0-1-.06-1.46-.06A16.47,16.47,0,0,0,2.2,23.26a1,1,0,0,0-.2.6V30a2,2,0,0,0,2,2H16.7Z" class="clr-i-outline clr-i-outline-path-2"></path><path d="M26.87,16.29a.37.37,0,0,1,.15,0,.42.42,0,0,0-.15,0Z" class="clr-i-outline clr-i-outline-path-3"></path><path d="M33.68,23.32l-2-.61a7.21,7.21,0,0,0-.58-1.41l1-1.86A.38.38,0,0,0,32,19l-1.45-1.45a.36.36,0,0,0-.44-.07l-1.84,1a7.15,7.15,0,0,0-1.43-.61l-.61-2a.36.36,0,0,0-.36-.24H23.82a.36.36,0,0,0-.35.26l-.61,2a7,7,0,0,0-1.44.6l-1.82-1a.35.35,0,0,0-.43.07L17.69,19a.38.38,0,0,0-.06.44l1,1.82A6.77,6.77,0,0,0,18,22.69l-2,.6a.36.36,0,0,0-.26.35v2.05A.35.35,0,0,0,16,26l2,.61a7,7,0,0,0,.6,1.41l-1,1.91a.36.36,0,0,0,.06.43l1.45,1.45a.38.38,0,0,0,.44.07l1.87-1a7.09,7.09,0,0,0,1.4.57l.6,2a.38.38,0,0,0,.35.26h2.05a.37.37,0,0,0,.35-.26l.61-2.05a6.92,6.92,0,0,0,1.38-.57l1.89,1a.36.36,0,0,0,.43-.07L32,30.4A.35.35,0,0,0,32,30l-1-1.88a7,7,0,0,0,.58-1.39l2-.61a.36.36,0,0,0,.26-.35V23.67A.36.36,0,0,0,33.68,23.32ZM24.85,28a3.34,3.34,0,1,1,3.33-3.33A3.34,3.34,0,0,1,24.85,28Z" class="clr-i-outline clr-i-outline-path-4"></path>
                             <rect x="0" y="0" width="36" height="36" fill-opacity="0"/>
                         </svg>Administrator</li></a>
+                        <a class="logout" href="Logout.php">logout</a>
                 </ul>
             </nav>
         </div>
@@ -161,7 +211,7 @@ foreach ($landlords as $landlord) {
                                     <p>active Tenants</p>
                                 </div>
                                 <div class="right">
-                                    <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
+                                    <input type="text" id="search2" placeholder="Search..." onkeyup="filterTable2()">
                                     <div class="sort-component">
                                         <label for="sort-options" class="sort-label">Sort_by:</label>
                                         <select id="sort-options" class="sort-select">
@@ -177,7 +227,7 @@ foreach ($landlords as $landlord) {
                                 <button onclick="RTenant()">Add</button>
                             </div>
                             
-                        <table>
+                        <table id="tenantTable2">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -194,17 +244,27 @@ foreach ($landlords as $landlord) {
 foreach ($tenants as $tenant) {
     // Get room data from $rooms array
     $room = getRoom($tenant['room_id'], $rooms);
-    $location = $room['location'];
-    $landlord = getLandlord($room['landlord'], $landlords);
+    if ($room) {
+        $location = "<td>{$room['location']}</td>";
+        $landlord = getLandlord($room['landlord'], $landlords);
+        $tenant['landlord']= $landlord['name'];
+        $landlordt="<td>{$tenant['landlord']}</td>";
+    }else{
+        $location = "<td style='color:red'>not in any room</td>";
+        $tenant['landlord']="not in any room";
+        $landlordt="<td style='color:red'>{$tenant['landlord']}</td>";
+    }
+    //$location = $room['location'];
+   // $landlord = getLandlord($room['landlord'], $landlords);
     $balances = getBalance($tenant['id'],date("M"),date("Y"));
     $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
 
     // Replace placeholder names and balance with data from JSON
     echo "<tr>";
     echo "<td>{$tenant['name']}</td>";
-    echo "<td>{$landlord['name']}</td>";
+    echo $landlordt;
     echo "<td>{$tenant['contact']}</td>";
-    echo "<td>{$location}</td>";
+    echo $location;
     echo "<td>ugx {$balance}</td>";
     echo "<td class='status-edit' onclick='TEdit({$tenant['id']})'><div>edit</div></td>";
     echo "</tr>";
@@ -225,7 +285,7 @@ foreach ($tenants as $tenant) {
                         <p>all Rooms</p>
                     </div>
                     <div class="right">
-                        <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
+                        <input type="text" id="search3" placeholder="Search..." onkeyup="filterTable3()">
                         <div class="sort-component">
                             <label for="sort-options" class="sort-label">Sort_by:</label>
                             <select id="sort-options" class="sort-select" onchange="sortTable()">
@@ -237,7 +297,7 @@ foreach ($tenants as $tenant) {
                         </div>
                     </div>
                 </div>
-            <table id="tenantTable">
+            <table id="tenantTable3">
                 <thead>
                     <tr>
                         <th>Room Id</th>
@@ -320,10 +380,10 @@ foreach ($rooms as $room) {
             <form action="" id="landlordForm2">
             <input type="text" id="lidd" placeholder="#id" disabled>
             <input type="text" name="lname" id="lname" placeholder="Landlord" required>
-            <input type="text" name="lcontact" id="lcontact" placeholder="Contact" required>
-            <input type="email" name="lemail" id="lemail" placeholder="Email" required>
+            <input type="text" name="lcontact" id="lcontact" placeholder="Contact">
+            <input type="email" name="lemail" id="lemail" placeholder="Email">
             <input type="text" name="llocation" id="llocation" placeholder="Location" required>
-            <input type="number" name="lrooms" id="lrooms" max="10" placeholder="add number of rooms">
+            <input type="number" name="lrooms" id="lrooms" min="0" placeholder="add number of rooms">
             <input type="hidden" name="lid" id="lid">
             <input type="text" name="" id="ldate" placeholder="date registered" disabled>
             <button class="savebtn" type="submit">Submit</button>
@@ -376,6 +436,7 @@ foreach ($rooms as $room) {
                 <input type="text" name="rlocation" id="rlocation" placeholder="Location">
                 <input type="text" name="ramount" id="ramount" placeholder="Amount">
                 <button type="submit" class="savebtn">Save</button>
+                <div id="rdel" class='delete' onclick='Rdel(2)'>delete</div>
             </form>
         </div>
         

@@ -7,7 +7,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Rental</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -74,7 +74,7 @@
                             Landlords</li>
                     </a>
                     <a href="rooms.php"><li><svg class="more" width="24" height="24" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.00512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="11.264"></g><g id="SVGRepo_iconCarrier"> <path fill="var(--ci-primary-color, #000000)" d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z" class="ci-primary"></path> <rect width="32" height="64" x="256" y="232" fill="var(--ci-primary-color, #000000)" class="ci-primary"></rect> </g></svg>Rooms</li></a>
-                    <a href="accounting.php">
+                    <a <?php if ($_SESSION['role'] == 'admin'){}else {echo "class='for-admin'";}?> href="accounting.php">
                         <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -99,7 +99,7 @@
                                     stroke-linejoin="round" />
                             </svg>Accounting</li>
                     </a>
-                    <a href="payment.php">
+                    <a <?php if ($_SESSION['role'] == 'admin'){}else {echo "class='for-admin'";}?> href="payment.php">
                         <li><svg class="fill" fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 viewBox="0 0 511 511" xml:space="preserve">
@@ -146,7 +146,7 @@
                                 </g>
                             </svg>Payment</li>
                     </a>
-                    <a href="administrator.php">
+                    <a <?php if ($_SESSION['role'] == 'admin'){}else {echo "class='for-admin'";}?> href="administrator.php">
                         <li><svg class="fill" fill="#000000" width="800px" height="800px" viewBox="0 0 36 36"
                                 version="1.1" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -165,11 +165,22 @@
                                 <rect x="0" y="0" width="36" height="36" fill-opacity="0" />
                             </svg>Administrator</li>
                     </a>
+                    <a class="logout" href="Logout.php">logout</a>
                 </ul>
             </nav>
         </div>
         <div class="dashmain">
-
+            <style>
+                h2.name{
+                    width: 100%;
+                    font-size:20px;
+                    font-weight:normal;
+                    margin:0;
+                }
+            </style>
+        <h2 class='name'>Welcome back <?php 
+            echo $_SESSION['name'];
+            ?></h2>
             <!-- ................................summary.................................... -->
 
             <div class="summary">
@@ -278,17 +289,24 @@
                         foreach ($tenants as $tenant) {
                             // Get room data from $rooms array
                             $room = getRoom($tenant['room_id'], $rooms);
-                            $location = $room['location'];
-                            $landlord = getLandlord($room['landlord'], $landlords);
+                            if ($room) {
+                                $location = "<td>{$room['location']}</td>";
+                                $landlord = getLandlord($room['landlord'], $landlords);
+                                $tenant['landlord']= $landlord['name'];
+                                $landlordt="<td>{$tenant['landlord']}</td>";
+                            }else{
+                                $location = "<td style='color:red'>not in any room</td>";
+                                $tenant['landlord']="not in any room";
+                                $landlordt="<td style='color:red'>{$tenant['landlord']}</td>";
+                            }
                             $balances = getBalance($tenant['id'],date("M"),date("Y"));
                             $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
                             $tenant['balance'] = $balance;
-                            // Replace placeholder names and balance with data from JSON
                             echo "<tr class='TReport' onclick='TReport({$tenant['id']})'>";
                             echo "<td>{$tenant['name']}</td>";
-                            echo "<td>{$landlord['name']}</td>";
+                            echo $landlordt;
                             echo "<td>{$tenant['contact']}</td>";
-                            echo "<td>{$location}</td>";
+                            echo $location;
                             echo "<td>ugx " . number_format($tenant['balance'], 0, '.', ',') . "</td>";
                             if ($tenant['balance'] <= 0) {
                                 echo "<td class='status-active'><div>cleared</div></td>";

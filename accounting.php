@@ -229,15 +229,15 @@ if ($_SESSION['role'] == 'admin') {
                 </div>
 
                 <div class="card">
-                  <p>UGX 20,140,000</p>
+                  <p>-</p>
                   <h3>Expected Profit</h3>
-                  <p>6% this month</p>
+                  <p> this month</p>
               </div>
   
               <div class="card">
-                  <p>UGX 20,140,000</p>
+                  <p>-</p>
                   <h3>Accumulated Profit</h3>
-                  <p>6% this month</p>
+                  <p> this month</p>
               </div>
             </div>
             <!-- ..................................metrics1........................................... -->

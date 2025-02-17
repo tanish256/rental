@@ -96,6 +96,17 @@ if (isset($_SESSION['role'])) {
 
             }
         }
+        @media (max-width:600px) {
+            .login-main{
+                flex-direction:column !important;
+                form{
+                    width: 100% !important;
+                }
+                .brand{
+                    width: 100% !important;
+                }
+            }
+        }
     </style>
 </head>
 <body>

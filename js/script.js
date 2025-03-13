@@ -231,6 +231,7 @@ if (data.success) {
     $('#llocation').val(data.data.location); // Ensure API returns 'location'
     $('#lemail').val(data.data.email);
     $('#ldate').val('registered on '+dateOnboarded);
+    $('#Ldel').attr('onclick', 'Ldel(' + data.data.id + ')');
     //$("#thistory").attr("href", "transhistry.php?tid="+data.data.id);
    // $('#tenantDetails').show(); // Show the details div
 } else {

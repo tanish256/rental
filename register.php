@@ -46,9 +46,7 @@ try {
         ]);
 
         // Optionally, set session variables for the newly registered user
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $inputUsername;
-        $_SESSION['role'] = $role;
+
 
         // Redirect to the appropriate dashboard after registration
         if ($_SESSION['role'] == 'admin') {
@@ -66,26 +64,87 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
 </head>
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    font-family: sans-serif;
+    background-image: url(assets/bg\ login.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+input,
+label {
+    display: block;
+    width: 50%;
+}
+
+form {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    box-shadow: #9197b334 1px 1px 5px;
+    border-radius: 7px;
+    padding-block: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    width: 50%;
+    margin: 10px 0;
+    font-size: 14px;
+    background: #9197b334;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+}
+
+input[type=submit] {
+    width: 50%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: #0F5FC2;
+    color: white;
+
+}
+
+@media (max-width:600px) {
+    form {
+        width: 100%;
+    }
+}
+</style>
+
 <body>
     <h2>Add User</h2>
     <form action="register.php" method="POST">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
+        <input type="text" id="username" name="username" required>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password" required>
         <label for="password">Full Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
+        <input type="text" id="name" name="name" required>
 
         <label for="role">Role (admin/user):</label>
-        <input type="text" id="role" name="role" required><br><br>
+        <input type="text" id="role" name="role" required>
 
         <input type="submit" value="Register">
     </form>
 </body>
+
 </html>

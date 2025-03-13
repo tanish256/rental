@@ -56,8 +56,8 @@ $tenants = $tenants_stmt->fetchAll(PDO::FETCH_ASSOC);
 $ttenants = count($tenants);
 
 // Function to get room information by ID
-$total_balance_bf = 0;
-$total_balance_due = 0;
+$total_balance_bfw = 0;
+$total_balance_duew = 0;
 $total_balance = 0;
 // Iterate through the tenants array and sum up the balances
 foreach ($tenants as $tenant) {
@@ -67,8 +67,8 @@ foreach ($tenants as $tenant) {
     $balance = isset($balances[0]['total_balance']) && $balances[0]['total_balance'] >= 0 ? $balances[0]['total_balance'] : 0;
 
     // Add to the running totals
-    $total_balance_bf += $balance_bf;
-    $total_balance_due += $balance_due;
+    $total_balance_bfw += $balance_bf;
+    $total_balance_duew += $balance_due;
     $total_balance += $balance;
 }
 function getRoom($room_id, $rooms) {

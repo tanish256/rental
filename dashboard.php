@@ -222,21 +222,21 @@
             <!-- ................................summary.................................... -->
 
             <!-- ..............................................metrics1....................... -->
-            <div class="metrics">
+            <div class="metrics" <?php if ($_SESSION['role'] == 'admin'){}else {echo "Style='display:none;'";}?>>
                 <div class="card">
-                    <p>UGX <?php echo number_format($total_balance_bf, 0, '.', ',')?></p>
+                    <p>UGX <?php echo number_format($total_balance_bfw, 0, '.', ',')?></p>
                     <h3>Balance b/F</h3>
                     <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo number_format($total_balance_due, 0, '.', ',') ?></p>
+                    <p>UGX <?php echo number_format($total_balance_duew, 0, '.', ',') ?></p>
                     <h3>Expected Gross</h3>
                     <p>this month</p>
                 </div>
 
                 <div class="card">
-                    <p>UGX <?php echo number_format($total_balance_due+$total_balance_bf-$total_balance, 0, '.', ',') ?></p>
+                    <p>UGX <?php echo number_format($total_balance_duew+$total_balance_bfw-$total_balance, 0, '.', ',') ?></p>
                     <h3>Total Payment</h3>
                     <p>this month</p>
                 </div>

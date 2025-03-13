@@ -79,9 +79,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     //code...
                     $daten =date("Y");
                     $monthn =date("M");
+                    $datenumber=date("j");
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $insert_query = "INSERT INTO balances (`tenant`, `month`, `year`) VALUES (:tenant_id, :month, :year)";
                     $insertb_stmt = $pdo->prepare($insert_query);
+                    $rooms_query = "SELECT * FROM rooms where id = :room_id";
+                    $rooms_stmt = $pdo->prepare($rooms_query);
+                    $rooms_stmt->execute([
+                        ':room_id' => $room_id
+                    ]);
+                    $rent_due = $rooms_stmt->fetch(PDO::FETCH_ASSOC)['amount'];
+                if ($datenumber<=15) {
+                    $insert_query = "INSERT INTO balances (`tenant`, `month`, `year`, `balance_due`,`total_balance`) VALUES (:tenant_id, :month, :year, :balance_due, balance_due)";
+                    $insertb_stmt = $pdo->prepare($insert_query);
+                    $insertb_stmt->bindParam(':balance_due', $rent_due, PDO::PARAM_INT);
+
+
+                    # code...
+                }else{
+                    $insert_query = "INSERT INTO balances (`tenant`, `month`, `year`) VALUES (:tenant_id, :month, :year)";
+                    $insertb_stmt = $pdo->prepare($insert_query);
+                }
+                
+              
                     $insertb_stmt->bindParam(':tenant_id', $tenant_id, PDO::PARAM_INT);
                     $insertb_stmt->bindParam(':month', $monthn, PDO::PARAM_INT);
                     $insertb_stmt->bindParam(':year', $daten, PDO::PARAM_INT);

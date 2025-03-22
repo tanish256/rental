@@ -1,5 +1,11 @@
 <?php 
  require "Vhelper.php";
+ if ($_SESSION['role'] == 'admin') {
+
+}else{
+    header("Location: tenant.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +23,7 @@
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.01</p>
+                <p>v.02</p>
             </div>
             <nav>
                 <ul>
@@ -178,9 +184,8 @@
                     margin:0;
                 }
             </style>
-        <h2 class='name'>Welcome back <?php 
-            echo $_SESSION['name'];
-            ?></h2>
+        <h2 class='name'>Welcome back <?php echo $_SESSION['name'];?></h2>
+
             <!-- ................................summary.................................... -->
 
             <div class="summary">
@@ -225,7 +230,7 @@
             <div class="metrics" <?php if ($_SESSION['role'] == 'admin'){}else {echo "Style='display:none;'";}?>>
                 <div class="card">
                     <p>UGX <?php echo number_format($total_balance_bfw, 0, '.', ',')?></p>
-                    <h3>Balance b/F</h3>
+                    <h3><span style="color:red">Balance b/F</span></h3>
                     <p>this month</p>
                 </div>
 
@@ -237,7 +242,7 @@
 
                 <div class="card">
                     <p>UGX <?php echo number_format($total_balance_duew+$total_balance_bfw-$total_balance, 0, '.', ',') ?></p>
-                    <h3>Total Payment</h3>
+                    <h3><span style="color:green">Total Payment</span></h3>
                     <p>this month</p>
                 </div>
 
@@ -248,103 +253,57 @@
                 </div>
             </div>
             <!-- ..................................metrics1........................................... -->
+            <style>
+                .graphs{
+                    width: 92%;
+                    justify-content: space-around;
+                    display: flex;
+                    background-color: #94d0ea;
+                    padding: 10px;
+                }
+                .graphs.properties{
+                    background-color: #ea9494;
+                }
+                .graphs .chart1{
+                    width: 47%;
+                    background-color: white;
+                    border-radius: 2px;
+                    padding: 5px;
+                }
+                .graphs .chart2{
+                    width: 47%;
+                    background-color: white;
+                    border-radius: 2px;
+                    padding: 5px;
+                }
 
-
-
-            <!-- ----------------------------------table-------------------------------------------- -->
-            <div class="tablecard">
-                <div class="tops">
-                    <div class="headers">
-                        <h1>Tenants</h1>
-                        <p>active Tenants</p>
-                    </div>
-                    <div class="right">
-                        <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
-                        <div class="sort-component">
-                            <label for="sort-options" class="sort-label">Sort_by:</label>
-                            <select id="sort-options" class="sort-select" onchange="sortTable()">
-                                <option value="name-asc">Name</option>
-                                <option value="landlord-asc">Landlord</option>
-                                <option value="status-asc">Status</option>
-                                <option value="balance-asc">Balance</option>
-                            </select>
-                        </div>
-                    </div>
+            </style>
+            <div class="graphs income">
+                <div class="chart1">
+                <div id="chart"></div>
                 </div>
-
-                <table id="tenantTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>landlord</th>
-                            <th>Phone</th>
-                            <th>Location</th>
-                            <th>Balance</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                        // Loop through tenants and output the table rows
-                        foreach ($tenants as $tenant) {
-                            // Get room data from $rooms array
-                            $room = getRoom($tenant['room_id'], $rooms);
-                            if ($room) {
-                                $location = "<td>{$room['location']}</td>";
-                                $landlord = getLandlord($room['landlord'], $landlords);
-                                $tenant['landlord']= $landlord['name'];
-                                $landlordt="<td>{$tenant['landlord']}</td>";
-                            }else{
-                                $location = "<td style='color:red'>not in any room</td>";
-                                $tenant['landlord']="not in any room";
-                                $landlordt="<td style='color:red'>{$tenant['landlord']}</td>";
-                            }
-                            $balances = getBalance($tenant['id'],date("M"),date("Y"));
-                            $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
-                            $tenant['balance'] = $balance;
-                            echo "<tr class='TReport' onclick='TReport({$tenant['id']})'>";
-                            echo "<td>{$tenant['name']}</td>";
-                            echo $landlordt;
-                            echo "<td>{$tenant['contact']}</td>";
-                            echo $location;
-                            echo "<td>ugx " . number_format($tenant['balance'], 0, '.', ',') . "</td>";
-                            if ($tenant['balance'] <= 0) {
-                                echo "<td class='status-active'><div>cleared</div></td>";
-                            } else {
-                                echo "<td class='status-inactive'><div>pending</div></td>";
-                            }
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                <div class="chart2">
+                    <div id="chart2"></div>
+                    </div>
             </div>
-            <!-- ----------------------------------table-------------------------------------------- -->
+            <!-- <div class="graphs properties">
+                <div class="chart1">
+                <div id="chart3"></div>
+                </div>
+                <div class="chart2">
+                    <div id="chart4"></div>
+                    </div>
+            </div> -->
+
+
 
         </div>
     </div>
-    <div class="Tparent tenant edit">
-        <div class="card">
-            <div class="x" id="xt">x</div>
-            <h2>Tenant Information</h2>
-            <form action="">
-                <input type="text" name="" id="tid" placeholder="Id" disabled>
-                <input type="text" name="" id="tname" placeholder="Tenant Name" disabled>
-                <input type="text" name="" id="tcontact" placeholder="Contact" disabled>
-                <input type="text" name="" id="tlocation" placeholder="location" disabled>
-                <input type="text" name="" id="tbalance" placeholder="Balance" disabled>
-                <input type="text" name="" id="troom" placeholder="Room Id" disabled>
-                <input type="text" name="" id="tlandlord" placeholder="Landlord" disabled>
-                <input type="text" name="" id="tamount" placeholder="amount" disabled>
-                <input type="text" name="" id="tdate" placeholder="date registered" disabled>
-            </form>
-            <a id="thistory" target="_blank" href="transhistry.php?tenant=2" >Transaction History</a>
-        </div>
-
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/filter.js"></script>
+    <script src="js/graphs.js"></script>
+    
 </body>
 
 </html>

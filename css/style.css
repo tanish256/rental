@@ -1,4 +1,4 @@
-body { margin: 0; padding: 0; font-family: sans-serif; background-color: #f9f7f7; --sb-track-color: #6c81902a; --sb-thumb-color: #63a4d9; --sb-size: 14px; }
+body { margin: 0; padding: 0; font-family: sans-serif; background-color: #e5eaed; --sb-track-color: #6c81902a; --sb-thumb-color: #63a4d9; --sb-size: 14px; }
 .root { display: flex; margin: 0; justify-content: space-between; }
 .root .sidebar { background-color: #002c59a5; box-shadow: #e2ecf97a 1px 2px 5px; border-right: solid #b5b5b56f 1px; height: 100vh; width: 23%; position: fixed; }
 .root .sidebar .logo { justify-content: center; padding-block: 30px; display: flex; gap: 20px; }

@@ -71,7 +71,7 @@
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.01</p>
+                <p>v.02</p>
             </div>
             <nav>
                 <ul>

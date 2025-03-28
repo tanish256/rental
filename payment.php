@@ -281,7 +281,8 @@
         if (tenantId  && paydate) {
             // Execute logic for tenant
             console.log("Tenant payment logic executed.");
-            $.ajax({
+            if (confirm(`Confirm payment of ${paymentAmount}`)) {
+                $.ajax({
                 url: 'postpayment.php', // The server-side script to handle the request
                 type: 'POST',
                 data: {
@@ -297,13 +298,16 @@
                     console.error('An error occurred:', error);
                 }
             });
+            }
+
         }else if(tenantId){
             alert('No date specified');
         } else if (landlordId) {
             // Execute logic for landlord
             console.log("Landlord payment logic executed.");
             //alert(paymentAmount);
-            $.ajax({
+            if (confirm(`Confirm payment of ${paymentAmount}`)) {
+                $.ajax({
                 url: 'postpayment.php', // The server-side script to handle the request
                 type: 'POST',
                 data: {
@@ -318,6 +322,7 @@
                     console.error('An error occurred:', error);
                 }
             });
+            }
         } else {
             // No tenant or landlord ID found
             alert("No valid tenant or landlord ID found.");

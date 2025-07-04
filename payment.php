@@ -247,7 +247,7 @@
                                 $balance_due = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
                                 // Replace placeholder names and balance with data from JSON
                                 echo "<tr>";
-                                echo "<td>{$tenant['name']} <span style='color:red;font-size:10px'>({$landlord['name']})</span></td>";
+                                echo "<td style='padding:5px'><span style='font-family:sans-serif; font-size:15px;'>{$tenant['name']}</span> <span style='color:red;font-size:10px;margin:0;padding:0;'>({$landlord['name']})</span></td>";
                                 echo "<td>".$balance_due+$balance_bf."</td>";
                                 echo "<td>{$balance}</td>";
                                 echo "<td>".$balance_due+$balance_bf-$balance."</td>";

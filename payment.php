@@ -1,5 +1,5 @@
 <?php 
- require "Vhelper.php";
+ require_once "Vhelper.php";
  if ($_SESSION['role'] == 'admin') {
   
  } else {
@@ -68,7 +68,7 @@
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.02</p>
+                <p>v.03</p>
             </div>
             <nav>
                 <ul>
@@ -238,16 +238,16 @@
                                 // Loop through tenants and output the table rows
                             foreach ($tenants as $tenant) {
                                 // Get room data from $rooms array
-                                //$room = getRoom($tenant['room_id'], $rooms);
-                                //$location = $room['location'];
-                               // $landlord = getLandlord($room['landlord'], $landlords);
-                                $balances = getBalance($tenant['id'],date("M"),date("Y"));
+                                $room = getRoom($tenant['room_id'], $rooms);
+                                $location = $room['location'];
+                                $landlord = getLandlord($room['landlord'], $landlords);
+                                $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
                                 $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
                                 $balance_bf = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
                                 $balance_due = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
                                 // Replace placeholder names and balance with data from JSON
                                 echo "<tr>";
-                                echo "<td>{$tenant['name']}</td>";
+                                echo "<td>{$tenant['name']} <span style='color:red;font-size:10px'>({$landlord['name']})</span></td>";
                                 echo "<td>".$balance_due+$balance_bf."</td>";
                                 echo "<td>{$balance}</td>";
                                 echo "<td>".$balance_due+$balance_bf-$balance."</td>";

@@ -15,7 +15,7 @@
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.02</p>
+                <p>v.03</p>
             </div>
             <nav>
                 <ul>
@@ -256,7 +256,7 @@
                                     $tenant['landlord']="not in any room";
                                     $landlordt="<td style='color:red'>{$tenant['landlord']}</td>";
                                 }
-                                $balances = getBalance($tenant['id'],date("M"),date("Y"));
+                                $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
                                 $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
                                 $tenant['balance'] = $balance;
                                 echo "<tr class='TReport' onclick='TReport({$tenant['id']})'>";

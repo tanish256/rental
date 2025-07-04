@@ -13,15 +13,23 @@ require 'config.php';
 $year = date("Y");
 $month = date("M");
 
-// Fetch Summary
-$summary_query = "SELECT * FROM accs_summary";
-$summary_stmt = $pdo->prepare($summary_query);
-$summary_stmt->execute();
-$summarys = $summary_stmt->fetchAll(PDO::FETCH_ASSOC);
-$Tsummary =getSummary($month, $year,$summarys);
+// Load balances for tenants
+$balance_query = "SELECT * FROM balances WHERE month = :month AND year = :year AND tenant IS NOT NULL";
+$balance_stmt = $pdo->prepare($balance_query);
+$balance_stmt->execute([
+    ':month' => $month,
+    ':year' => $year
+]);
+$allBalances = $balance_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Index balances by tenant ID
+$tenantBalances = [];
+foreach ($allBalances as $b) {
+    $tenantBalances[$b['tenant']] = $b;
+}
 
 
-// Fetch Transactions
+
 $sql_rwt = "SELECT *
     FROM rooms 
     WHERE id NOT IN (SELECT room_id FROM tenants WHERE room_id IS NOT NULL)";
@@ -61,7 +69,7 @@ $total_balance_duew = 0;
 $total_balance = 0;
 // Iterate through the tenants array and sum up the balances
 foreach ($tenants as $tenant) {
-    $balances = getBalance($tenant['id'], date("M"), date("Y"));
+    $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
     $balance_bf = isset($balances[0]['balance_bf']) && $balances[0]['balance_bf'] >= 0 ? $balances[0]['balance_bf'] : 0;
     $balance_due = isset($balances[0]['balance_due']) && $balances[0]['balance_due'] >= 0 ? $balances[0]['balance_due'] : 0;
     $balance = isset($balances[0]['total_balance']) && $balances[0]['total_balance'] >= 0 ? $balances[0]['total_balance'] : 0;
@@ -80,14 +88,6 @@ function getRoom($room_id, $rooms) {
     return null;
 }
 // Function to get summary of Given Date
-function getSummary($month, $year, $summarys) {
-    foreach ($summarys as $summary) {
-        if ($summary['f_year'] == $year && $summary['f_month'] == $month) {
-            return $summary;
-        }
-    }
-    return null;
-}
 
 // Function to get landlord by ID
 function getLandlord($landlord_id, $landlords) {
@@ -139,12 +139,12 @@ function getBalanceLandlord($tenant_id, $month, $year) {
 
 // Function to get Tenant by ID
 function getTenant($tid) {
-    global $tenants;
+    global $tenants,$tenantBalances;
     foreach ($tenants as $tenant) {
         if ($tenant['id'] == $tid) {
             global $rooms;
             global $landlords;
-            $balances = getBalance($tenant['id'],date("M"),date("Y"));
+            $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
             $balance_bf = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
             $balance_due = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
             $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
@@ -162,23 +162,32 @@ function getTenant($tid) {
     return null;
 }
 function getTenantsByLandlord($landlord_id) {
-    global $tenants, $rooms;
+    global $tenants, $rooms, $landlords, $tenantBalances;
+
     $filtered_tenants = [];
 
     foreach ($tenants as $tenant) {
         $room = getRoom($tenant['room_id'], $rooms);
         if ($room && $room['landlord'] == $landlord_id) {
-            $balances = getBalance($tenant['id'],date("M"),date("Y"));
-            $tenant['balance_bf'] = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
-            $tenant['balance_due'] = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
-            $tenant['balance'] = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
-            $filtered_tenants[] = json_decode(getTenant($tenant['id']));
+            $balances = isset($tenantBalances[$tenant['id']]) ? $tenantBalances[$tenant['id']] : [];
 
+            $tenant['balance_bf'] = isset($balances['balance_bf']) ? $balances['balance_bf'] : 0;
+            $tenant['balance_due'] = isset($balances['balance_due']) ? $balances['balance_due'] : 0;
+            $tenant['balance'] = isset($balances['total_balance']) ? $balances['total_balance'] : 0;
+
+            $landlord = getLandlord($room['landlord'], $landlords);
+
+            $tenant['landlord'] = $landlord['name'] ?? '';
+            $tenant['location'] = $room['location'] ?? '';
+            $tenant['amount'] = $room['amount'] ?? 0;
+
+            $filtered_tenants[] = $tenant;
         }
     }
 
     return json_encode($filtered_tenants);
 }
+
 if (isset($_GET['blandlord'])) {
     $landlord_id = $_GET['blandlord'];
     $tenants = getTenantsByLandlord($landlord_id);

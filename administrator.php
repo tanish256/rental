@@ -71,7 +71,7 @@
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.02</p>
+                <p>v.03</p>
             </div>
             <nav>
                 <ul>
@@ -261,7 +261,7 @@ foreach ($tenants as $tenant) {
     }
     //$location = $room['location'];
    // $landlord = getLandlord($room['landlord'], $landlords);
-    $balances = getBalance($tenant['id'],date("M"),date("Y"));
+    $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
     $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
 
     // Replace placeholder names and balance with data from JSON

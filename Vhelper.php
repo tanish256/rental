@@ -238,6 +238,30 @@ function roomHasTenant($pdo, $room_id) {
     }
 }
 
+function getcomission($landlord,$paid,$no_tenants) : int {
+    $fixed =0;
+    $percentage =1;
+    $payout =2;
+    $per_room=3;
+
+    if($paid<=0){
+               return 0; // Unknown commission type
+    }else{
+        switch ($landlord['commission_type']) {
+        case $fixed:
+            return intval($landlord['commission']);
+        case $percentage:
+            return intval($paid * $landlord['commission'] / 100);
+        case $payout:
+            return max(0, $paid - $landlord['commission']);
+        case $per_room:
+            return $no_tenants*$landlord['commission'];
+        default:
+            return 0; // Unknown commission type
+    }
+
+    }
+}
 
 
 //never touch it handles monthly balances

@@ -100,11 +100,22 @@ if ($_SESSION['role'] == 'admin') {
     
 </style>
 <body>
+      <!-- Loader HTML -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<script>
+  // Hide loader after page is fully loaded
+  window.addEventListener("load", function() {
+    document.getElementById("loader").style.display = "none";
+  });
+</script>
     <div class="root">
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.03</p>
+                <p>v.04</p>
             </div>
             <nav>
                 <ul>
@@ -227,15 +238,39 @@ if ($_SESSION['role'] == 'admin') {
                     <h3>Total Balance</h3>
                     <p>this month</p>
                 </div>
+                <?php
+                  // First calculate all profits
+                  $exp_profit = 0;
+                  $got_profit = 0;
+
+                  foreach ($landlords as $landlord) {
+                      $tenantsl = getTenantsByLandlord($landlord['id']);
+                      $tenantst = json_decode($tenantsl, true);
+                      
+                      $total_balance_due = 0;
+                      $total_balance_bf = 0;
+                      $total_balance = 0;
+                      foreach ($tenantst as $tenant) {
+                          $total_balance_due += isset($tenant['balance_due']) ? $tenant['balance_due'] : 0;
+                          $total_balance += isset($tenant['balance']) ? $tenant['balance'] : 0;
+                          $total_balance_bf += isset($tenant['balance_bf']) ? $tenant['balance_bf'] : 0;
+                      }
+                      $final_balance = $total_balance_due + $total_balance_bf - $total_balance;
+                      $commission =getcomission($landlord,$final_balance,count($tenantst));
+                      $commission_main = getcomission($landlord, $total_balance_due, count($tenantst));
+                      $exp_profit += $commission_main;
+                      $got_profit += $commission;
+                  }
+                ?>
 
                 <div class="card">
-                  <p>-</p>
+                  <p>UGX <?php echo number_format($exp_profit, 0, '.', ',') ?></p>
                   <h3>Expected Profit</h3>
                   <p> this month</p>
               </div>
   
               <div class="card">
-                  <p>-</p>
+                  <p>UGX <?php echo number_format($got_profit, 0, '.', ',')?> </p>
                   <h3>Accumulated Profit</h3>
                   <p> this month</p>
               </div>
@@ -302,12 +337,17 @@ if ($_SESSION['role'] == 'admin') {
                     
                         // Calculate final balance
                         $final_balance = $total_balance_due + $total_balance_bf - $total_balance;
-                    
+
+                        $commission_main=getcomission($landlord,$total_balance_due,count($tenantst));
+                        $commission =getcomission($landlord,$final_balance,count($tenantst));
+                        $exp_profit += $commission_main;
+                        $got_profit += $commission;
+
                         // Display the landlord's name and balance data
                         echo "<td>{$landlord['name']}</td>";
                         echo "<td>{$total_balance_bf}</td>";
-                        echo "<td>{$total_balance_due}</td>";
-                        echo "<td>{$final_balance}</td>";
+                        echo "<td>{$total_balance_due} <span style='color:#007bff;font-size:12px;margin:0;padding:0;'>({$commission_main})</span></td>";
+                        echo "<td>{$final_balance}  <span style='color:#007bff;font-size:12px;margin:0;padding:0;'>({$commission})</span></td>";
                         echo "<td>ugx " . number_format($total_balance, 0, '.', ',') . "</td>";
                     
                         // Determine the status based on the total balance

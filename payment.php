@@ -64,11 +64,22 @@
     }
 </style>
 <body>
+        <!-- Loader HTML -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<script>
+  // Hide loader after page is fully loaded
+  window.addEventListener("load", function() {
+    document.getElementById("loader").style.display = "none";
+  });
+</script>
     <div class="root">
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.03</p>
+                <p>v.04</p>
             </div>
             <nav>
                 <ul>

@@ -18,12 +18,23 @@
 </head>
 
 <body>
+    <!-- Loader HTML -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<script>
+  // Hide loader after page is fully loaded
+  window.addEventListener("load", function() {
+    document.getElementById("loader").style.display = "none";
+  });
+</script>
 
     <div class="root">
         <div class="sidebar">
             <div class="logo">
                 <img src="assets/rental.svg" alt="">
-                <p>v.03</p>
+                <p>v.04</p>
             </div>
             <nav>
                 <ul>
@@ -286,17 +297,6 @@
                     <div id="chart2"></div>
                     </div>
             </div>
-            <!-- <div class="graphs properties">
-                <div class="chart1">
-                <div id="chart3"></div>
-                </div>
-                <div class="chart2">
-                    <div id="chart4"></div>
-                    </div>
-            </div> -->
-
-
-
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

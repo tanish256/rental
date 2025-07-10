@@ -208,7 +208,7 @@ if (isset($_GET['room'])) {
 
 if (isset($_GET['tenant'])) {
     $tenant_id = $_GET['tenant']; // Get tenant ID from the query string
-    $tenant= getTenant($tenant_id,$tenants);
+    $tenant= getTenant($tenant_id);
     if ($tenant) {
         # code...
         $tenant_data = json_decode($tenant, true);  // Decode JSON into an arra

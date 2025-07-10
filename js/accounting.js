@@ -21,10 +21,10 @@ $(document).ready(function () {
                         const $subRow = $(`
                             <tr class="sub-row">
                                 <td>${data.name}</td>
-                                <td>${data.balance_bf}</td>
-                                <td>${data.balance_due}</td>
-                                <td>${data.balance_due+data.balance_bf-data.balance}</td>
-                                <td>${data.balance}</td>
+                                <td>${data.balance_bf.toLocaleString()}</td>
+                                <td>${data.balance_due.toLocaleString()}</td>
+                                <td>${(data.balance_due + data.balance_bf - data.balance).toLocaleString()}</td>
+                                <td>${data.balance.toLocaleString()}</td>
                                 <td class="${data.balance > 0 ? 'status-inactive' : 'status-active'}">
                                     <div>${data.balance > 0 ? 'Pending' : 'Cleared'}</div>
                                 </td>

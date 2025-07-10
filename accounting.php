@@ -345,9 +345,11 @@ if ($_SESSION['role'] == 'admin') {
 
                         // Display the landlord's name and balance data
                         echo "<td>{$landlord['name']}</td>";
-                        echo "<td>{$total_balance_bf}</td>";
-                        echo "<td>{$total_balance_due} <span style='color:#007bff;font-size:12px;margin:0;padding:0;'>({$commission_main})</span></td>";
-                        echo "<td>{$final_balance}  <span style='color:#007bff;font-size:12px;margin:0;padding:0;'>({$commission})</span></td>";
+                        echo "<td>" . number_format($total_balance_bf) . 
+     "</td>";
+                        echo "<td>" . number_format($total_balance_due) . 
+     "<span style='color:#007bff;font-size:11px;margin:0;padding:0;'>(" . number_format($commission_main) . ")</span></td>";
+                        echo "<td>". number_format($final_balance) ."<span style='color:#007bff;font-size:11px;margin:0;padding:0;'>(" . number_format($commission) . ")</span></td>";
                         echo "<td>ugx " . number_format($total_balance, 0, '.', ',') . "</td>";
                     
                         // Determine the status based on the total balance

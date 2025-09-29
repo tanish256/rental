@@ -431,11 +431,23 @@ require "Vhelper.php";
                         echo "</div>";
                         echo "<div class='tenant-detail'>";
                         echo "<div class='detail-label'>Report Period</div>";
-                        echo "<div class='detail-value'>" . date('F Y') . "</div>";
+                        if (isset($_GET['tid'])) {
+                            $transactions = getTransactions($_GET['tid']);
+                            if ($transactions && count($transactions) > 0) {
+                                // Sort transactions by date ascending to find the oldest one
+                                usort($transactions, function($a, $b) {
+                                    return strtotime($a['date_paid']) - strtotime($b['date_paid']);
+                                });
+
+                                $oldestDate = $transactions[0]['date_paid'];
+                                echo "<div class='detail-value'>Since " . date('F Y', strtotime($oldestDate)) . "</div>";
+                            } else {
+                                echo "<div class='detail-value'>No transactions</div>";
+                            }}
                         echo "</div>";
                         echo "<div class='tenant-detail'>";
                         echo "<div class='detail-label'>Room Amount</div>";
-                        echo "<div class='detail-value'>{$tenant_data['amount']}</div>";
+                        echo "<div class='detail-value'> UGx " . number_format(($balance_due + $balance_bf) . $tenant_data['amount'])."</div>";
                         echo "</div>";
                         echo "</div>";
                     }

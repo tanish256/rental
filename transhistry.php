@@ -387,11 +387,11 @@ require "Vhelper.php";
                     </div>
                     <div class="contact-item">
                         <span class="contact-icon">📞</span>
-                        <span>+256 773 897809</span>
+                        <span>+256 788 994553</span>
                     </div>
                     <div class="contact-item">
                         <span class="contact-icon">📞</span>
-                        <span>+256 753 040496</span>
+                        <span>+256 706 122303</span>
                     </div>
                     <div class="contact-item">
                         <span class="contact-icon">✉️</span>

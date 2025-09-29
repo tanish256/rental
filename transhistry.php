@@ -580,7 +580,11 @@ require "Vhelper.php";
             
             // Get the report container
             const element = document.querySelector('.report-container');
-            
+            const actions = document.querySelector('.action-buttons');
+
+            // Hide the button section before generating PDF
+            actions.style.display = 'none';
+
             // Options for html2canvas
             const options = { 
                 scale: 2,
@@ -627,6 +631,14 @@ require "Vhelper.php";
                 
                 // Save the PDF
                 doc.save('Mainstay-Tenant-Report-' + new Date().toISOString().slice(0, 10) + '.pdf');
+
+                // Show the button again after PDF is generated
+                actions.style.display = 'flex';
+            }).catch(error => {
+                console.error('PDF generation error:', error);
+
+                // Ensure the button is shown again even on error
+                actions.style.display = 'flex';
             });
         }
     </script>

@@ -85,7 +85,7 @@ body {
 }
 
 input,
-label {
+label,select {
     display: block;
     width: 50%;
 }
@@ -102,7 +102,7 @@ form {
     align-items: center;
 }
 
-input {
+input ,select {
     width: 50%;
     margin: 10px 0;
     font-size: 14px;
@@ -141,7 +141,10 @@ input[type=submit] {
         <input type="text" id="name" name="name" required>
 
         <label for="role">Role (admin/user):</label>
-        <input type="text" id="role" name="role" required>
+        <select type="text" id="role" name="role" required>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
 
         <input type="submit" value="Register">
     </form>

@@ -149,6 +149,19 @@ function TReport(tenantId) {
                 $('#tdate').val('registered on '+data.data.date_onboarded);
                 $("#thistory").attr("href", "transhistry.php?tid="+data.data.id);
                // $('#tenantDetails').show(); // Show the details div
+                const balanceBadge = document.getElementById('status-badge');
+                    if (balanceBadge){
+                        if (Number(data.data.balance) > 0) {
+                        balanceBadge.className = 'status-badge overdue';
+                        balanceBadge.textContent = 'Overdue';
+                    } else if (Number(data.data.balance) < 0) {
+                        balanceBadge.className = 'status-badge paid';
+                        balanceBadge.textContent = 'Credit';
+                    } else {
+                        balanceBadge.className = 'status-badge paid';
+                        balanceBadge.textContent = 'Paid';
+                    }
+                    }
             } else {
                 alert('Error fetching tenant data!');
             }

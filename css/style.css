@@ -1,6 +1,6 @@
 body { margin: 0; padding: 0; font-family: sans-serif; background-color: #e5eaed; --sb-track-color: #6c81902a; --sb-thumb-color: #63a4d9; --sb-size: 14px; }
 .root { display: flex; margin: 0; justify-content: space-between; }
-.root .sidebar { background-color: #002c59a5; box-shadow: #e2ecf97a 1px 2px 5px; border-right: solid #b5b5b56f 1px; height: 100vh; width: 23%; position: fixed; }
+.root .sidebar { background-color: #002c59a5; box-shadow: #e2ecf97a 1px 2px 5px; border-right: solid #b5b5b56f 1px; height: 100vh; width: 25%; position: fixed; }
 .root .sidebar .logo { justify-content: center; padding-block: 30px; display: flex; gap: 20px; }
 .root .sidebar .logo p { color: white; }
 .root .sidebar .logo img { width: 50%; }
@@ -9,17 +9,7 @@ body { margin: 0; padding: 0; font-family: sans-serif; background-color: #e5eaed
 .root .sidebar nav ul a li:hover { color: #9197B3; background-color: white; opacity: 0.8; }
 .root .sidebar nav ul a li:hover svg.fill { fill: #9197B3; }
 .root .sidebar nav ul a li:hover svg path { stroke: #9197B3; width: 30px; height: 30px; }
-.root .sidebar nav ul a li:hover svg.more path, rect { fill: #9197B3; }
-.root .sidebar nav ul a li.active { color: #9197B3; background-color: white; }
-.root .sidebar nav ul a li.active svg.fill { fill: #9197B3; }
-.root .sidebar nav ul a li.active svg path { stroke: #9197B3; width: 30px; }
-.root .sidebar nav ul a li.active svg.more path, rect { fill: #9197B3; }
 .root .sidebar nav ul a li { padding: 0; text-align: center; border-radius: 3px; width: 70%; padding-inline: 10%; color: white; gap: 10%; line-height: 40px; display: flex; align-items: center; justify-content: start; }
-.root .sidebar nav ul a li svg path { stroke: white; width: 30px; transition: fill 0.3s ease; }
-.root .sidebar nav ul a li svg.more path, rect { fill: white; }
-.root .sidebar nav ul a li svg { width: 30px; height: 30px; }
-.root .sidebar nav ul a li svg.fill { fill: white; }
-.root .sidebar nav ul a li img { width: 30px; }
 .root .dashmain { display: flex; gap: 20px; flex-direction: column; height: fit-content; align-items: center; padding-block: 2%; margin-left: 27.5%; width: 70%; }
 .tablecard { width: 90%; display: flex; flex-direction: column; align-items: center; background-color: white; box-shadow: #d2dbe7a2 1px 1px 7px; border-radius: 3px; padding: 2%; }
 .TReport { cursor: pointer; }
@@ -30,7 +20,6 @@ table { max-height: 80%; display: block; background-color: #002c5904; width: 100
 tbody::-webkit-scrollbar { width: var(--sb-size) }
 tbody::-webkit-scrollbar-track { background: var(--sb-track-color); border-radius: 3px; }
 tbody::-webkit-scrollbar-thumb { background: var(--sb-thumb-color); border-radius: 3px; }
-
 @supports not selector(::-webkit-scrollbar) {
     table {
       scrollbar-color: var(--sb-thumb-color)
@@ -38,14 +27,14 @@ tbody::-webkit-scrollbar-thumb { background: var(--sb-thumb-color); border-radiu
     }
   }
 
-th, td { padding: 10px; text-wrap: wrap; overflow-x: hidden; text-align: left; width: 14.3%; }
+th, td { padding: 10px; text-wrap: wrap; font-size: small; overflow-x: hidden; text-align: left; width: 14.3%; }
 th { width: 14.3%; color: rgba(0, 0, 0, 0.5); }
 th.date, td.date { width: 5%; }
 tr { align-items: center; display: flex; color: rgba(45, 45, 45); border-bottom: 1px solid rgba(55, 55, 55, 0.1); }
 tbody tr:hover { background-color: #f1f1f1; }
 tbody, thead { display: block; width: 100%; }
 tbody { max-height: 70vh; display: block; background-color: #002c5904; overflow-y: scroll; }
-thead { background-color: #002c59a5; }
+thead { background-color: #002c59cf; border-radius: 3px 3px 0 0;}
 thead th { color: white; }
 .sub-row { scale: 0.97; background-color: #a4e0f1; font-size: 0.9em; animation: expandRow 0.3s ease; }
 .sub-row:hover { background-color: #42a8c4; color: white !important; }
@@ -93,116 +82,255 @@ input:focus { border: 2.5px solid #007bff; outline: none !important; }
 tbody.collect tr td button { background-color: #16c0983f; border: 1.5px solid #008767; color: #008767; }
 tbody.collect tr td input[type='date'] { width: 90%; border: #008767 solid 2px; color: #008767; border-radius: 5px; }
 tbody.collect tr td input.payment { border: #008767 solid 2px; color: #008767; width: 90%; }
-.Tparent { width: 100%; height: 100%; top: 0; position: fixed; background-color: rgba(5, 5, 5, 0.302); display: none; align-items: center; justify-content: center; }
-.Tparent .card { width: 60%; height: 70%; background-color: white; border-radius: 5px; position: relative; }
-.Tparent .card .x { position: absolute; padding: 0; font-weight: lighter; right: 0; font-size: 30px; margin: 0; width: 35px; line-height: 35px; text-align: center; border-radius: 50%; cursor: pointer; border: 1px solid black; }
-.Tparent .card a { margin-inline: 20px; }
-.Tparent h2 { font-family: sans-serif; font-size: 1.5em; margin-inline-start: 20px; font-weight: normal; }
-.Tparent form { width: 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; padding-block: 10px; gap: 5%; row-gap: 10px; }
-.Tparent form input { width: 40%; height: fit-content; border-radius: 3px; border: none; color: black; padding: 15px 10px; background-color: #9197b334; }
+.Tparent {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.3s ease;
+}
+
+.Tparent.active {
+    display: flex;
+}
+
+.Tparent .card {
+    width: 90%;
+    max-width: 700px;
+    height: auto;
+    max-height: 85vh;
+    padding: 10px;
+    background-color: white;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+}
+
+.Tparent .card .x {
+    position: absolute;
+    padding: 0;
+    font-weight: 300;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    margin: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    color: #555;
+    border: none;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.Tparent .card .x:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.Tparent .card .header {
+    padding: 20px 25px 15px;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #f9fafb;
+}
+
+.Tparent .card h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.Tparent .card .subtitle {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+.Tparent form {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 25px;
+    gap: 15px;
+}
+
+.Tparent .form-group {
+    width: calc(50% - 10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.Tparent form label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.Tparent form label .icon {
+    margin-right: 6px;
+    color: #7f8c8d;
+}
+
+.Tparent form input {
+    width: 80%;
+    height: 44px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 0 12px;
+    background-color: #f8f9fa;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.Tparent form input:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.Tparent form input:disabled {
+    color: #666;
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+.Tparent .card .footer {
+    padding: 15px 25px 20px;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #f9fafb;
+}
+
+.Tparent .card .btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Tparent .card .btn-primary {
+    background-color: #3498db;
+    color: white;
+    border: none;
+}
+
+.Tparent .card .btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+}
+
+.Tparent .card .btn-primary .icon {
+    margin-right: 6px;
+}
+
+.Tparent .card .btn-outline {
+    background-color: transparent;
+    color: #7f8c8d;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+}
+
+.Tparent .card .btn-outline:hover {
+    background-color: #f5f5f5;
+    color: #555;
+}
+
+.Tparent .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.Tparent .status-badge.paid {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+}
+
+.Tparent .status-badge.pending {
+    background-color: rgba(241, 196, 15, 0.15);
+    color: #f39c12;
+}
+
+.Tparent .status-badge.overdue {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .Tparent .card {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .Tparent .form-group {
+        width: 100%;
+    }
+    
+    .Tparent form {
+        padding: 15px 20px;
+    }
+    
+    .Tparent .card .header,
+    .Tparent .card .footer {
+        padding: 15px 20px;
+    }
+}
+.Tparent .card .content {
+    max-height: calc(85vh - 140px);
+    overflow-y: auto;
+}
 input:disabled { color: #6d6d6d !important; cursor: not-allowed; }
 div.delete { background-color: #ff0000cc; width: fit-content; color: white; text-align: center; cursor: pointer; padding: 7px 20px; border-radius: 3px; border: none; }
-a.logout { color: white !important; position: fixed; width: fit-content !important; bottom: 5%; font-size: 16px; text-decoration: underline !important; }
-.for-admin { pointer-events: none; opacity: 0; }
 
-
-
-/* Dropdown Container */
-.root .sidebar nav ul .dropdown {
-  position: relative;
-  width: 90%;
-  border-radius: 5px;
-  justify-content: center;
-  cursor: pointer;
-}
-.root .sidebar nav ul .dropdown:hover {
-  background-color: #ffffff93;
-}
-
-/* Dropdown Toggle (Main Link) */
-.root .sidebar nav ul .dropdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 0 10%;
-  width: 70%;
-  color: white;
-  line-height: 40px;
-}
-
-.root .sidebar nav ul .dropdown-toggle svg.dropdown-arrow {
-  margin-left: 5px;
-  transition: transform 0.3s ease;
-}
-
-/* Dropdown Menu (Hidden by Default) */
-.root .sidebar nav ul .dropdown-menu {
-  position: fixed;
-  list-style: none;
-  padding:5px 0 ;
-  margin: 0;
-  background-color: #002c59;
-  border-radius: 3px;
-  width: 15%;
-  margin-left:5%;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-  opacity: 0;
-}
-
-/* Dropdown Links */
-.root .sidebar nav ul .dropdown-menu a {
-  width: 100%;
-  text-decoration: none;
-  color: white;
-}
-
-.root .sidebar nav ul .dropdown-menu a li {
-  padding: 2px 10%;
-  line-height: 25px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.9em;
-}
-
-.root .sidebar nav ul .dropdown-menu a li:hover {
-  background-color: rgba(255, 255, 255, 0.377);
-}
-
-/* Active/Hover States */
-.root .sidebar nav ul .dropdown:hover .dropdown-menu {
-  max-height: 200px; /* Adjust based on content */
-  opacity: 1;
-}
-.root .sidebar nav ul .dropdown .dropdown-toggle svg.dropdown-arrow {
-  height: 20px;
-  width: 20px;
-}
-
-.root .sidebar nav ul .dropdown:hover .dropdown-toggle svg.dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-.root .sidebar nav ul .dropdown:hover .dropdown-toggle {
-  color: #9197B3;
-}
-
-.root .sidebar nav ul .dropdown:hover svg.fill {
-  fill: #9197B3;
-}
-
-.root .sidebar nav ul .dropdown:hover svg path {
-  stroke: #9197B3;
-}
-.root .sidebar nav ul .dropdown svg.fill {
-  fill: #ffffff;
-}
-.root .sidebar nav ul .dropdown svg{ width: 30px; height: 30px; color: white; }
-.root .sidebar nav ul .dropdown:hover svg path {
-  stroke: #9197B3;
-}
  /* Loader Styles */
 #loader {
       position: fixed;
@@ -226,3 +354,232 @@ a.logout { color: white !important; position: fixed; width: fit-content !importa
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    :root {
+    --sidebar-bg: #1E293B;
+    --sidebar-accent: #3B82F6;
+    --sidebar-hover: #334155;
+    --sidebar-text: #E2E8F0;
+    --sidebar-text-muted: #94A3B8;
+    --sidebar-border: #374151;
+    --sidebar-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+    background-color: #F8FAFC; 
+    --sb-track-color: #6c81902a; 
+    --sb-thumb-color: #63a4d9; 
+    --sb-size: 14px; 
+}
+
+.root { 
+    display: flex; 
+    margin: 0; 
+    min-height: 100vh;
+}
+
+/* Modern Sidebar Styles */
+.root .sidebar { 
+    background: linear-gradient(180deg, var(--sidebar-bg) 0%, #0F172A 100%);
+    box-shadow: var(--sidebar-shadow);
+    border-right: 1px solid var(--sidebar-border);
+    height: 100vh;
+    width: 25%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+}
+
+/* Logo Section */
+.root .sidebar .logo { 
+    border-bottom: 1px solid var(--sidebar-border);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Navigation Styles */
+.root .sidebar nav {
+    flex: 1;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.root .sidebar nav ul { 
+    list-style-type: none; 
+    display: flex; 
+    padding: 0; 
+    margin: 0;
+    gap: 4px; 
+    align-items: center; 
+    flex-direction: column; 
+    flex: 1;
+}
+
+.root .sidebar nav ul a { 
+    width: 100%; 
+    display: flex; 
+    text-decoration: none; 
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+/* Menu Items */
+.root .sidebar nav ul a li {
+    padding: 6px 24px;
+    color: var(--sidebar-text);
+    gap: 16px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0 8px;
+    border-radius: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Hover States */
+.root .sidebar nav ul a li:hover {
+    background: var(--sidebar-hover);
+    color: white;
+    transform: translateX(4px);
+}
+
+.root .sidebar nav ul a li:hover::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    background: var(--sidebar-accent);
+    border-radius: 2px;
+}
+
+/* Update SVG colors on hover */
+.root .sidebar nav ul a li:hover svg path {
+    stroke: white !important;
+}
+
+.root .sidebar nav ul a li:hover svg.fill {
+    fill: white !important;
+}
+
+.root .sidebar nav ul a li:hover svg.more path,
+.root .sidebar nav ul a li:hover svg.more rect {
+    fill: white !important;
+}
+
+.root .sidebar nav ul a li:hover .ci-primary {
+    fill: white !important;
+}
+
+/* Active State */
+.root .sidebar nav ul a li.active {
+    background: var(--sidebar-accent);
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.root .sidebar nav ul a li.active::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 24px;
+    background: white;
+    border-radius: 2px;
+}
+
+/* Update SVG colors for active state */
+.root .sidebar nav ul a li.active svg path {
+    stroke: white !important;
+}
+
+.root .sidebar nav ul a li.active svg.fill {
+    fill: white !important;
+}
+
+.root .sidebar nav ul a li.active svg.more path,
+.root .sidebar nav ul a li.active svg.more rect {
+    fill: white !important;
+}
+
+.root .sidebar nav ul a li.active .ci-primary {
+    fill: white !important;
+}
+
+/* Icons */
+.root .sidebar nav ul a li svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+/* Default SVG colors */
+.root .sidebar nav ul a li:not(.active):not(:hover) svg path {
+    stroke: var(--sidebar-text-muted) !important;
+}
+
+.root .sidebar nav ul a li:not(.active):not(:hover) svg.fill {
+    fill: var(--sidebar-text-muted) !important;
+}
+
+.root .sidebar nav ul a li:not(.active):not(:hover) svg.more path,
+.root .sidebar nav ul a li:not(.active):not(:hover) svg.more rect {
+    fill: var(--sidebar-text-muted) !important;
+}
+
+.root .sidebar nav ul a li:not(.active):not(:hover) .ci-primary {
+    fill: var(--sidebar-text-muted) !important;
+}
+/* Logout Button */
+.root .sidebar nav ul a.logout {
+    margin: 8px;
+    color: #EF4444;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding-block: 5px;
+}
+
+.root .sidebar nav ul a.logout:hover {
+    background: #EF4444;
+    color: white;
+}
+
+.root .sidebar nav ul a.logout:hover {
+    stroke: white !important;
+}
+
+/* Main Content Area */
+.root .dashmain { 
+    display: flex; 
+    gap: 24px; 
+    flex-direction: column; 
+    height: fit-content; 
+    align-items: center; 
+    padding-block: 2%; 
+}
+
+/* Smooth Scrollbar */
+.sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--sidebar-border);
+    border-radius: 2px;
+}

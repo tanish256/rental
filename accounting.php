@@ -221,8 +221,8 @@ require 'auth-check.php';
                         echo "<td>" . number_format($total_balance_bf) . 
      "</td>";
                         echo "<td>" . number_format($total_balance_due) . 
-     "<span style='color:#007bff;font-size:11px;margin:0;padding:0;'>(" . number_format($commission_main) . ")</span></td>";
-                        echo "<td>". number_format($final_balance) ."<span style='color:#007bff;font-size:11px;margin:0;padding:0;'>(" . number_format($commission) . ")</span></td>";
+     "</td>";
+                        echo "<td>". number_format($final_balance) ."</td>";
                         echo "<td>ugx " . number_format($total_balance, 0, '.', ',') . "</td>";
                     
                         // Determine the status based on the total balance

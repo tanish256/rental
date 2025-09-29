@@ -180,7 +180,7 @@
                                 $balance_bf = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
                                 $balance_due = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
                                 echo "<tr>";
-                                echo "<td style='padding:5px'><span style='font-family:sans-serif; font-size:15px;'>{$tenant['name']}</span> <span style='color:red;font-size:10px;margin:0;padding:0;'>({$landlord['name']})</span></td>";
+                                echo "<td style='padding:5px'><span style='font-family:sans-serif; font-size:15px;'>{$tenant['name']}</span> <br/><span style='white-space:nowrap;background-color:#3b82f6;color:rgba(221, 221, 221, 1);font-size:10px;margin:0;padding:3px 5px ; border-radius:3px;'>{$landlord['name']}</span></td>";
                                 echo "<td style='text-align: center;'>" . number_format($balance_due + $balance_bf) . "</td>";
                                 echo "<td style='text-align: center;'>" . number_format($balance) . "</td>";
                                 echo "<td style='text-align: center;'>" . number_format(($balance_due + $balance_bf) - $balance) . "</td>";

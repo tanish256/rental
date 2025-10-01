@@ -447,7 +447,7 @@ require "Vhelper.php";
                         echo "</div>";
                         echo "<div class='tenant-detail'>";
                         echo "<div class='detail-label'>Room Amount</div>";
-                        echo "<div class='detail-value'> UGx " . number_format(($balance_due + $balance_bf) . $tenant_data['amount'])."</div>";
+                        echo "<div class='detail-value'> UGx " . number_format($tenant_data['amount'])."</div>";
                         echo "</div>";
                         echo "</div>";
                     }

@@ -234,7 +234,7 @@ $menu_items = [
 <div class="sidebar">
     <div class="logo">
         <img src="assets/rental.svg" alt="">
-        <p>v.05</p>
+        <p>v.06</p>
     </div>
     <nav>
         <ul>

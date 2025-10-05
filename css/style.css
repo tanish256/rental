@@ -15,7 +15,7 @@ body { margin: 0; padding: 0; font-family: sans-serif; background-color: #e5eaed
 .TReport { cursor: pointer; }
 table { max-height: 80%; display: block; background-color: #002c5904; width: 100%; border-collapse: collapse; }
 .tadd { width: 100%; display: flex; justify-content: flex-end; }
-.tadd button { padding: 8px 25px; background-color: #008767; cursor: pointer; margin: 10px; color: white; border-radius: 3px; border: none; }
+.tadd button ,button.addbtn{ padding: 8px 25px; background-color: #008767; cursor: pointer; margin: 10px; color: white; border-radius: 3px; border: none; }
 .savebtn { padding: 8px 25px; background-color: #008767; cursor: pointer; margin: 10px; color: white; border-radius: 3px; border: none; }
 tbody::-webkit-scrollbar { width: var(--sb-size) }
 tbody::-webkit-scrollbar-track { background: var(--sb-track-color); border-radius: 3px; }
@@ -216,6 +216,7 @@ tbody.collect tr td input.payment { border: #008767 solid 2px; color: #008767; w
 
 .Tparent .card .footer {
     padding: 15px 25px 20px;
+    gap: 10px;
     border-top: 1px solid #eaeaea;
     display: flex;
     justify-content: flex-end;
@@ -248,6 +249,21 @@ tbody.collect tr td input.payment { border: #008767 solid 2px; color: #008767; w
 }
 
 .Tparent .card .btn-primary .icon {
+    margin-right: 6px;
+}
+.Tparent .card .btn-success {
+    background-color: #1f9747;
+    color: white;
+    border: none;
+}
+
+.Tparent .card .btn-success:hover {
+    background-color: #1d8b42;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+}
+
+.Tparent .card .btn-success .icon {
     margin-right: 6px;
 }
 
@@ -582,4 +598,94 @@ body {
 .sidebar::-webkit-scrollbar-thumb {
     background: var(--sidebar-border);
     border-radius: 2px;
+}
+/* Payment Modal Styles */
+.recent-transactions {
+    margin-bottom: 20px;
+}
+
+.payment-summary {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.payment-summary h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1rem;
+}
+
+.payment-summary div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.payment-summary hr {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.status-badge.pending {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #856404;
+}
+
+.status-badge.paid {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #155724;
+}
+
+/* Button styles */
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #6c757d;
+}
+
+.btn-outline:hover {
+    background-color: #6c757d;
+    color: white;
+}
+/* Odd rows: light blue */
+tbody tr:nth-child(odd) {
+    background-color: #e6f2ff; /* very light blue */
+}
+
+/* Even rows: slightly lighter blue */
+tbody tr:nth-child(even) {
+    background-color: #f9fcff; /* AliceBlue */
+}
+
+/* Hover effect: slightly stronger blue */
+tbody tr:hover {
+    background-color: #cce6ff;
+}
+
+/* Optional: keep sub-rows separate */
+tbody tr.sub-row {
+    background-color: #a4e0f1 !important; /* your existing sub-row color */
 }

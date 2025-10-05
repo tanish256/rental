@@ -137,7 +137,7 @@ try {
         $inputPassword = $_POST['password'];
 
         // Prepare the SQL statement to get the user by username
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE user_name = :username");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE user_name = :username and status = 'active'");
         $stmt->execute(['username' => $inputUsername]);
 
         // Fetch the user data
@@ -149,6 +149,7 @@ try {
             $_SESSION['loggedin'] = true;
             $_SESSION['name'] = $user['name'];
             $_SESSION['role'] = $user['role'];
+            $_SESSION['user_id'] = $user['id'];
 
             // Redirect to the appropriate page based on the role
             if ($_SESSION['role'] == 'admin') {

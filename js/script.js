@@ -2,6 +2,7 @@ $(document).ready(function () {
     
     $('#xt').click(function () {
         $('.Tparent.tenant.edit').hide();
+        clearTenantModal()
     });
     $('#xtr').click(function () {
         $('.Tparent.tenant.r').hide();

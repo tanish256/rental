@@ -1,4 +1,5 @@
 <?php 
+date_default_timezone_set('Africa/Kampala');
 session_start();
 if (!isset($_SESSION['loggedin'])) {
     // Redirect to login page if not logged in
@@ -57,7 +58,7 @@ $landlords_stmt->execute();
 $landlords = $landlords_stmt->fetchAll(PDO::FETCH_ASSOC);
 $tlandlords = count($landlords);
 // Fetch all tenants
-$tenants_query = "SELECT * FROM tenants";
+$tenants_query = "SELECT * FROM tenants where status = 'active'";
 $tenants_stmt = $pdo->prepare($tenants_query);
 $tenants_stmt->execute();
 $tenants = $tenants_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -237,7 +238,15 @@ function roomHasTenant($pdo, $room_id) {
         return false; 
     }
 }
-
+function getTenantByRoom($room_id) {
+    global $tenants;
+    foreach ($tenants as $tenant) {
+        if ($tenant['room_id'] == $room_id) {
+            return $tenant['name'];
+        }
+    }
+    return "No Tenant";
+}
 function getcomission($landlord,$paid,$no_tenants) : int {
     $fixed =0;
     $percentage =1;

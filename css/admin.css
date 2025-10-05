@@ -1,0 +1,118 @@
+/* User Management Specific Styles */
+.headers h1 {
+    margin: 0;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.8rem;
+}
+
+.headers p {
+    color: #7f8c8d;
+    margin: 5px 0 0;
+    font-size: 0.95rem;
+}
+
+/* Form Select Styles */
+.Tparent form select {
+    width: 83%;
+    height: 44px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 0 12px;
+    background-color: #f8f9fa;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.Tparent form select:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* Action Buttons in Table */
+tr td button.edit-user {
+    background-color: #3498db;
+    color: white;
+    border: 1.5px solid #3498db;
+    padding: 6px 15px;
+    margin-right: 5px;
+}
+
+tr td button.delete-user {
+    background-color: #e74c3c;
+    color: white;
+    border: 1.5px solid #e74c3c;
+    padding: 6px 15px;
+}
+
+tr td button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+#searchUsers {
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #a6a6a6;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .tablecard .tops {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .tablecard .tops .right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    #searchUsers {
+        width: 40%;
+    }
+    
+    .sort-component {
+        width: 30%;
+    }
+}
+.sort-component {
+    padding: 5px;
+}
+.sort-label {
+    text-wrap: nowrap;
+}
+
+/* Status Badges */
+.status-active div {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+    width: fit-content;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.status-inactive div {
+    background-color: rgba(241, 196, 15, 0.15);
+    color: #f39c12;
+    width: fit-content;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.status-edit div {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+    width: fit-content;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+.tablecard .tops .right  {
+    align-items: center;
+}

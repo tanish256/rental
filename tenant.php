@@ -139,6 +139,7 @@
         </div>
     </div>
 
+    <!-- Tenant Information Modal -->
     <div class="Tparent tenant edit">
     <div class="card">
         <div class="x" id="xt">×</div>
@@ -190,15 +191,301 @@
             </form>
         </div>
         <div class="footer">
+            <?php
+            if($_SESSION['role'] != 'user') {
+                echo '<a id="tpayment" class="btn btn-success">
+                <span class="icon">💵</span> payment
+            </a>';
+                }
+             ?>
+            
             <a id="thistory" target="_blank" href="transhistry.php?tenant=2" class="btn btn-primary">
                 <span class="icon">📊</span> Transaction History Report
             </a>
         </div>
     </div>
 </div>
+
+    <!-- Payment Modal -->
+    <div class="Tparent" id="paymentModal">
+        <div class="card">
+            <button class="x" id="closePaymentModal">&times;</button>
+            <div class="header">
+                <h2>Payment for <span id="paymentTenantName"></span></h2>
+                <div class="subtitle">Record new payment and view recent transactions</div>
+            </div>
+            <div class="content">
+                <!-- Recent Transactions Section -->
+                <div class="recent-transactions">
+                    <h3 style="margin-bottom: 15px; color: #333; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+                        Last 3 Transactions
+                    </h3>
+                    <div id="recentTransactions" style="max-height: 200px; overflow-y: auto; margin-bottom: 20px;">
+                        <!-- Transactions will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <form id="paymentForm">
+                    <input type="hidden" id="paymentTenantId" name="tenant_id">
+                    
+                    <div class="form-group">
+                        <label for="paymentDate">
+                            <span class="icon">📅</span> Payment Date *
+                        </label>
+                        <input type="date" id="paymentDate" name="date" required value="<?php echo date('Y-m-d'); ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paymentAmount">
+                            <span class="icon">💰</span> Payment Amount (UGX) *
+                        </label>
+                        <input type="number" id="paymentAmount" name="payment" placeholder="Enter amount" required min="1">
+                    </div>
+
+                    <!-- Summary Section -->
+                    <div class="payment-summary" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h4 style="margin: 0 0 10px 0; color: #333;">Payment Summary</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-weight: 500;">Total Balance:</span>
+                            <span id="summaryTotalBalance" style="font-weight: 600;">UGX 0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-weight: 500;">Paid This Month:</span>
+                            <span id="summaryPaidThisMonth" style="font-weight: 600; color: #28a745;">UGX 0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-weight: 500;">New Payment:</span>
+                            <span id="summaryNewPayment" style="font-weight: 600; color: #007bff;">UGX 0</span>
+                        </div>
+                        <hr style="margin: 10px 0;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="font-weight: 600;">Remaining Balance:</span>
+                            <span id="summaryRemainingBalance" style="font-weight: 700; color: #dc3545;">UGX 0</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="footer">
+                <button class="btn btn-outline" id="cancelPaymentBtn">Cancel</button>
+                <button class="btn btn-success" id="submitPaymentBtn">
+                    <span class="icon">💳</span> Process Payment
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/filter.js"></script>
-</body>
+    <script>
+        // Global variables
+        let currentTenantId = null;
+        let currentBalance = 0;
+        let paidThisMonth = 0;
 
+        // Open payment modal
+        document.getElementById('tpayment').addEventListener('click', function() {
+            const rawValue = document.getElementById('tid').value;
+            const tenantId = rawValue.replace('tenant id: #', '');
+            const tenantName = document.getElementById('tname').value;
+            
+            if (!tenantId) {
+                alert('No tenant selected');
+                return;
+            }
+
+            currentTenantId = tenantId;
+            openPaymentModal(tenantId, tenantName);
+        });
+
+        // Open payment modal function
+        function openPaymentModal(tenantId, tenantName) {
+            document.getElementById('paymentTenantName').textContent = tenantName;
+            document.getElementById('paymentTenantId').value = tenantId;
+            
+            // Load recent transactions and balance info
+            loadRecentTransactions(tenantId);
+            loadBalanceInfo(tenantId);
+            
+            // Show modal
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        // Close payment modal
+        document.getElementById('closePaymentModal').addEventListener('click', closePaymentModal);
+        document.getElementById('cancelPaymentBtn').addEventListener('click', closePaymentModal);
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('paymentForm').reset();
+            currentTenantId = null;
+            currentBalance = 0;
+            paidThisMonth = 0;
+            updateSummary();
+        }
+
+        // Load recent transactions
+        function loadRecentTransactions(tenantId) {
+            $.ajax({
+                url: 'get_recent_transactions.php',
+                type: 'GET',
+                data: { tenant_id: tenantId },
+                success: function(response) {
+                    const transactions = response;
+                    displayRecentTransactions(transactions);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading transactions:', error);
+                    document.getElementById('recentTransactions').innerHTML = 
+                        '<div style="text-align: center; color: #666; padding: 20px;">Error loading transactions</div>';
+                }
+            });
+        }
+
+        // Display recent transactions
+        function displayRecentTransactions(transactions) {
+            const container = document.getElementById('recentTransactions');
+            
+            if (transactions.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #666; padding: 20px;">No recent transactions found</div>';
+                return;
+            }
+
+            let html = '';
+            transactions.forEach(transaction => {
+                const date = new Date(transaction.date_paid).toLocaleDateString();
+                const amount = new Intl.NumberFormat().format(transaction.amount);
+                
+                html += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #f0f0f0;">
+                        <div>
+                            <div style="font-weight: 500;">${date}</div>
+                            <div style="font-size: 0.8rem; color: #666;">Transaction #${transaction.id}</div>
+                        </div>
+                        <div style="font-weight: 600; color: #28a745;">UGX ${amount}</div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Load balance information
+        function loadBalanceInfo(tenantId) {
+            $.ajax({
+                url: 'get_tenant_balance.php',
+                type: 'GET',
+                data: { tenant_id: tenantId },
+                success: function(response) {
+                    currentBalance = response.total_balance || 0;
+                    paidThisMonth = ((response.balance_due + response.balance_bf) - response.total_balance) || 0;
+                    updateSummary();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading balance info:', error);
+                    currentBalance = 0;
+                    paidThisMonth = 0;
+                    updateSummary();
+                }
+            });
+        }
+
+        // Update payment summary
+        function updateSummary() {
+            const paymentAmount = parseFloat(document.getElementById('paymentAmount').value) || 0;
+            const remainingBalance = Math.max(0, currentBalance - paymentAmount);
+            
+            document.getElementById('summaryTotalBalance').textContent = 'UGX ' + new Intl.NumberFormat().format(currentBalance);
+            document.getElementById('summaryPaidThisMonth').textContent = 'UGX ' + new Intl.NumberFormat().format(paidThisMonth);
+            document.getElementById('summaryNewPayment').textContent = 'UGX ' + new Intl.NumberFormat().format(paymentAmount);
+            document.getElementById('summaryRemainingBalance').textContent = 'UGX ' + new Intl.NumberFormat().format(remainingBalance);
+            
+            // Update color based on remaining balance
+            const remainingElement = document.getElementById('summaryRemainingBalance');
+            if (remainingBalance === 0) {
+                remainingElement.style.color = '#28a745';
+            } else if (remainingBalance < currentBalance) {
+                remainingElement.style.color = '#ffc107';
+            } else {
+                remainingElement.style.color = '#dc3545';
+            }
+        }
+
+        // Real-time summary update
+        document.getElementById('paymentAmount').addEventListener('input', updateSummary);
+
+        // Submit payment
+        document.getElementById('submitPaymentBtn').addEventListener('click', function() {
+            const paymentAmount = document.getElementById('paymentAmount').value;
+            const paymentDate = document.getElementById('paymentDate').value;
+            
+            if (!paymentAmount || paymentAmount <= 0) {
+                alert('Please enter a valid payment amount');
+                return;
+            }
+            
+            if (!paymentDate) {
+                alert('Please select a payment date');
+                return;
+            }
+            
+            if (confirm(`Confirm payment of UGX ${new Intl.NumberFormat().format(paymentAmount)} for this tenant?`)) {
+                processPayment();
+            }
+        });
+
+        // Process payment
+        function processPayment() {
+            const formData = new FormData(document.getElementById('paymentForm'));
+
+            $.ajax({
+                url: 'postpayment.php',
+                type: 'POST',
+                data: formData,
+                processData: false, 
+                contentType: false,  
+                success: function(response) {
+                            alert('Payment processed successfully!');
+                            closePaymentModal();
+                            location.reload();
+                            // Refresh the tenant modal to show updated balance
+                            if (typeof TReport === 'function') {
+                                TReport(currentTenantId);
+                            }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Payment error:', error);
+                    alert('Error processing payment. Please try again.');
+                }
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentModal();
+            }
+        });
+        function clearTenantModal() {
+            document.getElementById('tid').value = '';
+            document.getElementById('tname').value = '';
+            document.getElementById('tcontact').value = '';
+            document.getElementById('tlocation').value = '';
+            document.getElementById('tbalance').value = '';
+            document.getElementById('troom').value = '';
+            document.getElementById('tlandlord').value = '';
+            document.getElementById('tamount').value = '';
+            document.getElementById('tdate').value = '';
+
+            // Reset status badge too
+            const badge = document.getElementById('status-badge');
+            badge.textContent = 'Pending';
+            badge.className = 'status-badge pending';
+
+            // Reset transaction history link to default
+            document.getElementById('thistory').setAttribute('href', 'transhistry.php?tenant=');
+        }
+    </script>
+</body>
 </html>

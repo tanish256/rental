@@ -206,7 +206,7 @@ $menu_items = [
         'admin_only' => true
     ],
     [
-        'href' => 'register.php',
+        'href' => 'user_management.php',
         'icon' => '<svg class="fill" fill="#000000" width="800px" height="800px" viewBox="0 0 36 36"
                       version="1.1" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -224,9 +224,9 @@ $menu_items = [
                           class="clr-i-outline clr-i-outline-path-4"></path>
                       <rect x="0" y="0" width="36" height="36" fill-opacity="0" />
                   </svg>',
-        'text' => 'Register User',
-        'page' => 'register.php',
-        'admin_only' => true
+        'text' => 'User Management',
+        'page' => 'user_management.php',
+        'super_admin_only' => true
     ]
 ];
 ?>
@@ -241,7 +241,11 @@ $menu_items = [
             <?php foreach ($menu_items as $item): ?>
                 <?php 
                 // Skip admin-only items for non-admin users
-                if (isset($item['admin_only']) && $item['admin_only'] && $user_role != 'admin') {
+                if (isset($item['admin_only']) && $item['admin_only'] && $user_role == 'user') {
+                    continue;
+                }
+                // Skip super-admin-only items for non-super-admin users
+                if (isset($item['super_admin_only']) && $item['super_admin_only'] && $user_role != 'super-admin') {
                     continue;
                 }
                 

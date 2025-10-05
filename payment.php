@@ -1,55 +1,5 @@
 <?php 
- require_once "Vhelper.php";
- if ($_SESSION['role'] == 'admin') {
-  
- } else {
-   echo '<!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>403 Forbidden</title>
-     <style>
-         body {
-             font-family: Arial, sans-serif;
-             background-color: #f4f4f4;
-             color: #333;
-             text-align: center;
-             padding: 50px;
-         }
-         h1 {
-             font-size: 72px;
-             color: #d9534f;
-         }
-         p {
-             font-size: 18px;
-         }
-         button {
-             background-color: #007bff;
-             color: white;
-             font-size: 16px;
-             padding: 10px 20px;
-             border: none;
-             border-radius: 5px;
-             cursor: pointer;
-             text-decoration: none;
-         }
-         button:hover {
-             background-color: #0056b3;
-         }
-     </style>
- </head>
- <body>
-     <h1>403</h1>
-     <p>Forbidden: You dont have permission to access this page.</p>
-     <a href="javascript:history.back()">
-         <button>Go Back</button>
-     </a>
- </body>
- </html>
- ';
-   exit;
- }
+require 'auth-check.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,11 +8,6 @@
     <title>Rental</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<style>
-    tbody{
-        max-height: 40vh;
-    }
-</style>
 <body>
         <!-- Loader HTML -->
 <div id="loader">
@@ -79,7 +24,7 @@
         <?php include 'sidebar.php'; ?>
         <div class="dashmain">
             <!-- ----------------------------------table-------------------------------------------- -->
-            <div class="tablecard">
+            <!-- <div class="tablecard">
                 <div class="tops">
                     <div class="headers">
                         <h1>Landlords</h1>
@@ -131,7 +76,7 @@
                    
                 </tbody>
             </table>
-            </div>
+            </div> -->
             <!-- ----------------------------------table-------------------------------------------- -->
 
                         <!-- ----------------------------------table-------------------------------------------- -->

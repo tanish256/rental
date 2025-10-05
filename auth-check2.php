@@ -7,6 +7,9 @@ if (!isset($_SESSION['role'])) {
 }elseif ($_SESSION['role'] == 'user') {
         header("Location: tenant.php");
         exit();
+}elseif ($_SESSION['role'] == 'admin') {
+        header("Location: dashboard.php");
+        exit();
 }else{
 
 }

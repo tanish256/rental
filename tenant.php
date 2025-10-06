@@ -420,7 +420,7 @@
             const paymentAmount = document.getElementById('paymentAmount').value;
             const paymentDate = document.getElementById('paymentDate').value;
             
-            if (!paymentAmount || paymentAmount <= 0) {
+            if (!paymentAmount) {
                 alert('Please enter a valid payment amount');
                 return;
             }

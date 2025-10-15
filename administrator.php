@@ -8,14 +8,6 @@
     <title>Rental</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<style>
-    tbody{
-        max-height: 30vh;
-        tr{
-            cursor: unset;
-        }
-    }
-</style>
 <body>
         <!-- Loader HTML -->
 <div id="loader">
@@ -31,62 +23,76 @@
     <div class="root">
         <?php include 'sidebar.php'; ?>
         <div class="dashmain">
-            <!-- ----------------------------------table-------------------------------------------- -->
-            <div class="tablecard">
-                <div class="tops">
-                    <div class="headers">
-                        <h1>Landlords</h1>
-                        <p>active Landlords</p>
-                    </div>
-                    <div class="right">
-                        <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
-                        <div class="sort-component">
-                            <label for="sort-options" class="sort-label">Sort_by:</label>
-                            <select id="sort-options" class="sort-select" onchange="sortTable()">
-                              <option value="name-asc">Name</option>
-                              <option value="name-desc">Landlord</option>
-                              <option value="date-asc">Status</option>
-                              <option value="date-desc">Balance</option>
-                            </select>
-                          </div>
-                    </div>
-                </div>
-                <div class="tadd">
-                    <button onclick="Rlandlord()">Add</button>
-                </div>
-                
-            <table id="tenantTable">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Location</th>
-                        <th>Balance</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-// Loop through tenants and output the table rows
-foreach ($landlords as $landlord) {
-    $balances = getBalanceLandlord($landlord['id'],date("M"),date("Y"));
-    $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
-    echo "<tr>";
-    echo "<td>{$landlord['name']}</td>";
-    echo "<td class='email'>{$landlord['email']}</td>";
-    echo "<td>{$landlord['contact']}</td>";
-    echo "<td>{$landlord['location']}</td>";
-    echo "<td>ugx {$balance}</td>";
-    echo "<td class='status-edit'><div onclick='Elandlord({$landlord['id']})'>edit</div></td>";
-    echo "</tr>";
-}
-?>   
-                </tbody>
-            </table>
-            </div>
-            <!-- ----------------------------------table-------------------------------------------- -->
 
+
+            <div class="tabs-container">
+                  <div class="tabs">
+                    <button class="tab-button active" data-tab="landlords">Landlords</button>
+                    <button class="tab-button" data-tab="rooms">Rooms</button>
+                    <button class="tab-button" data-tab="tenants">Tenants</button>
+                </div>
+
+                  <!-- LANDLORDS -->
+                    <div id="landlords" class="tab-content active">
+                        <!-- ----------------------------------table-------------------------------------------- -->
+                        <div class="tablecard">
+                            <div class="tops">
+                                <div class="headers">
+                                    <h1>Landlords</h1>
+                                    <p>active Landlords</p>
+                                </div>
+                                <div class="right">
+                                    <input type="text" id="search" placeholder="Search..." onkeyup="filterTable()">
+                                    <div class="sort-component">
+                                        <label for="sort-options" class="sort-label">Sort_by:</label>
+                                        <select id="sort-options" class="sort-select" onchange="sortTable()">
+                                        <option value="name-asc">Name</option>
+                                        <option value="name-desc">Landlord</option>
+                                        <option value="date-asc">Status</option>
+                                        <option value="date-desc">Balance</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tadd">
+                                <button onclick="Rlandlord()">Add</button>
+                            </div>
+                            
+                            <table id="tenantTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Location</th>
+                                        <th>Balance</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                // Loop through tenants and output the table rows
+                                foreach ($landlords as $landlord) {
+                                    $balances = getBalanceLandlord($landlord['id'],date("M"),date("Y"));
+                                    $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
+                                    echo "<tr>";
+                                    echo "<td>{$landlord['name']}</td>";
+                                    echo "<td class='email'>{$landlord['email']}</td>";
+                                    echo "<td>{$landlord['contact']}</td>";
+                                    echo "<td>{$landlord['location']}</td>";
+                                    echo "<td>ugx {$balance}</td>";
+                                    echo "<td class='status-edit'><div onclick='Elandlord({$landlord['id']})'>edit</div></td>";
+                                    echo "</tr>";
+                                }
+                                ?>   
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- ----------------------------------table-------------------------------------------- -->
+                    </div>
+
+                      <!-- TENANTS -->
+                    <div id="tenants" class="tab-content">
                         <!-- ----------------------------------table-------------------------------------------- -->
                         <div class="tablecard">
                             <div class="tops">
@@ -99,124 +105,130 @@ foreach ($landlords as $landlord) {
                                     <div class="sort-component">
                                         <label for="sort-options" class="sort-label">Sort_by:</label>
                                         <select id="sort-options" class="sort-select">
-                                          <option value="name-asc">Name</option>
-                                          <option value="name-desc">Landlord</option>
-                                          <option value="date-asc">Status</option>
-                                          <option value="date-desc">Balance</option>
+                                            <option value="name-asc">Name</option>
+                                            <option value="name-desc">Landlord</option>
+                                            <option value="date-asc">Status</option>
+                                            <option value="date-desc">Balance</option>
                                         </select>
-                                      </div>
+                                        </div>
                                 </div>
                             </div>
                             <div class="tadd">
                                 <button onclick="RTenant()">Add</button>
                             </div>
                             
-                        <table id="tenantTable2">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Landlord</th>
-                                    <th>Phone</th>
-                                    <th>Location</th>
-                                    <th>Balance</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-// Loop through tenants and output the table rows
-foreach ($tenants as $tenant) {
-    // Get room data from $rooms array
-    $room = getRoom($tenant['room_id'], $rooms);
-    if ($room) {
-        $location = "<td>{$room['location']}</td>";
-        $landlord = getLandlord($room['landlord'], $landlords);
-        $tenant['landlord']= $landlord['name'];
-        $landlordt="<td>{$tenant['landlord']}</td>";
-    }else{
-        $location = "<td style='color:red'>not in any room</td>";
-        $tenant['landlord']="not in any room";
-        $landlordt="<td style='color:red'>{$tenant['landlord']}</td>";
-    }
-    //$location = $room['location'];
-   // $landlord = getLandlord($room['landlord'], $landlords);
-    $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
-    $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
+                            <table id="tenantTable2">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Landlord</th>
+                                        <th>Phone</th>
+                                        <th>Location</th>
+                                        <th>Balance</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                        // Loop through tenants and output the table rows
+                                    foreach ($tenants as $tenant) {
+                                        // Get room data from $rooms array
+                                        $room = getRoom($tenant['room_id'], $rooms);
+                                        if ($room) {
+                                            $location = "<td>{$room['location']}</td>";
+                                            $landlord = getLandlord($room['landlord'], $landlords);
+                                            $tenant['landlord']= $landlord['name'];
+                                            $landlordt="<td>{$tenant['landlord']}</td>";
+                                        }else{
+                                            $location = "<td style='color:red'>not in any room</td>";
+                                            $tenant['landlord']="not in any room";
+                                            $landlordt="<td style='color:red'>{$tenant['landlord']}</td>";
+                                        }
+                                        //$location = $room['location'];
+                                    // $landlord = getLandlord($room['landlord'], $landlords);
+                                        $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
+                                        $balance = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
 
-    // Replace placeholder names and balance with data from JSON
-    echo "<tr>";
-    echo "<td>{$tenant['name']}</td>";
-    echo $landlordt;
-    echo "<td>{$tenant['contact']}</td>";
-    echo $location;
-    echo "<td>ugx {$balance}</td>";
-    echo "<td class='status-edit' onclick='TEdit({$tenant['id']})'><div>edit</div></td>";
-    echo "</tr>";
-}
-?>
-                                
-                                
-                            </tbody>
-                        </table>
+                                        // Replace placeholder names and balance with data from JSON
+                                        echo "<tr>";
+                                        echo "<td>{$tenant['name']}</td>";
+                                        echo $landlordt;
+                                        echo "<td>{$tenant['contact']}</td>";
+                                        echo $location;
+                                        echo "<td>ugx {$balance}</td>";
+                                        echo "<td class='status-edit' onclick='TEdit({$tenant['id']})'><div>edit</div></td>";
+                                        echo "</tr>";
+                                    }
+                                ?>
+                                    
+                                    
+                                </tbody>
+                            </table>
                         </div>
                         <!-- ----------------------------------table-------------------------------------------- -->
+                    </div>
 
+                    <div id="rooms" class="tab-content">
                         <!-- ----------------------------------table-------------------------------------------- -->
-            <div class="tablecard">
-                <div class="tops">
-                    <div class="headers">
-                        <h1>Rooms</h1>
-                        <p>all Rooms</p>
-                    </div>
-                    <div class="right">
-                        <input type="text" id="search3" placeholder="Search..." onkeyup="filterTable3()">
-                        <div class="sort-component">
-                            <label for="sort-options" class="sort-label">Sort_by:</label>
-                            <select id="sort-options" class="sort-select" onchange="sortTable()">
-                                <option value="name-asc">Name</option>
-                                <option value="landlord-asc">Landlord</option>
-                                <option value="status-asc">Status</option>
-                                <option value="balance-asc">Balance</option>
-                            </select>
+                        <div class="tablecard">
+                            <div class="tops">
+                                <div class="headers">
+                                    <h1>Rooms</h1>
+                                    <p>all Rooms</p>
+                                </div>
+                                <div class="right">
+                                    <input type="text" id="search3" placeholder="Search..." onkeyup="filterTable3()">
+                                    <div class="sort-component">
+                                        <label for="sort-options" class="sort-label">Sort_by:</label>
+                                        <select id="sort-options" class="sort-select" onchange="sortTable()">
+                                            <option value="name-asc">Name</option>
+                                            <option value="landlord-asc">Landlord</option>
+                                            <option value="status-asc">Status</option>
+                                            <option value="balance-asc">Balance</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="tenantTable3">
+                                <thead>
+                                    <tr>
+                                        <th>Room Id</th>
+                                        <th>Landlord</th>
+                                        <th>Status</th>
+                                        <th>Location</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                    // Loop through tenants and output the table rows
+                                    foreach ($rooms as $room) {
+                                        // Get room data from $rooms array
+                                        $landlord = getLandlord($room['landlord'], $landlords);
+                                        echo "<tr>";
+                                        echo "<td>#{$room['id']}</td>";
+                                        echo "<td>{$landlord['name']}</td>";
+                                        if (roomHasTenant($pdo, $room['id'])) {
+                                            echo "<td class='status-active'><div>occupied</div></td>";
+                                        } else {
+                                            echo "<td class='status-inactive'><div>vacant</div></td>";
+                                        }
+                                        // echo "<td>{$room['roomcondition']}</td>";
+                                        echo "<td>{$room['location']}</td>";
+                                        echo "<td>ugx " . number_format($room['amount'], 0, '.', ',') . "</td>";
+                                        echo "<td class='status-edit' onclick='Redit({$room['id']})'><div>edit</div></td>";
+                                        echo "</tr>";
+                                    }
+                                ?> 
+                                </tbody>
+                            </table>
                         </div>
+                        <!-- ----------------------------------table-------------------------------------------- -->
                     </div>
-                </div>
-            <table id="tenantTable3">
-                <thead>
-                    <tr>
-                        <th>Room Id</th>
-                        <th>Landlord</th>
-                        <th>Status</th>
-                        <th>Location</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-// Loop through tenants and output the table rows
-foreach ($rooms as $room) {
-    // Get room data from $rooms array
-    $landlord = getLandlord($room['landlord'], $landlords);
-    echo "<tr>";
-    echo "<td>#{$room['id']}</td>";
-    echo "<td>{$landlord['name']}</td>";
-    if (roomHasTenant($pdo, $room['id'])) {
-        echo "<td class='status-active'><div>occupied</div></td>";
-    } else {
-        echo "<td class='status-inactive'><div>vacant</div></td>";
-    }
-    // echo "<td>{$room['roomcondition']}</td>";
-    echo "<td>{$room['location']}</td>";
-    echo "<td>ugx " . number_format($room['amount'], 0, '.', ',') . "</td>";
-    echo "<td class='status-edit' onclick='Redit({$room['id']})'><div>edit</div></td>";
-    echo "</tr>";
-}
-?> 
-                </tbody>
-            </table>
             </div>
-            <!-- ----------------------------------table-------------------------------------------- -->
+
+            
 
         </div>
     </div>
@@ -359,7 +371,7 @@ foreach ($rooms as $room) {
             }
         }
     </script>
-        <script>
+    <script>
         function Ldel(tid) {
             if (confirm('Are you sure you want to delete Landlord #'+tid)) {
                 var formData = {
@@ -384,5 +396,20 @@ foreach ($rooms as $room) {
             }
         }
     </script>
+    <script>
+        document.querySelectorAll(".tab-button").forEach(button => {
+            button.addEventListener("click", () => {
+            // remove active class from all buttons and content
+            document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+            document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+            
+            // activate the clicked tab and its content
+            button.classList.add("active");
+            const tabId = button.getAttribute("data-tab");
+            document.getElementById(tabId).classList.add("active");
+            });
+        });
+    </script>
+
 </body>
 </html>

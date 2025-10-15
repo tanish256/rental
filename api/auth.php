@@ -1,6 +1,6 @@
 <?php
 // Start the session
-require 'config.php';
+require '../helpers/config.php';
 session_start();
 
 try {

@@ -1,5 +1,5 @@
 <?php 
-require "Vhelper.php";
+require "../helpers/Vhelper.php";
 ?>
 
 <!DOCTYPE html>
@@ -554,9 +554,9 @@ require "Vhelper.php";
         </div>
     </div>
 
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/html2canvas.min.js"></script>
-    <script src="js/jspdf.umd.min.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/html2canvas.min.js"></script>
+    <script src="../js/jspdf.umd.min.js"></script>
 
     <script>
         function updateDateTime() {

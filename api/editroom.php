@@ -1,5 +1,5 @@
 <?php
-require 'config.php'; // Include your database connection
+require '../helpers/config.php'; // Include your database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);

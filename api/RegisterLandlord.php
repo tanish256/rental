@@ -3,7 +3,7 @@ error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
 ini_set('display_errors', 0);  // Don't display errors on the page
 ini_set('log_errors', 1);      // Log errors to a file
 ini_set('error_log', '/error.log'); // Optional: specify a log file
-require 'config.php'; // Include your database connection
+require '../helpers/config.php'; // Include your database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);

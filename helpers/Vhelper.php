@@ -3,14 +3,14 @@ date_default_timezone_set('Africa/Kampala');
 session_start();
 if (!isset($_SESSION['loggedin'])) {
     // Redirect to login page if not logged in
-    header("Location: login.php");
+    header("Location: ../pages/login.php");
     exit;
 }
-error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
-ini_set('display_errors', 0);  // Don't display errors on the page
-ini_set('log_errors', 1);      // Log errors to a file
-ini_set('error_log', '/error.log'); // Optional: specify a log file
-require 'config.php';
+// error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+// ini_set('display_errors', 0);  // Don't display errors on the page
+// ini_set('log_errors', 1);      // Log errors to a file
+// ini_set('error_log', '/error.log'); // Optional: specify a log file
+include 'config.php';
 $year = date("Y");
 $month = date("M");
 
@@ -274,7 +274,7 @@ function getcomission($landlord,$paid,$no_tenants) : int {
 
 
 //never touch it handles monthly balances
-$file = 'year.txt';
+$file = '../year.txt';
 $currentYearMonth = date('Y-M');
 if (file_exists($file)) {
     // Read the last year-month from the file

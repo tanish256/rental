@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../helpers/config.php';
 
 header('Content-Type: application/json');
 $current_month = date('M');

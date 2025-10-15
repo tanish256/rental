@@ -1,6 +1,6 @@
 <?php
 // collect_payment.php
-require 'config.php';
+require '../helpers/config.php';
 // Ensure data is sent via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get POST data

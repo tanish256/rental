@@ -1,12 +1,12 @@
 <?php 
- require "auth-check.php";
+ require "../helpers/auth-check.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Rental</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
         <!-- Loader HTML -->
@@ -21,7 +21,7 @@
   });
 </script>
     <div class="root">
-        <?php include 'sidebar.php'; ?>
+        <?php include '../components/sidebar.php'; ?>
         <div class="dashmain">
 
 
@@ -344,9 +344,9 @@
         
     </div>
 
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/filter.js"></script>
-    <script src="js/script.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/filter.js"></script>
+    <script src="../js/script.js"></script>
     <script>
         function Tdel(tid) {
             if (confirm('Are you sure you want to delete Tenant #'+tid)) {
@@ -355,7 +355,7 @@
                     del: 1
                 };
                 $.ajax({
-                    url: "RegisterTenant.php",
+                    url: "../api/RegisterTenant.php",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(formData),
@@ -379,7 +379,7 @@
                     del: 1
                 };
                 $.ajax({
-                    url: "RegisterLandlord.php",
+                    url: "../api/RegisterLandlord.php",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(formData),

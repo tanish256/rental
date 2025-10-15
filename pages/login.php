@@ -1,10 +1,10 @@
-<?php 
-session_start();
-if (isset($_SESSION['role'])) {
-    // Redirect to login page if not logged in
-    header("Location: dashboard.php");
-    exit;
-}
+<?php
+    session_start();
+    if (isset($_SESSION['role'])) {
+        // Redirect to login page if not logged in
+        header('Location: dashboard.php');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -18,12 +18,12 @@ if (isset($_SESSION['role'])) {
             margin:0;
         }
         ::placeholder {
-  color: #3D3C42;
-}
+        color: #3D3C42;
+        }
 
-::-ms-input-placeholder { /* Edge 12-18 */
-  color: #3D3C42;
-}
+        ::-ms-input-placeholder { /* Edge 12-18 */
+        color: #3D3C42;
+        }
         .root{
             display:flex;
             background:#FAFBFF;
@@ -114,7 +114,7 @@ if (isset($_SESSION['role'])) {
         <div class="login-main">
             <div class="brand">
                 <div class="logo">
-                    <img src="assets/rental.svg
+                    <img src="../assets/rental.svg
                     " alt="">
             </div>
             v0.1
@@ -123,53 +123,53 @@ if (isset($_SESSION['role'])) {
                 <h3>login</h3> 
                 <p>login to access rental</p>
                 <?php
-// Start the session
-require 'config.php';
+                // Start the session
+                require '../helpers/config.php';
 
-try {
-    // Create a PDO connection
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Check if the form was submitted
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Get the username and password from the form
-        $inputUsername = $_POST['username'];
-        $inputPassword = $_POST['password'];
+                try {
+                    // Create a PDO connection
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Prepare the SQL statement to get the user by username
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE user_name = :username and status = 'active'");
-        $stmt->execute(['username' => $inputUsername]);
+                    // Check if the form was submitted
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        // Get the username and password from the form
+                        $inputUsername = $_POST['username'];
+                        $inputPassword = $_POST['password'];
 
-        // Fetch the user data
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                        // Prepare the SQL statement to get the user by username
+                        $stmt = $pdo->prepare("SELECT * FROM users WHERE user_name = :username and status = 'active'");
+                        $stmt->execute(['username' => $inputUsername]);
 
-        // Check if the user exists and verify the password
-        if ($user && password_verify($inputPassword, $user['pass'])) {
-            // Set session variables based on the username and role
-            $_SESSION['loggedin'] = true;
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['role'] = $user['role'];
-            $_SESSION['user_id'] = $user['id'];
+                        // Fetch the user data
+                        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Redirect to the appropriate page based on the role
-            if ($_SESSION['role'] == 'admin') {
-                //echo "logged in";
-                header("Location: dashboard.php");
-            } else {
-                //echo "failed";
-                header("Location: dashboard.php");
-            }
-            exit;
-        } else {
-            // Invalid login
-            echo "<p style='color:red; margin:0; font-size:14px;'>Invalid username or password!</p>";
-        }
-    }
-} catch (PDOException $e) {
-    // Handle any errors with the database connection
-    echo "Error: " . $e->getMessage();
-}
-?>
+                        // Check if the user exists and verify the password
+                        if ($user && password_verify($inputPassword, $user['pass'])) {
+                            // Set session variables based on the username and role
+                            $_SESSION['loggedin'] = true;
+                            $_SESSION['name'] = $user['name'];
+                            $_SESSION['role'] = $user['role'];
+                            $_SESSION['user_id'] = $user['id'];
+
+                            // Redirect to the appropriate page based on the role
+                            if ($_SESSION['role'] == 'admin') {
+                                // echo "logged in";
+                                header('Location: dashboard.php');
+                            } else {
+                                // echo "failed";
+                                header('Location: dashboard.php');
+                            }
+                            exit;
+                        } else {
+                            // Invalid login
+                            echo "<p style='color:red; margin:0; font-size:14px;'>Invalid username or password!</p>";
+                        }
+                    }
+                } catch (PDOException $e) {
+                    // Handle any errors with the database connection
+                    echo 'Error: ' . $e->getMessage();
+                }
+                ?>
 
                 <input type="text" name="username" placeholder="username">
                 <input type="password" name="password" placeholder="password">

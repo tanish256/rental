@@ -1,5 +1,5 @@
 <?php
-require 'auth-check2.php';
+require '../helpers/auth-check2.php';
 
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -161,8 +161,8 @@ $users = getAllUsers($pdo, $search, $sort);
 <head>
     <meta charset="UTF-8">
     <title>User Management - Rental System</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 
 <body>
@@ -172,7 +172,7 @@ $users = getAllUsers($pdo, $search, $sort);
     </div>
 
     <div class="root">
-        <?php include 'sidebar.php'; ?>
+        <?php include '../components/sidebar.php'; ?>
         <div class="dashmain">
             <div class="headers">
                 <h1>User Management</h1>
@@ -494,7 +494,7 @@ $users = getAllUsers($pdo, $search, $sort);
         // Open modal for editing an existing user
         function editUser(userId) {
             // Fetch user data via AJAX
-            fetch(`get_user.php?id=${userId}`)
+            fetch(`../api/get_user.php?id=${userId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

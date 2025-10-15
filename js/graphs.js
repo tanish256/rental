@@ -1,4 +1,4 @@
-fetch('graphdata.php?MIG')  // Replace with actual PHP endpoint
+fetch('../api/graphdata.php?MIG')  // Replace with actual PHP endpoint
   .then(response => response.json())
   .then(data => {
       var optionsMIG = {
@@ -45,7 +45,7 @@ fetch('graphdata.php?MIG')  // Replace with actual PHP endpoint
   })
   .catch(error => console.error('Error fetching data:', error));
 
-   fetch('graphdata.php?MCP')  // Replace with actual PHP endpoint
+   fetch('../api/graphdata.php?MCP')  // Replace with actual PHP endpoint
   .then(response => response.json())
   .then(data => {
       var optionsMCP = {

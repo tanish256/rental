@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../helpers/config.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['room_id'])) {

@@ -2,13 +2,13 @@
 require 'Vhelper.php';
 
 if (!isset($_SESSION['role'])) {
-    header("Location: login.php");
+    header("Location: ../pages/login.php");
     exit();
 }elseif ($_SESSION['role'] == 'user') {
-        header("Location: tenant.php");
+        header("Location: ../pages/tenant.php");
         exit();
 }elseif ($_SESSION['role'] == 'admin') {
-        header("Location: dashboard.php");
+        header("Location: ../pages/dashboard.php");
         exit();
 }else{
 

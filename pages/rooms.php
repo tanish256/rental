@@ -1,12 +1,12 @@
 <?php 
-require 'Vhelper.php';
+require '../helpers/Vhelper.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Rental</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
         <!-- Loader HTML -->
@@ -21,7 +21,7 @@ require 'Vhelper.php';
   });
 </script>
     <div class="root">
-        <?php include 'sidebar.php'; ?>
+        <?php include '../components/sidebar.php'; ?>
         <div class="dashmain">
 
             <div class="summary">
@@ -29,7 +29,7 @@ require 'Vhelper.php';
                 <!-- ...................................summary.................................. -->
                 <div class="sum">
                     <div class="circle">
-                        <img src="assets/profile-2user.svg" alt="">
+                        <img src="../assets/profile-2user.svg" alt="">
                     </div>
                     <div class="inf">
                         <h3>Total Tenants</h3>
@@ -40,7 +40,7 @@ require 'Vhelper.php';
     
                 <div class="sum">
                     <div class="circle">
-                        <img src="assets/profile-tick.svg" alt="">
+                        <img src="../assets/profile-tick.svg" alt="">
                     </div>
                     <div class="inf">
                         <h3>Total Landlords</h3>
@@ -51,7 +51,7 @@ require 'Vhelper.php';
     
                 <div class="sum">
                     <div class="circle">
-                        <img src="assets/monitor.svg" alt="">
+                        <img src="../assets/monitor.svg" alt="">
                     </div>
                     <div class="inf">
                     <h3>Vacant Rooms</h3>
@@ -96,33 +96,33 @@ require 'Vhelper.php';
                 </thead>
                 <tbody>
                 <?php
-// Loop through tenants and output the table rows
-foreach ($rooms as $room) {
-    // Get room data from $rooms array
-    $landlord = getLandlord($room['landlord'], $landlords);
-    $tenant = getTenantByRoom($room['id']);
-    $isOccupied = roomHasTenant($pdo, $room['id']);
-    $statusClass = $isOccupied ? 'status-active' : 'status-inactive';
-    $statusText = $isOccupied ? 'occupied' : 'vacant';
-    
-    echo "<tr class='room-row' 
-          data-room-id='{$room['id']}'
-          data-room-location='{$room['location']}'
-          data-room-amount='{$room['amount']}'
-          data-landlord-name='{$landlord['name']}'
-          data-tenant-name='{$tenant}'
-          data-is-occupied='" . ($isOccupied ? 'true' : 'false') . "'
-          data-status='{$statusText}'>";
-    
-    echo "<td style='width:9%'>#{$room['id']}</td>";
-    echo "<td>{$landlord['name']}</td>";
-    echo "<td style='width:19%'>{$tenant}</td>";
-    echo "<td>{$room['location']}</td>";
-    echo "<td>ugx " . number_format($room['amount'], 0, '.', ',') . "</td>";
-    echo "<td class='{$statusClass}'><div>{$statusText}</div></td>";
-    echo "</tr>";
-}
-?>
+                    // Loop through tenants and output the table rows
+                    foreach ($rooms as $room) {
+                        // Get room data from $rooms array
+                        $landlord = getLandlord($room['landlord'], $landlords);
+                        $tenant = getTenantByRoom($room['id']);
+                        $isOccupied = roomHasTenant($pdo, $room['id']);
+                        $statusClass = $isOccupied ? 'status-active' : 'status-inactive';
+                        $statusText = $isOccupied ? 'occupied' : 'vacant';
+                        
+                        echo "<tr class='room-row' 
+                            data-room-id='{$room['id']}'
+                            data-room-location='{$room['location']}'
+                            data-room-amount='{$room['amount']}'
+                            data-landlord-name='{$landlord['name']}'
+                            data-tenant-name='{$tenant}'
+                            data-is-occupied='" . ($isOccupied ? 'true' : 'false') . "'
+                            data-status='{$statusText}'>";
+                        
+                        echo "<td style='width:9%'>#{$room['id']}</td>";
+                        echo "<td>{$landlord['name']}</td>";
+                        echo "<td style='width:19%'>{$tenant}</td>";
+                        echo "<td>{$room['location']}</td>";
+                        echo "<td>ugx " . number_format($room['amount'], 0, '.', ',') . "</td>";
+                        echo "<td class='{$statusClass}'><div>{$statusText}</div></td>";
+                        echo "</tr>";
+                    }
+                ?>
                     
                     
                 </tbody>
@@ -192,7 +192,7 @@ foreach ($rooms as $room) {
         </div>
     </div>
 
-    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
     <script>
         // Room deletion functionality
         let currentRoomId = null;
@@ -310,7 +310,7 @@ foreach ($rooms as $room) {
 
 
             $.ajax({
-                url: 'delete_room.php',
+                url: '../api/delete_room.php',
                 type: 'POST',
                 data: { 
                     room_id: currentRoomId,
@@ -367,6 +367,6 @@ foreach ($rooms as $room) {
             }, 3000);
         }
     </script>
-    <script src="js/filter.js"></script>
+    <script src="../js/filter.js"></script>
 </body>
 </html>

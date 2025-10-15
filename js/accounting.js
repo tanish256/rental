@@ -8,7 +8,7 @@ $(document).ready(function () {
   $('.sub-row').remove();
 }else{
         $.ajax({
-            url: 'Vhelper.php', // Replace with actual API endpoint
+            url: '../helpers/Vhelper.php', // Replace with actual API endpoint
             method: 'GET',
             data: { blandlord: landlordId }, // Send landlord ID as parameter
             dataType: 'json',

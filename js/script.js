@@ -27,7 +27,7 @@ $(document).ready(function () {
         };
         
         $.ajax({
-            url: "RegisterLandlord.php",
+            url: "../api/RegisterLandlord.php",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(formData),
@@ -55,7 +55,7 @@ $(document).ready(function () {
         };
         
         $.ajax({
-            url: "RegisterLandlord.php",
+            url: "../api/RegisterLandlord.php",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(formData),
@@ -84,7 +84,7 @@ $("#Editrrom").submit(function(event){
     };
     
     $.ajax({
-        url: "editroom.php",
+        url: "../api/editroom.php",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(formData),
@@ -110,7 +110,7 @@ function Rdel(){
         };
         
         $.ajax({
-            url: "editroom.php",
+            url: "../api/editroom.php",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(formData),
@@ -132,7 +132,7 @@ function Rdel(){
 function TReport(tenantId) {
     $('.Tparent.tenant.edit').css('display', 'flex');
     $.ajax({
-        url: 'Vhelper.php',
+        url: '../helpers/Vhelper.php',
         type: 'GET',
         data: { tenant: tenantId }, // Send the tenant ID as a GET parameter
         dataType: 'json',
@@ -175,7 +175,7 @@ function TReport(tenantId) {
 function TEdit(tenantId) {
     $('.Tparent.tenant.edit').css('display', 'flex');
     $.ajax({
-        url: 'Vhelper.php',
+        url: '../helpers/Vhelper.php',
         type: 'GET',
         data: { tenant: tenantId }, // Send the tenant ID as a GET parameter
         dataType: 'json',
@@ -204,7 +204,7 @@ function TEdit(tenantId) {
 function Redit(id) {
     $('.Tparent.room').css('display', 'flex');
     $.ajax({
-        url: 'Vhelper.php',
+        url: '../helpers/Vhelper.php',
         type: 'GET',
         data: { room: id }, // Send the tenant ID as a GET parameter
         dataType: 'json',
@@ -230,7 +230,7 @@ function Redit(id) {
 function Elandlord(id) {
     $('.Tparent.landlord.e').css('display', 'flex');
 $.ajax({
-url: 'Vhelper.php',
+url: '../helpers/Vhelper.php',
 type: 'GET',
 data: { landlord: id }, // Send the tenant ID as a GET parameter
 dataType: 'json',
@@ -260,64 +260,64 @@ console.error('Error:', error);
 function Rlandlord() {
     $('.Tparent.landlord.r').css('display', 'flex');
         
-    }
+}
 
-    function RTenant() {
-        $('.Tparent.tenant.r').css('display', 'flex');
+function RTenant() {
+    $('.Tparent.tenant.r').css('display', 'flex');
+
+}
+$("#RegisterT").submit(function(event){
+    event.preventDefault();
     
-    }
-    $("#RegisterT").submit(function(event){
-        event.preventDefault();
-        
-        var formData = {
-            id: $("input[name='trid']").val(),
-            name: $("input[name='trname']").val(),
-            room: $("input[name='trroom']").val(),
-            contact: $("input[name='trcontact']").val()
-        };
-        
-        $.ajax({
-            url: "RegisterTenant.php",
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(formData),
-            success: function(response){
-                console.log(response.message);
-                $('.Tparent.tenant.r').hide();
-                    location.reload();
-                
-            },
-            error: function(xhr, status, error){
-                alert("Error: " + xhr.responseText);
-            }
-        });
+    var formData = {
+        id: $("input[name='trid']").val(),
+        name: $("input[name='trname']").val(),
+        room: $("input[name='trroom']").val(),
+        contact: $("input[name='trcontact']").val()
+    };
+    
+    $.ajax({
+        url: "../api/RegisterTenant.php",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        success: function(response){
+            console.log(response.message);
+            $('.Tparent.tenant.r').hide();
+                location.reload();
+            
+        },
+        error: function(xhr, status, error){
+            alert("Error: " + xhr.responseText);
+        }
     });
-    $("#EditTenant").submit(function(event){
-        event.preventDefault();
-        
-        var formData = {
-            id: $("input[name='tid']").val(),
-            name: $("input[name='tname']").val(),
-            room: $("input[name='troom']").val(),
-            contact: $("input[name='tcontact']").val()
-        };
-        
-        $.ajax({
-            url: "RegisterTenant.php",
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(formData),
-            success: function(response){
-                console.log(response.message);
-                $('.Tparent.tenant.edit').hide();
-                    location.reload();
-                
-            },
-            error: function(xhr, status, error){
-                alert("Error: " + xhr.responseText);
-            }
-        });
+});
+$("#EditTenant").submit(function(event){
+    event.preventDefault();
+    
+    var formData = {
+        id: $("input[name='tid']").val(),
+        name: $("input[name='tname']").val(),
+        room: $("input[name='troom']").val(),
+        contact: $("input[name='tcontact']").val()
+    };
+    
+    $.ajax({
+        url: "../api/RegisterTenant.php",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        success: function(response){
+            console.log(response.message);
+            $('.Tparent.tenant.edit').hide();
+                location.reload();
+            
+        },
+        error: function(xhr, status, error){
+            alert("Error: " + xhr.responseText);
+        }
     });
-    $('#lrooms').keydown(function(event) {
-    event.preventDefault(); // Prevent typing any keys
+});
+$('#lrooms').keydown(function(event) {
+event.preventDefault(); // Prevent typing any keys
 });

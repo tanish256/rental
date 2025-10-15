@@ -1,6 +1,6 @@
 <?php
 
-include_once 'config.php';
+include_once '../helpers/config.php';
 $year = date('Y');
 header('Content-Type: application/json');
 

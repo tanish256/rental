@@ -1,5 +1,5 @@
 <?php
-require 'auth-check.php';
+require '../helpers/auth-check.php';
 
 header('Content-Type: application/json');
 

@@ -78,7 +78,7 @@ require 'auth-check.php';
             <!-- ................................summary.................................... -->
 
             <!-- ..............................................metrics1....................... -->
-            <div class="metrics" <?php if ($_SESSION['role'] == 'admin'){}else {echo "Style='display:none;'";}?>>
+            <div class="metrics">
                 <div class="card">
                     <p>UGX <?php echo number_format($total_balance_bfw, 0, '.', ',')?></p>
                     <h3><span style="color:red">Balance b/F</span></h3>

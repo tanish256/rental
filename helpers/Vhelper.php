@@ -75,24 +75,17 @@ foreach ($tenants as $tenant) {
     $balance_bf = isset($balances[0]['balance_bf']) && $balances[0]['balance_bf'] >= 0 ? $balances[0]['balance_bf'] : 0;
     $balance_due = isset($balances[0]['balance_due']) && $balances[0]['balance_due'] >= 0 ? $balances[0]['balance_due'] : 0;
     $balance = isset($balances[0]['total_balance']) && $balances[0]['total_balance'] >= 0 ? $balances[0]['total_balance'] : 0;
+    $balance2 = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
+
+    // Add to the running totals (can now include negatives)
+    $total_balance2 += $balance2;
 
     // Add to the running totals
     $total_balance_bfw += $balance_bf;
     $total_balance_duew += $balance_due;
     $total_balance += $balance;
 }
-foreach ($tenants as $tenant) {
-    $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
-    
-    $balance_bf2 = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
-    $balance_due2 = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
-    $balance2 = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
 
-    // Add to the running totals (can now include negatives)
-    $total_balance_bfw2 += $balance_bf2;
-    $total_balance_duew2 += $balance_due2;
-    $total_balance2 += $balance2;
-}
 
 function getRoom($room_id, $rooms) {
     foreach ($rooms as $room) {

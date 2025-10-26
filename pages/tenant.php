@@ -155,6 +155,14 @@
         <div class="footer">
             <?php
             if($_SESSION['role'] != 'user') {
+                echo '<style>.btn-red{background:red;color:white;}</style>';
+                echo '<a id="tdisable" class="btn btn-red">
+                <span class="icon">🗑️</span> disable
+            </a>';
+                }
+             ?>
+            <?php
+            if($_SESSION['role'] != 'user') {
                 echo '<a id="tpayment" class="btn btn-success">
                 <span class="icon">💵</span> payment
             </a>';
@@ -245,7 +253,30 @@
         let currentTenantId = null;
         let currentBalance = 0;
         let paidThisMonth = 0;
+        document.getElementById('tdisable').addEventListener('click', function() {
+            const rawValue = document.getElementById('tid').value;
+            const tenantId = rawValue.replace('tenant id: #', '');
+            if (!tenantId) {
+                alert('No tenant selected');
+                return;
+            }
 
+            if (confirm('Are you sure you want to disable this tenant? This action cannot be undone.')) {
+                $.ajax({
+                    url: '../api/RegisterTenant.php',
+                    type: 'POST',
+                    data: { id: tenantId,del: true },
+                    success: function(response) {
+                        alert('Tenant disable successfully!');
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error deleting tenant:', error);
+                        alert('Error deleting tenant. Please try again.');
+                    }
+                });
+            }
+        });
         // Open payment modal
         document.getElementById('tpayment').addEventListener('click', function() {
             const rawValue = document.getElementById('tid').value;

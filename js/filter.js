@@ -12,6 +12,20 @@ function filterTable() {
         row.style.display = match ? '' : 'none';
     });
 }
+function filterTablel() {
+    var input = document.getElementById('search').value.toLowerCase();
+    var rows = document.querySelectorAll('#landlordTable tbody tr');
+    rows.forEach(row => {
+        var cells = row.getElementsByTagName('td');
+        var match = false;
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].textContent.toLowerCase().includes(input)) {
+                match = true;
+            }
+        }
+        row.style.display = match ? '' : 'none';
+    });
+}
 function filterTable2() {
     var input = document.getElementById('search2').value.toLowerCase();
     var rows = document.querySelectorAll('#tenantTable2 tbody tr');

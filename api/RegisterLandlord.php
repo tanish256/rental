@@ -6,13 +6,12 @@ ini_set('error_log', '/error.log'); // Optional: specify a log file
 require '../helpers/config.php'; // Include your database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $name = $data['name'];
-    $contact = $data['contact'];
-    $email = $data['email'];
-    $location = $data['location'];
-    if (isset($data['del'])) {
-        $idi = $data['id'];
+    $name = $_POST['name'];
+    $contact = $_POST['contact'];
+    $email = $_POST['email'];
+    $location = $_POST['location'];
+    if (isset($_POST['del'])) {
+        $idi = $_POST['id'];
         try {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sqld = "DELETE FROM landlord WHERE id = :id";
@@ -23,45 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch (PDOException $e) {
             echo json_encode(["error" => $e->getMessage()]);
         }
-    }elseif($data['id']){
-        //$rooms =$data['rooms'];
-        $landlord_id = $data['id'];
-        $rooms_count = isset($data['rooms']) ? intval($data['rooms']) : 0;
-        if ($rooms_count >= 1) {
-                $insert_query = "INSERT INTO rooms (landlord,location) VALUES (:landlord_id,:location)";
-                $insert_stmt = $pdo->prepare($insert_query);
-    
-                for ($i = 0; $i < $rooms_count; $i++) {
-                    $insert_stmt->execute([
-                        'location' =>$location,
-                        'landlord_id' => $landlord_id
-                    ]);
-                }
-                echo "$rooms_count rooms added for landlord ID $landlord_id.";
-                if (empty(getBalanceLandlord($landlord_id,date("M"),date("Y"))[0])) {
-                    //balance to date already exists
-                    try {
-                        //code...
-                        $daten =date("Y");
-                        $monthn =date("M");
-                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $insert_query = "INSERT INTO balances (`landlord`, `month`, `year`) VALUES (:landlord_id, :month, :year)";
-                        $insertb_stmt = $pdo->prepare($insert_query);
-                        $insertb_stmt->bindParam(':landlord_id', $landlord_id, PDO::PARAM_INT);
-                        $insertb_stmt->bindParam(':month', $monthn, PDO::PARAM_INT);
-                        $insertb_stmt->bindParam(':year', $daten, PDO::PARAM_INT);
-                        $insertb_stmt->execute();
-                        echo json_encode(["message" => "balance added"]);
-                    } catch (PDOException $e) {
-                        echo json_encode(["error" => $e->getMessage()]);
-                    }
-                }else{
-                    echo "balance exists";
-                    
-                }
-
-        }
-        echo json_encode(["message" => "editing landlord"]);
+    }elseif($_POST['id']){
+        $landlord_id = $_POST['id'];
         try {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
@@ -69,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $pdo->prepare($sql);
             
             $stmt->execute([
-                ':id' => $data['id'],
+                ':id' => $_POST['id'],
                 ':name' => $name,
                 ':contact' => $contact,
                 ':email' => $email,

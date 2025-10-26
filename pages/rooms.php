@@ -201,14 +201,14 @@ require '../helpers/Vhelper.php';
         // Add click event to room rows
         document.addEventListener('DOMContentLoaded', function() {
             const roomRows = document.querySelectorAll('.room-row');
-            
-            roomRows.forEach(row => {
+            <?php if($_SESSION['role'] != 'user') {
+                echo "roomRows.forEach(row => {
                 row.addEventListener('click', function(e) {
                     const roomId = this.getAttribute('data-room-id');
                     const roomData = getRoomDataFromRow(this);
                     openDeleteModal(roomId, roomData);
                 });
-            });
+            });"; }?>
 
             // Modal event listeners
             document.getElementById('closeDeleteModal').addEventListener('click', closeDeleteModal);

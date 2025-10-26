@@ -80,6 +80,12 @@
     </div>
 
     <div class="card">
+    <p>UGX <?php echo number_format(($total_balance_duew+$total_balance_bfw-$total_balance)-($total_balance_duew2+$total_balance_bfw2-$total_balance2), 0, '.', ',') ?></p>
+    <h3>Upfront Payment</h3>
+    <p>this month</p>
+    </div>
+
+    <div class="card">
         <p>UGX <?php echo number_format($total_balance, 0, '.', ',')  ?></p>
         <h3>Total Balance</h3>
         <p>this month</p>

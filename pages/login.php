@@ -117,7 +117,7 @@
                     <img src="../assets/rental.svg
                     " alt="">
             </div>
-            v0.1
+            v0.6
             </div>
             <form action="login.php" method="POST">
                 <h3>login</h3> 

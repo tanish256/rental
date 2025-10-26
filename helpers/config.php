@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+ini_set('display_errors', 0);  // Don't display errors on the page
+ini_set('log_errors', 1);      // Log errors to a file
+ini_set('error_log', '/error.log'); // Optional: specify a log file
 function loadEnv($file) {
     if (!file_exists($file)) {
         throw new Exception(".env file not found at: " . $file);

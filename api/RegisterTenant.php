@@ -6,24 +6,23 @@ ini_set('error_log', '/error.log'); // Optional: specify a log file
 require '../helpers/config.php'; // Include your database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $name = $data['name'];
-    $contact = $data['contact'];
-    $room_id = isset($data['room']) ? intval($data['room']) : 0;
-    if (isset($data['del'])) {
-        $idi = $data['id'];
+    $name = $_POST['name'];
+    $contact = $_POST['contact'];
+    $room_id = isset($_POST['room_id']) ? intval($_POST['room_id']) : 0;
+    if (isset($_POST['del'])) {
+        $idi = $_POST['id'];
         try {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sqld = "DELETE FROM tenants WHERE id = :id";
+            $sqld = "UPDATE tenants SET status = 'inactive', room_id = null WHERE id = :id";
             $stmtd = $pdo->prepare($sqld);
             $stmtd->bindParam(':id', $idi, PDO::PARAM_INT);
             $stmtd->execute();
-            echo json_encode(["message" => "delete initiated"]);
+            echo json_encode(["message" => "tenant disabled"]);
         } catch (PDOException $e) {
             echo json_encode(["error" => $e->getMessage()]);
         }
-    }elseif (isset($data['id'])) {
-        if ($data['room']) {
+    }elseif (isset($_POST['id'])) {
+        if ($_POST['room_id']) {
             try {
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
@@ -31,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt = $pdo->prepare($sql);
                 
                 $stmt->execute([
-                    ':id' => $data['id'],
+                    ':id' => $_POST['id'],
                     ':name' => $name,
                     ':room' => $room_id,
                     ':contact' => $contact
@@ -50,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt = $pdo->prepare($sql);
                 
                 $stmt->execute([
-                    ':id' => $data['id'],
+                    ':id' => $_POST['id'],
                     ':name' => $name,
                     ':contact' => $contact
                 ]);

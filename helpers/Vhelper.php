@@ -6,10 +6,10 @@ if (!isset($_SESSION['loggedin'])) {
     header("Location: ../pages/login.php");
     exit;
 }
-// error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
-// ini_set('display_errors', 0);  // Don't display errors on the page
-// ini_set('log_errors', 1);      // Log errors to a file
-// ini_set('error_log', '/error.log'); // Optional: specify a log file
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+ini_set('display_errors', 0);  // Don't display errors on the page
+ini_set('log_errors', 1);      // Log errors to a file
+ini_set('error_log', '/error.log'); // Optional: specify a log file
 include 'config.php';
 $year = date("Y");
 $month = date("M");
@@ -52,7 +52,7 @@ $vacant_stmt->execute();
 $vacant = $vacant_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch all landlords
-$landlords_query = "SELECT * FROM landlord";
+$landlords_query = "SELECT * FROM landlord ORDER BY name ASC";
 $landlords_stmt = $pdo->prepare($landlords_query);
 $landlords_stmt->execute();
 $landlords = $landlords_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -68,6 +68,7 @@ $ttenants = count($tenants);
 $total_balance_bfw = 0;
 $total_balance_duew = 0;
 $total_balance = 0;
+$total_balance2 = 0;
 // Iterate through the tenants array and sum up the balances
 foreach ($tenants as $tenant) {
     $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
@@ -80,6 +81,19 @@ foreach ($tenants as $tenant) {
     $total_balance_duew += $balance_due;
     $total_balance += $balance;
 }
+foreach ($tenants as $tenant) {
+    $balances = isset($tenantBalances[$tenant['id']]) ? [$tenantBalances[$tenant['id']]] : [[]];
+    
+    $balance_bf2 = isset($balances[0]['balance_bf']) ? $balances[0]['balance_bf'] : 0;
+    $balance_due2 = isset($balances[0]['balance_due']) ? $balances[0]['balance_due'] : 0;
+    $balance2 = isset($balances[0]['total_balance']) ? $balances[0]['total_balance'] : 0;
+
+    // Add to the running totals (can now include negatives)
+    $total_balance_bfw2 += $balance_bf2;
+    $total_balance_duew2 += $balance_due2;
+    $total_balance2 += $balance2;
+}
+
 function getRoom($room_id, $rooms) {
     foreach ($rooms as $room) {
         if ($room['id'] == $room_id) {

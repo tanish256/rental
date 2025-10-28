@@ -514,7 +514,7 @@
                     </div>
                     <div class="form-group">
                         <label for="editRoomLocation">Location</label>
-                        <input type="text" id="editRoomLocation" name="location" class="form-control" disabled>
+                        <input type="text" id="editRoomLocation" name="location" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label for="editRoomAmount">Monthly Rent (UGX)</label>
